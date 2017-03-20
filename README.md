@@ -41,6 +41,8 @@ xxxxxxx      xxxxxxx     888888888          666666666        v0.9     Delivered 
                                                                       OpenSecurityTraining.info
                                                                       For More Tutorials and Info, Please visit:
                                                                       www.kernelfarm.com
+                                                                      https://www.linkedin.com/in/arash-t-c-3a277bbb
+                                                                      https://twitter.com/KernelFarm
                                                                      
 
 
