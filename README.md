@@ -1,7 +1,7 @@
 
 KERNELFARM 2017
 ================================================================================================================================
-THE HOLY BOOK OF X68
+THE HOLY BOOK OF X86
 
 Delivered to you by Arash TC with the spirit of
 OpenSecurityTraining.info
