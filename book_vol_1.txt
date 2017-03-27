@@ -302,7 +302,7 @@ The Stack
 
 Caller - Callee Convention
 
-        Caller Save Registers mean that when ever you want to call a function save these registers (EAX,EDX,ECX  32-bit or RAX,EDX,ECX
+        Caller Save Registers mean that when ever you want to call a function, save these registers (EAX,EDX,ECX  32-bit or RAX,EDX,ECX
         for 64-bit) somehow so when the execution is handed over to the function, your data will remain intact. That means caller is
         responsible of saving these registers in order to prevent their destruction when the function modifies the values held in these
         registers. The caller is also responsible for restoring the saved values in registers when execution gets back to him.
