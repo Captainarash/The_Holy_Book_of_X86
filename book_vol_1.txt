@@ -180,7 +180,7 @@ Binary-Decimal-Hex Refresher:
 Negative Numbers:
         Negative Numbers in x86 architecture may seem a little bit weird at first. A negative Number named N with it
         Positive value of P, is P's one's complement plus one.
-		Holy shit! What was that again? ok! It is very simple and clear if you see it in action.
+	Holy shit! What was that again? ok! It is very simple and clear if you see it in action.
 
         P = 1 in decimal = 0x01 in Hex = 00000001 in Binary.
         One's Complement is when you flip all the bits of the number P. So:
