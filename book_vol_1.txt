@@ -44,7 +44,7 @@ xxxxxxx      xxxxxxx8:::::8     8:::::8    6::::::6
    x:::::xx:::::x   8::::::88888::::::86::::::66666::::::6
   x:::::x  x:::::x   88:::::::::::::88  66:::::::::::::66
  x:::::x    x:::::x    88:::::::::88      66:::::::::66
-xxxxxxx      xxxxxxx     888888888          666666666        v0.1     Delivered to you by Arash TC with the spirit of OpenSecurityTraining.info
+xxxxxxx      xxxxxxx     888888888          666666666        v0.1.1     Delivered to you by Arash TC with the spirit of OpenSecurityTraining.info
 
 
 
@@ -1221,3 +1221,58 @@ to ESP. Then it pops the value in ESP (after adding 8 to ESP) which is the SAVED
 (line <+60>).
         The same story fits to the remaining instruction in main. It wipes up the stack frame by adding 0x18 (24 decimal) to ESP. Pops SAVED EBP back
 to EBP register and returns to whoever called main().
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+        Now that we successfully analyzed our second example, it's a good time to introduce you to concept of jumps. There are a some ways to change
+EIP's value in order to change the execution path to somewhere else in the program. One way of doing that is by using a CALL instruction as mentioned
+earlier. Remember that a CALL will push the address of the next instruction onto the stack which was referred to as SAVED EIP in our demonstrations
+of stack. A JUMP instruction won't do that. It simply changes the EIP value and this cause the execution to "jump" to that address and follow
+execution. We have different kinds of jump and each of them are a convenient way to assemble a control flow or a loop in a high level language. JUMPs
+are categorized into 2 groups: Conditional and Unconditional.
+
+Unconditional Jump:
+
+    _ __  __ ___
+ _ | |  \/  | _ \
+| || | |\/| |  _/
+ \__/|_|  |_|_|
+
+
+        A JMP instruction is an unconditional jump. All it does is simply changing the value of EIP with the given address. For example the piece of
+code below will simply changes the EIP value with a hardcoded address:
+
+                        ____ EIP before = 0xsomething
+                      /
+       JMP 0x00401000
+                      \______ EIP after = 0x00401000
+
+        Using hardcoded addresses is rarely seen and also not recommended because it highly reduces the reliability of code. Hence we use relative
+form of addressing by using registers. For example the assembly code below is highly used in vanilla stack-based overflows when we want to redirect
+the execution flow to our injected shellcode on the stack:
+
+                       jmp esp
+
+                ESP = 0x7fffff50 (start of our injected shellcode)
+
+          Or when our shellcode is at some offset to the address pointed by EAX:
+
+                sub eax,0x100
+                jmp eax
+
+        **NOTE: We're gonna see more in-depth discussions on stack overflows later. So don't worry if you don't have a clue what I'm talking about.
+Just know that JMP instruction is an unconditional jump and will change the execution flow, no questions asked.
+
+
+Conditional Jumps:
+
+        A conditional jump is based on checking a single value in EFLAGS register that is a result of a comparison. For us to understand how they
+work, we need to dive into explaining EFLAGS register and all of its tiny parts. Obviously that's not convenient to explain every little thing inside
+it. You're not reading the Intel's Manual anyway. So here we go:
+
+
+
+ ___ ___ _      _   ___ ___
+| __| __| |    /_\ / __/ __|
+| _|| _|| |__ / _ \ (_ \__ \
+|___|_| |____/_/ \_\___|___/
