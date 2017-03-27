@@ -18,4 +18,4 @@ This book tends to overview and teach x86 subjects in the eyes of a reverse engi
 This Book will be completed and published in 3 volumes. I try to update the content as I write the book.
 
 
-In order to avoid messing up the ASCII arts used in this book, please open the files in Microsoft WordPad or ATOM or similar text editors that can be configured to read ASCII format. 
+In order to avoid messing up the ASCII arts used in this book, please open the files in Microsoft WordPad, ATOM, Vim or similar text editors that can be configured to read ASCII format.
