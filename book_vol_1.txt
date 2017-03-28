@@ -44,7 +44,7 @@ xxxxxxx      xxxxxxx8:::::8     8:::::8    6::::::6
    x:::::xx:::::x   8::::::88888::::::86::::::66666::::::6
   x:::::x  x:::::x   88:::::::::::::88  66:::::::::::::66
  x:::::x    x:::::x    88:::::::::88      66:::::::::66
-xxxxxxx      xxxxxxx     888888888          666666666        v0.1.1     Delivered to you by Arash TC with the spirit of OpenSecurityTraining.info
+xxxxxxx      xxxxxxx     888888888          666666666        v0.1.2     Delivered to you by Arash TC with the spirit of OpenSecurityTraining.info
 
 
 
@@ -273,7 +273,7 @@ REGISTERS:
         Purpose Registers, we have EIP (RIP for 64-bit) which is called Instruction Pointer which hold the current flow of the execution;
         and we have EFLAGS, which is a 32-bit long register of registers. Yeah. I know that might sound crazy but I will explain them fully
         in later chapters.
-[remember to refer to RFLAGS for surprise!]
+
 
         EAX is mostly used when a function wants to return a value and it also used for lots of different purposes. You have to see them
         in action in order to recognize its usability in different scenarios. EBX is base pointer for data section and EDX is I/O pointer
@@ -317,7 +317,106 @@ Structure of Registers
 
         Every registers is divided into some smaller pieces as follows:
 
-[add registers structure from Intel's manual]
+        63                                 0
+        +----------------------------------+
+        |               RAX                |
+        +----------------+-----------------+
+        |   RESERVED     |       EAX       |
+        +----------------------------------+
+                         |EXTENDED|   AX   |
+                         +-----------------+
+                         |        |AH  | AL|
+                         +--------+--------+
+                         31       16   8   0
+
+        63                                 0
+        +----------------------------------+
+        |               RBX                |
+        +----------------+-----------------+
+        |   RESERVED     |       EBX       |
+        +----------------------------------+
+                         |EXTENDED|   BX   |
+                         +-----------------+
+                         |        |BH  | BL|
+                         +--------+--------+
+                         31       16   8   0
+
+
+        63                                 0
+        +----------------------------------+
+        |               RCX                |
+        +----------------+-----------------+
+        |   RESERVED     |       ECX       |
+        +----------------------------------+
+                         |EXTENDED|   CX   |
+                         +-----------------+
+                         |        | CH| CL |
+                         +--------+--------+
+                         31       16   8   0
+
+        63                                 0
+        +----------------------------------+
+        |               RDX                |
+        +----------------+-----------------+
+        |   RESERVED     |       EDX       |
+        +----------------------------------+
+                         |EXTENDED|   DX   |
+                         +-----------------+
+                         |        | DH| DL |
+                         +--------+--------+
+                         31       16   8   0
+
+        63                                 0
+        +----------------------------------+
+        |               RSI                |
+        +----------------+-----------------+
+        |   RESERVED     |       ESI       |
+        +----------------------------------+
+                         |EXTENDED|   SI   |
+                         +-----------------+
+                         31                0
+
+        63                                 0
+        +----------------------------------+
+        |               RDI                |
+        +----------------+-----------------+
+        |   RESERVED     |       EDI       |
+        +----------------------------------+
+                         |EXTENDED|   DI   |
+                         +-----------------+
+                         31                0
+
+        63                                 0
+        +----------------------------------+
+        |               RBP                |
+        +----------------+-----------------+
+        |   RESERVED     |       EBP       |
+        +----------------------------------+
+                         |EXTENDED|   BP   |
+                         +-----------------+
+                         31                0
+
+        63                                 0
+        +----------------------------------+
+        |               RSP                |
+        +----------------+-----------------+
+        |   RESERVED     |       ESP       |
+        +----------------------------------+
+                         |EXTENDED|   SP   |
+                         +-----------------+
+                         31                0
+
+        63                                 0
+        +----------------------------------+
+        |              RFLAGS              |
+        +----------------+-----------------+
+        |   RESERVED     |      EFLAGS     |
+        +----------------------------------+
+                         |EXTENDED|  FLAGS |
+                         +-----------------+
+                         31                0
+
+
 
 
         You can access the small portions of registers in an assembly code. The concept of accessing and using these small portions becomes
@@ -1271,8 +1370,10 @@ work, we need to dive into explaining EFLAGS register and all of its tiny parts.
 it. You're not reading the Intel's Manual anyway. So here we go:
 
 
-
  ___ ___ _      _   ___ ___
 | __| __| |    /_\ / __/ __|
 | _|| _|| |__ / _ \ (_ \__ \
 |___|_| |____/_/ \_\___|___/
+
+        EFLAGS is a register that has a lot of flags! No, shit! (:D). But it is really what it's about. Flags that control certain parts of the
+program and its connection with the OS.
