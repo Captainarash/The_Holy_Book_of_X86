@@ -62,8 +62,8 @@ always makes a 5
 Acknowledgement
 
         I owe everything I know about x86 architecture to Xeno Kovah. A man who shared his class videos and slides freely available to everyone which
-is a noble act. In return to his great efforts, I decided to write this tutorial on x86 architecture and assembly and publish it for free so everyone
-who is interested can learn and contribute.
+is a noble act. In return to his great efforts, I decided to write this tutorial on x86 architecture and assembly and publish it for free so whoever
+is interested can learn and contribute.
 
 =====================================================================================================================================================
 
@@ -72,6 +72,11 @@ About the Author[s]:
         Arash TC is the main author and maintainer of this book. He is currently studying IT in Finland. He's got OSCP/OSCE and a long long long way
 ahead to become a pro. He will appreciate readers' comments, criticisms and contributions. His main interest is low level security and kernel
 internals.
+
+        Amir Ali Torkaman is the editor of this volume. He studies English Literature. He's very enthusiastic about Information Security and Privacy.
+That's all I can tell about him now. maybe later you see more info about him here.
+
+        Other contributors are very appreciated as they help me to complete this project and present you a book which hopefully will be flawless.
 
         You can contact the author[s] by visiting http://www.kernelfarm.com/
 
@@ -1464,6 +1469,13 @@ register containing its different flags:
 condition. It compares the source and destination value with each other and set the appropriate bits (flags) accordingly in EFLAGS register. The CF,
 OF, SF, ZF, AF, and PF flags are set according to the result.
 
++--------------------------------+
+| Jcc - Jump if Condition is Met |
++--------------------------------+
+
+        Conditional jumps have too many different instructions, each designed for a specific purpose. It's not really convenient to mention all of
+them here since it will not do you any good. We just mention a couple of them here with examples. If you are interested to read more about them
+(highly recommended), check the Intel's manual (Now you're old enough to check the manual yourself :p).
 
 18.
      _ _  _ ___
@@ -1482,7 +1494,7 @@ ZF is not set (0) and will pass to the next instruction after the JNE instructio
     (5)    jne (3)
     (6)    ....
 
-    This piece of assembly represents a very simple and neat loop that loops 16 times. The first instruction does an "exclusive OR" on ECX. If you
+        This piece of assembly represents a very simple and neat loop that loops 16 times. The first instruction does an "exclusive OR" on ECX. If you
 remember correctly, this will zero out ECX. On second line we put decimal value of 16 (hex 0x10) in EAX. After incrementing ECX by 1, we compare ECX
 with EAX. Comparing the values 16 and 1 is done by subtracting 1 from 16. Obviously ZF will not be set to 1 and the jump will be taken. After taking
 the jump, EIP will point to line (3). This will increment ECX again by 1. After looping 16 times, ECX will be 0x10 and the CMP instruction
