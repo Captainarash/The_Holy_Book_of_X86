@@ -1333,6 +1333,7 @@ are categorized into 2 groups: Conditional and Unconditional.
 
 Unconditional Jump:
 
+16.
     _ __  __ ___
  _ | |  \/  | _ \
 | || | |\/| |  _/
@@ -1377,8 +1378,8 @@ inside it. You're not reading Intel's manual anyway. So here we go:
 |___|_| |____/_/ \_\___|___/
 
         EFLAGS is a register that has a lot of flags! No, shit! (:D). But it is really what it's about. Flags that control certain parts of the
-program and its connection with the OS. These flags are the bits of the EFLAGS register which can be set to 1 or 0. These values are mostly changed 
-after a comparison or after executing some instruction that has a direct effect on the state of these bits (flags). Here's the structure of EFLAGS 
+program and its connection with the OS. These flags are the bits of the EFLAGS register which can be set to 1 or 0. These values are mostly changed
+after a comparison or after executing some instruction that has a direct effect on the state of these bits (flags). Here's the structure of EFLAGS
 register containing its different flags:
 
 +=========+==============+===============================+==========+
@@ -1443,9 +1444,47 @@ register containing its different flags:
         Sign Flag (SF): As its name represents, it determines if you're dealing with a signed integer or an unsigned integer.
         Carry Flag (CF): Remember when you were in elementary school and the teacher said if we want to add 9 to 6:
 
-           Carry (1)    9 
-                  |   + 6 
+           Carry (1)    9
+                  |   + 6
                   |   -----
                   |__  1  5
 
-        Ehem. That's the best way I can describe it. You will see it more in action later.
+        Ehem. That's the best way I can describe it. You will see it more in action later. What were we talking about? Aha! Conditional jumps:
+
+
+17.
+
+  ___ __  __ ___
+ / __|  \/  | _ \
+| (__| |\/| |  _/
+ \___|_|  |_|_|
+
+
+        Before learning a conditional jump, you need to know how condition is determined, right? So CMP (Compare) instruction determines that
+condition. It compares the source and destination value with each other and set the appropriate bits (flags) accordingly in EFLAGS register. The CF,
+OF, SF, ZF, AF, and PF flags are set according to the result.
+
+
+18.
+     _ _  _ ___
+  _ | | \| | __|
+ | || | .` | _|
+  \__/|_|\_|___|
+
+
+        Jump if Not Equal or (JNE) checks if the Zero-Flag (ZF) is set or not. As the result of a CMP instruction sets this flag, it will take jump if
+ZF is not set (0) and will pass to the next instruction after the JNE instruction if ZF is set (1). Here's an example:
+
+    (1)    xor ecx,ecx
+    (2)    mov eax,0x10
+    (3)    inc ecx
+    (4)    cmp eax,ecx
+    (5)    jne (3)
+    (6)    ....
+
+    This piece of assembly represents a very simple and neat loop that loops 16 times. The first instruction does an "exclusive OR" on ECX. If you
+remember correctly, this will zero out ECX. On second line we put decimal value of 16 (hex 0x10) in EAX. After incrementing ECX by 1, we compare ECX
+with EAX. Comparing the values 16 and 1 is done by subtracting 1 from 16. Obviously ZF will not be set to 1 and the jump will be taken. After taking
+the jump, EIP will point to line (3). This will increment ECX again by 1. After looping 16 times, ECX will be 0x10 and the CMP instruction
+(subtracting 16 - 16) will result in 0 and ZF will be set to 1. This time the condition for JNE is not met and jump will not be take and EIP will
+point to line (6).
