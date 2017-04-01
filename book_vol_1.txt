@@ -69,7 +69,7 @@ who is interested can learn and contribute.
 
 About the Author[s]:
 
-        Arash TC is the main author and maintainer of this book. He is currently studying IT in Finland. He's got an OSCP/OSCE and a long long long way
+        Arash TC is the main author and maintainer of this book. He is currently studying IT in Finland. He's got OSCP/OSCE and a long long long way
 ahead to become a pro. He will appreciate readers' comments, criticisms and contributions. His main interest is low level security and kernel
 internals.
 
@@ -80,7 +80,7 @@ internals.
 Introduction:
 
         This book/guide/tutorial/wiki is about assembly and x86 architecture. It's written by a low level security dude for low level security dudes.
-If you wanna learn Assembly and its structure, reversing basics, segmentation, Paging, etc. keep on reading. I highly recommend you check
+        If you wanna learn Assembly and its structure, reversing basics, Segmentation, Paging, etc. keep on reading. I highly recommend you check
 opensecuritytraining.info website and watch Intro to x86 videos as you read this book.
 
 =====================================================================================================================================================
@@ -97,7 +97,7 @@ Since the book is not finished yet, it's not so convenient to put a table of con
 Data Types:
 
         There are 5 different data types to deal with in the world of Assembly. They are as follows:
-        Byte: A byte is simply an 8-bit value (1 byte) and the C equivalent of a byte is when you define a character like:
+        Byte: A byte is simply an 8-bit value (1 byte) and the C equivalent of a Byte is when you define a character like:
         char alpha = 'a';
 
         Word: A word is twice the size of a byte; 16-bit value (2 bytes) and it translates to this piece of code in C:
@@ -743,7 +743,7 @@ ESP -> | 18104000 | --> Address of the next instruction after the call. Pay atte
   after executing the function's prologue(PUSH EBP and MOV EBP,ESP), the hex value 0xBEEF is gonna be put in EAX. Here's how the stack will look like:
 
         +----------+
-        |Saved EIP | --> Return to whichever address called main()
+        |Saved EIP | --> Return to whoever called main()
         +----------+
         |SAVED EPB | --> Save the previous stack frame
         +----------+
@@ -786,7 +786,7 @@ executed, what's gonna happen is that whatever value that ESP currently points a
 is the stack after executing the RET instruction:
 
         +----------+
-        |Saved EIP | --> Return address to whichever address called main()
+        |Saved EIP | --> Return address to whoever called main()
         +----------+
 ESP --> |SAVED EPB | --> ESP point here after executing the RET instruction.
         +----------+
@@ -849,9 +849,10 @@ Now one thing you may have noticed is the brackets. So here's a rule which appli
 
           [Base index*scale + displacement]
 
-        Where Base is a register such as EAX,EBX,ESP,EBP, etc. and index again is another register multiplied by a scale plus the displacement(offset)
-        In the above example, we only used Base plus displacement which happens to be the most common R/M32 form you will see. Remember that all of
-        these parts in the brackets are optional which means that you can put a hardcoded memory address inside the bracket, i.e. [7FFFFF58].
+        Where Base is a register such as EAX, EBX, ESP, EBP, etc. and index again is another register multiplied by a scale plus the
+        displacement(offset). In the above example, we only used Base plus displacement which happens to be the most common R/M32 form you will see.
+        Remember that all of these parts in the brackets are optional which means that you can put a hardcoded memory address inside the
+        bracket(i.e. [7FFFFF58]).
 
 Here are some new instructions for you to continue to the next example:
 
@@ -863,7 +864,7 @@ Here are some new instructions for you to continue to the next example:
 
      Fairly easy, right? It takes the source and adds it to the destination and puts the final value in the destination. For example:
 
-          add eax,0x10 ---> will add decimal value 16 (or hex 10) to EAX and updates EAX with the result.
+          add eax,0x10 ---> will add decimal value 16(or hex 10) to EAX and updates EAX with the result.
 
 8.
 
@@ -962,7 +963,7 @@ the AND operation works, here's a refresher:
                 +---+---+-------+
 
 
-      If we have the instructions below,
+      If we have the instructions below:
 
                 mov eax, 0x12345678
                 and eax, 0x45454545
@@ -972,8 +973,8 @@ the AND operation works, here's a refresher:
 AND   ----------             ---------------------------------------
       0x00044440   <-----    0000 0000 0000 0100 0100 0100 0100 0000
 
-      the new value which is 0x44440 will be put in EAX. AND instruction accepts a register or an R/M32 (or R/M64 for 64-bit) form as destination. As
-a source, you can use an immediate, a register or an R/M32 (or R/M64).
+      The new value which is 0x44440 will be put in EAX. The AND instruction accepts a register or an R/M32(or an R/M64 for 64-bit) form as
+      destination. As a source, you can use an immediate, a register or an R/M32(or R/M64).
 
 14.
        ___  ___
@@ -981,7 +982,7 @@ a source, you can use an immediate, a register or an R/M32 (or R/M64).
      | (_) |   /
       \___/|_|_\
 
-      OR instruction like AND instruction performs a bitwise operation. You can check the table below as a refresher on OR operation:
+      The OR instruction like AND instruction performs a bitwise operation. You can check the table below as a refresher on the OR operation:
 
                 +---+---+-------+
                 | A | B | A or B|
@@ -995,7 +996,7 @@ a source, you can use an immediate, a register or an R/M32 (or R/M64).
                 | 1 | 1 |   1   |
                 +---+---+-------+
 
-      If we have the instructions below,
+      If we have the instructions below:
 
                     mov eax, 0x12345678
                     and eax, 0x45454545
@@ -1011,8 +1012,8 @@ a source, you can use an immediate, a register or an R/M32 (or R/M64).
         >  < (_) |   /
        /_/\_\___/|_|_\
 
-       XOR or "eXclusive OR" is a very useful instruction for zeroing out registers in terms of shellcoding. XOR operation is slightly different than
-OR and AND operations.
+       XOR or "eXclusive OR" is a very useful instruction for zeroing out registers in terms of shellcoding. The XOR operation is slightly different
+       than the OR and AND operations.
 
                 +---+---+-------+
                 | A | B |A xor B|
@@ -1026,18 +1027,18 @@ OR and AND operations.
                 | 1 | 1 |   0   |
                 +---+---+-------+
 
-        Imagine we're trying to encode our shellcode (You'll see this in action in later chapters) and we need a clean state of the register EAX. You
-may say "Hah! I just do a MOV EAX,0" but are you sure that works? Think again! You can't pass a Null-Byte (0x00) in your buffer so that is a big
-problem if you don't know about XOR. Here's how we can zero out EAX register with a bit of creativity:
+        Imagine we're trying to encode our shellcode(you'll see this in action in later chapters) and we need a clean state of the EAX register. You
+may say "Hah! I just do a MOV EAX,0" but are you sure that works? Think again! You can't pass a Null-Byte(0x00) to your buffer so that is a big
+problem if you don't know about XOR. Here's how we can zero out the EAX register with a bit of creativity:
 
         xor eax, eax
 
-        That's all it takes. Remember the result of an XOR operation is 1 if and only if the operands are different (loo at the table above again).
+        That's all it takes. Remember the result of an XOR operation is 1 if and only if the operands are different(look again at the table above).
 So XOR-ing a value with itself will always result in zero.
 
 
-        Now it's the time for our second example but this time I want you to do exercises step by step. I'm using an
-Ubuntu VM version 16.04.1 LTS (on VMware). First of all, here's the code in C which we are going to rip apart:
+        Now is the time for our second example but this time I want you to do some exercises step by step. I'm using an
+Ubuntu VM version 16.04.1 LTS(on VMware). First of all, here's the code in C which we are going to rip apart:
 
 example2.c
 -----------------------------------------------------------------------------------
@@ -1052,7 +1053,7 @@ int main(int argc, char ** argv){
 	return sub(argc,a);
 }
 -----------------------------------------------------------------------------------
-Compile and Build program using clang (not GCC) just for convenience:
+Compile and build the program using clang(not GCC) just for convenience:
 
   bash#> clang -o example2 example2.c -m32 -fno-stack-protector -Wl,-z,relro,-z,now,-z,noexecstack -static
 
@@ -1070,12 +1071,12 @@ Now you need to create this file named cmd in order to make it easy for us while
             display/16xw $esp
             break main
 
-using our previously cmd file:
+using our previous cmd file:
   bash#> gdb -x cmd example2
 
 Now issuing the commands:
       (gdb) disassemble main
-      Dump of assembler code for function main:
+      Dump of assembler code for the main function:
          0x080488a0 <+0>:	  push   ebp
          0x080488a1 <+1>: 	mov    ebp,esp
          0x080488a3 <+3>:	  sub    esp,0x18
@@ -1097,9 +1098,9 @@ Now issuing the commands:
          0x080488dc <+60>:	add    esp,0x18
          0x080488df <+63>:	pop    ebp
          0x080488e0 <+64>:	ret
-      End of assembler dump.
+      End of the assembler dump.
       (gdb) disassemble sub
-      Dump of assembler code for function sub:
+      Dump of assembler code for the sub function:
          0x08048880 <+0>:	  push   ebp
          0x08048881 <+1>:	  mov    ebp,esp
          0x08048883 <+3>:	  sub    esp,0x8
@@ -1113,13 +1114,13 @@ Now issuing the commands:
          0x0804889b <+27>:	add    esp,0x8
          0x0804889e <+30>:	pop    ebp
          0x0804889f <+31>:	ret
-      End of assembler dump.
+      End of the assembler dump.
 
 ***Note: If you need some guidance or tutorial on using gdb or linux, look for it elsewhere, not here!!
 
         Alright! We start analyzing the assembly line by line and match it with our high-level C code. Starting with line <+0> of main(), we can see
 it's saving the old stack frame and creating its own. Then it pushes ESP down by issuing a SUB ESP,0x18 on line <+3>. In order to make sense of that,
-we convert 0x18 to decimal which gives us 24. So it is reserving 24 bytes on the stack (why?). Here is how the stack looks like:
+we convert 0x18 to decimal which gives us 24. So it is reserving 24 bytes on the stack(why?). Here is how the stack looks like:
 
                     +------------+
             EBP + C |            |
@@ -1152,7 +1153,7 @@ we convert 0x18 to decimal which gives us 24. So it is reserving 24 bytes on the
 
        They are asking for some values beyond our current stack frame. Looks weird? No! Remember the calling conventions and how the parameters of a
 function get pushed onto the stack? That's exactly it and it's asking for main()'s parameters argc and *argv[]. One important note here is that
-whenever you see EBP plus something, 99% of the times it refering to some parameters passed for the called function. In this case, some function
+whenever you see EBP plus something, 99% of the time it's referring to some parameters passed for the called function. In this case, some function
 called main() and main() is asking for its parameters argc and argv. So we complete our picture of the stack:
 
                     +------------+
@@ -1178,16 +1179,16 @@ called main() and main() is asking for its parameters argc and argv. So we compl
                     +------------+
 
 
-                    EAX = pointer to the start of argv[] array
-                    ECX = hold the number of command line arguments when executing the program in the command line. For example:
+                    EAX = Pointer to the start of argv[] array
+                    ECX = Holds the number of command line arguments when executing the program in the command line. For example:
                     bash#> ./program 100
                     has 2 command line arguments.
 
-    Line <+12> corresponds to the first line in main(). The uninitialized variable a gets a NULL (0x00) value. Quickly note that different compilers
+    Line <+12> corresponds to the first line in main(). The uninitialized variable "a" gets a NULL(0x00) value. Quickly note that different compilers
 and architectures handle the uninitialized variables differently. For example they may end up in HEAP or even don't end up anywhere until they get
 initialized.
     On lines <+19> and <+22> of main, those command-line arguments that we saw previously which were moved to EAX and ECX, now get copied onto the
-stack. This time relative addressing of EBP minus something is used. This type of addresses (EBP minus something) 99% of the time represent local
+stack. This time relative addressing of EBP minus something is used. This type of addresses(EBP minus something) 99% of the time represent local
 variables and the function's own variables and procedures. SO after these 2 line:
 
             mov DWORD PTR [ebp-0x4],ecx
@@ -1220,7 +1221,7 @@ the stack will look like this:
 
 
         Line <+25> gets the pointer to the start of argv[] array and puts that address in EAX and on line <+28> it says: go to the start of the array,
-then go 4 bytes forward and take what ever values is in there and put it in EAX. If we picture it, it would make more sense:
+then go 4 bytes forward and take whatever value is in there and put it in EAX. If we picture it, it would make more sense:
 
             <+25>:	mov    eax,DWORD PTR [ebp-0xc]
             <+28>:	mov    eax,DWORD PTR [eax+0x4]
@@ -1228,7 +1229,7 @@ then go 4 bytes forward and take what ever values is in there and put it in EAX.
 
             argv[] --> {./example2,0x100,.....}
                        ^           ^
-                       |           |__ the command-line argument that we pass to the program. as an example, here we used number 256
+                       |           |__ the command-line argument that we pass to the program. As an example, here we used the number 256
                        |__ start of argv array
 
                        bash#> ./example2 256
@@ -1237,7 +1238,7 @@ then go 4 bytes forward and take what ever values is in there and put it in EAX.
                        argv[1] is 0x100 or 256
                        I hope it's clear now ;D
 
-        Then on line <+31> just before we call atoi() funtion, we need to push its parameter on to the stack which is argc.
+        Then on line <+31> just before we call atoi() funtion, we need to push its parameter onto the stack which is argc.
 
                       <+31>:	mov    DWORD PTR [esp],eax
         After that we call atoi on line <+> which makes our stack like this:
@@ -1251,7 +1252,7 @@ then go 4 bytes forward and take what ever values is in there and put it in EAX.
                       +------------+
               EBP --> | SAVED EBP  |[]
                       +------------+
-              EBP - 4 |int a = argc| ESP + 14   ***Note: this address was first filled with 0x00 and then filled with the value of argc.
+              EBP - 4 |int a = argc| ESP + 14   ***Note: This address was first filled with 0x00 and then filled with the value of argc.
                       +------------+
               EBP - 8 | ECX = argc | ESP + 10
                       +------------+
@@ -1266,7 +1267,7 @@ then go 4 bytes forward and take what ever values is in there and put it in EAX.
 
         We're not gonna go through atoi() function right now. As we learned before, it's gonna pick up its parameter from [EBP + 0x8] (note that after
 SAVED EIP is on address [EBP + 0x4]) and return the value in EAX and use the saved EIP to get back to main(). Then the returned value in EAX will be
-place onto stack at [EBP - 0x10]. Then on line <+42> pointer to argv[] is copied to EAX and on line <+45> the integer value of argc is copied in ECX.
+place onto stack at [EBP - 0x10]. Then on line <+42> pointer to argv[] is copied to EAX and on line <+45> the integer value of argc is copied to ECX.
 These values EXA,ECX will be placed at [ESP] and [ESP + 0x4] respectively to be ready to call sub().
 
                       +------------+
@@ -1293,10 +1294,10 @@ These values EXA,ECX will be placed at [ESP] and [ESP + 0x4] respectively to be 
 
 
         Now we have everything set up to call sub(). After calling sub() and past the function's prologue, it reserves 8 bytes for its stack frame.
-On line <+6> and <+9> it takes the local variables from previous stack frame (main()'s) and copies them in EAX and ECX respectively. Then it places
+On line <+6> and <+9> it takes the local variables from previous stack frame(main()'s) and copies them in EAX and ECX respectively. Then it places
 those values onto its own stack frame at [EBP - 0x4] for ECX and [EBP -0x8] for EAX. Then again on line <+18> it places the value of [EBP - 0x4] which
 is integer value of 2 in EAX. Then on line <+21> we have a shift logical left instruction with shifting of one bit which translates to multiply  by 2
-to power of one and then the next line of instruction, the value of [EBP - 0x8] which is 256(the imaginary value we passed on command line) will be
+to the power of one and then the next line of instruction, the value of [EBP - 0x8] which is 256(the imaginary value we passed on command line) will be
 added to EAX. The final result will be in EAX and returned to main().
 
                   +------------+
@@ -1316,9 +1317,9 @@ added to EAX. The final result will be in EAX and returned to main().
                   EAX = 2*2+256 = 260
 
         Now it's time to return to main(). Knowing that sub's return value of 260 in in EAX, it wipes down its stack frame in line <+27> by adding 8
-to ESP. Then it pops the value in ESP (after adding 8 to ESP) which is the SAVED EBP into EBP register. Then it uses the SAVED EIP to return to main()
+to ESP. Then it pops the value in ESP(after adding 8 to ESP) which is the SAVED EBP into EBP register. Then it uses the SAVED EIP to return to main()
 (line <+60>).
-        The same story fits to the remaining instruction in main. It wipes up the stack frame by adding 0x18 (24 decimal) to ESP. Pops SAVED EBP back
+        The same story fits to the remaining instruction in main. It wipes up the stack frame by adding 0x18(24 decimal) to ESP. Pops SAVED EBP back
 to EBP register and returns to whoever called main().
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1339,14 +1340,14 @@ Unconditional Jump:
 
 
         A JMP instruction is an unconditional jump. All it does is simply changing the value of EIP with the given address. For example the piece of
-code below will simply changes the EIP value with a hardcoded address:
+code below will simply change the EIP value with a hardcoded address:
 
                         ____ EIP before = 0xsomething
                       /
        JMP 0x00401000
                       \______ EIP after = 0x00401000
 
-        Using hardcoded addresses is rarely seen and also not recommended because it highly reduces the reliability of code. Hence we use relative
+        Using hardcoded addresses is rarely seen and also not recommended because it highly reduces the reliability of code. Hence we use the relative
 form of addressing by using registers. For example the assembly code below is highly used in vanilla stack-based overflows when we want to redirect
 the execution flow to our injected shellcode on the stack:
 
@@ -1360,14 +1361,14 @@ the execution flow to our injected shellcode on the stack:
                 jmp eax
 
         **NOTE: We're gonna see more in-depth discussions on stack overflows later. So don't worry if you don't have a clue what I'm talking about.
-Just know that JMP instruction is an unconditional jump and will change the execution flow, no questions asked.
+Just know that the JMP instruction is an unconditional jump and will change the execution flow, no questions asked.
 
 
 Conditional Jumps:
 
-        A conditional jump is based on checking a single value in EFLAGS register that is a result of a comparison. For us to understand how they
-work, we need to dive into explaining EFLAGS register and all of its tiny parts. Obviously that's not convenient to explain every little thing inside
-it. You're not reading the Intel's Manual anyway. So here we go:
+        A conditional jump is based on checking a single value in EFLAGS register that is the result of a comparison. For us to understand how they
+work, we need to dive into explaining the EFLAGS register and all of its tiny parts. Obviously that's not convenient to explain every little thing
+inside it. You're not reading Intel's manual anyway. So here we go:
 
 
  ___ ___ _      _   ___ ___
@@ -1375,5 +1376,5 @@ it. You're not reading the Intel's Manual anyway. So here we go:
 | _|| _|| |__ / _ \ (_ \__ \
 |___|_| |____/_/ \_\___|___/
 
-        EFLAGS is a register that has a lot of flags! No, shit! (:D). But it is really what it's about. Flags that control certain parts of the
+        EFLAGS is a register that has a lot of flags! No, shit! (:D). But that's really what it's about. Flags that control certain parts of the
 program and its connection with the OS.
