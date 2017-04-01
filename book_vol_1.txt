@@ -70,7 +70,7 @@ who is interested can learn and contribute.
 About the Author[s]:
 
         Arash TC is the main author and maintainer of this book. He is currently studying IT in Finland. He's got OSCP/OSCE and a long long long way
-ahead to become a pro. He will appreciate reader's comments and criticisms and contributions. His main interest is low level security and kernel
+ahead to become a pro. He will appreciate readers' comments, criticisms and contributions. His main interest is low level security and kernel
 internals.
 
         You can contact the author[s] by visiting http://www.kernelfarm.com/
@@ -80,7 +80,7 @@ internals.
 Introduction:
 
         This book/guide/tutorial/wiki is about assembly and x86 architecture. It's written by a low level security dude for low level security dudes.
-If you wanna learn Assembly and its structure, reversing basics, Segmentation, Paging and etc. keep on reading. I highly recommend you check
+        If you wanna learn Assembly and its structure, reversing basics, Segmentation, Paging, etc. keep on reading. I highly recommend you check
 opensecuritytraining.info website and watch Intro to x86 videos as you read this book.
 
 =====================================================================================================================================================
@@ -100,14 +100,14 @@ Data Types:
         Byte: A byte is simply an 8-bit value (1 byte) and the C equivalent of a Byte is when you define a character like:
         char alpha = 'a';
 
-        Word: A Word is twice the size of a byte; 16-bit value (2 bytes) and it translates to this piece of code in C:
+        Word: A word is twice the size of a byte; 16-bit value (2 bytes) and it translates to this piece of code in C:
         short int = 'a'
 
         DoubleWord: As its name represents, a Double-Word or a DWORD is a 32-bit value
-(4 bytes) and would be translated to:
+(4 bytes) and it would be translated to:
         int var = 3
 
-        QuadWord: A 64-bit value (8 bytes) with C equivalent of:
+        QuadWord: A 64-bit value (8 bytes) with the C equivalent of:
         long int var = ...
 
         Double-QuadWord: You do the math :)
@@ -136,8 +136,8 @@ Data Types:
 
 
 Binary-Decimal-Hex Refresher:
-        If you don't know how to work with Hexadecimal and Binary Values, I have to tell you to stop reading this and
-        go kill yourself. Seriously? Ok. Here a refresher for you:
+        If you don't know how to work with Hexadecimal and Binary values, I have to tell you to stop reading this and
+        go kill yourself. Seriously? Ok. Here's a refresher for you:
 
                         +-------------------- +-------------------- +--------------------
                         | Decimal (base 10) | | Binary (Base 2)   | |   HEX  (Base 16)  |
@@ -177,19 +177,19 @@ Binary-Decimal-Hex Refresher:
 
 
 
-Negative Numbers:
-        Negative Numbers in x86 architecture may seem a little bit weird at first. A negative Number named N with it
-        Positive value of P, is P's one's complement plus one.
-        Holy shit! What was that again? ok! It is very simple and clear if you see it in action.
+Negative numbers:
+        Negative numbers in x86 architecture may seem a little bit weird at first. A negative Number named N with the
+        positive value of P, is P's one's complement plus one.
+        Holy shit! What was that again? OK! It is very simple and clear if you see it in action.
 
         P = 1 in decimal = 0x01 in Hex = 00000001 in Binary.
-        One's Complement is when you flip all the bits of the number P. So:
-        P = 00000001 and P's One's Complement is all P's bits flipped which equals to:
+        One's complement is when you flip all the bits of the number P. So:
+        P = 00000001 and P's One's complement is all P's bits flipped which equals to:
         Flipped_P = 11111110 in Binary.
-        Now what happens if you add one to it and transfer it to HEX?
+        Now what happens if you add one to it and convert it to Hex?
         Flipped_P + 1 = 11111110 + 00000001 = 11111111 ---> 0xFF in Hex.
 
-        So negative one in x86 Hex format would be 0xFF. You can take a look at the following table to digest it completely.
+        So negative one in x86 Hex format would be 0xFF. You can take a look at the following table to completely comprehend it.
 
         +-------------------------------------------------------+
         |     P    |Flipped_P (One's Complement|Two's Complement|
@@ -198,16 +198,16 @@ Negative Numbers:
         +--------------------------------------+----------------+
 
 
-        For Signed Integers, we have these scopes:
+        For signed integers, we have these scopes:
 
-        from byte 0x01 to byte 0x7F , all bytes are positive.
+        -From byte 0x01 to byte 0x7F, all bytes are positive.
 
-        from byte 0x80 to byte 0xFF , all bytes are negative (They are in reversed order, 0xFF is -1 and as you approach smaller hex value,
+        -From byte 0x80 to byte 0xFF, all bytes are negative (They are in reversed order, 0xFF is -1 and as you approach a smaller hex value,
         you approach a smaller negative number).
 
-        from DWORD 0x00000001 to DWORD 0x7FFFFFFF, all DWORDs are positive.
+        -From DWORD 0x00000001 to DWORD 0x7FFFFFFF, all DWORDs are positive.
 
-        from DWORD 0x80000000 to DWORD 0xFFFFFFFF, all DWORDs are negative (They are in reversed order, means that last one (0xFFFFFFFF)
+        -From DWORD 0x80000000 to DWORD 0xFFFFFFFF, all DWORDs are negative (They are in reversed order, which means that the last one (0xFFFFFFFF)
         is -1 all the way down to the smallest).
 
         +----------+----------+
@@ -222,12 +222,12 @@ Negative Numbers:
 
 
 Little Endian or Big Endian?
-        Endianness comes from Jonathan Swifts's "Gulliver's Travels". It doesn't matter which way your eat your eggs and it certainly
+        Endianness comes from Jonathan Swifts' "Gulliver's Travels". It doesn't matter which way you eat your eggs and it certainly
         doesn't matter in computer architecture, right? Well, I don't know exactly. Probably not. But what matters is that Intel
-        Architecture is "Little-Endian" So what's up with that?
+        Architecture is "Little-Endian". So what's up with that?
 
-        In a Little-Endian Architecture, addresses are stored in RAM starting from the lowest nibble (nibble is said to each 4-bit
-        (1 byte) piece). For example, this is       what happens if you want to store the address 0x12345678 in Memory:
+        In a Little-Endian Architecture, addresses are stored in RAM starting from the lowest nibble (nibble is each 4-bit
+        (1 byte) piece). For example, this is what happens if you want to store the address 0x12345678 in memory:
 
         0x12345678  -->  0x12 0x34 0x56 0x78  -->
                                                 |                                          |
@@ -236,17 +236,17 @@ Little Endian or Big Endian?
         So it's simple. It just starts storing from that lowest nibble up to the highest nibble.
 
 
-        In Big-Endian Architecture, addresses are store in RAM as they are. Network traffic are Big-ENDIAN.
-        PowerPC, ARM, SPARC, MIPS, etc are Big-Endian unless otherwise configured.
+        In Big-Endian Architecture, addresses are stored in RAM as they are. Network traffic is Big-Endian.
+        PowerPC, ARM, SPARC, MIPS, etc. are Big-Endian unless otherwise configured.
 
-        *** Note: Register values are always Big-Endian. Little-Endian only applies to RAM (Memory).
+        *** Note: Register values are always Big-Endian. Little-Endian only applies to RAM(Memory).
 
 
 REGISTERS:
 
 
-        Registers are small memory storage areas built into the processor. They are still a volatile memory storage so if you power off
-        your PC, you're gonna lose the state of your registers. Intel Architecture defines 8 General Purpose Registers (GPR) as follows:
+        Registers are small memory storage areas built into the processor. They are still a volatile type of memory storage so if you power off
+        your PC, you're gonna lose the state of your registers. Intel architecture defines 8 General Purpose Registers(GPR) as follows:
 
         32-bit         |        64-bit
 ------------------------------------------------
@@ -269,24 +269,24 @@ REGISTERS:
                        |
 
 
-        Each of the registers above are 4 bytes long for 32-bit version, and 8 bytes long for the 64-bit version. Beside those General
-        Purpose Registers, we have EIP (RIP for 64-bit) which is called Instruction Pointer which hold the current flow of the execution;
-        and we have EFLAGS, which is a 32-bit long register of registers. Yeah. I know that might sound crazy but I will explain them fully
+        Each of the registers above are 4 bytes long in the 32-bit version, and 8 bytes long in the 64-bit version. Beside those General
+        Purpose Registers, we have EIP(RIP for 64-bit) which is called the Instruction Pointer which holds the current flow of the execution;
+        and we have EFLAGS, which is a 32-bit long register of registers. Yeah, I know that might sound crazy but I will explain them fully
         in later chapters.
 
 
-        EAX is mostly used when a function wants to return a value and it also used for lots of different purposes. You have to see them
-        in action in order to recognize its usability in different scenarios. EBX is base pointer for data section and EDX is I/O pointer
-        but let's save these convention for later chapters. ECX is mostly used as a counter for repetitive instructions i.e. a for
+        EAX is mostly used when a function wants to return a value and it is also used for lots of different purposes. You have to see them
+        in action in order to recognize its usability in different scenarios. EBX is the Base Pointer for data section and EDX is the I/O pointer
+        but let's save these conventions for later chapters. ECX is mostly used as a counter for repetitive instructions i.e. for a
         loop. ESI and EDI are used as Source Index and Destination Index respectively i.e. copying a string value. ESP is the stack pointer
-        which always points to the top of the current stack. EPB is the base pointer which always (actually not always :D) points to the bottom
+        which always points to the top of the current stack. EPB is the base pointer which always(actually not always :D) points to the bottom
         of the current stack by convention. I have to mention that these are only some conventions and you don't have to use them in the
         exact way. It is simply for simplicity and readability for your code.
 
 The Stack
 
         Two very important concepts you need to know, Stack and Heap. I'm gonna tell you what Stack is now and save Heap for later
-        chapters. Stack is a conceptual are of memory (RAM) which mostly holds a functions local variables. Stack has a Last-In-First-Out
+        chapters. Stack is a conceptual area of memory (RAM) which mostly holds a function's local variables. Stack has a Last-In-First-Out
         data structure, meaning that the first thing that is pushed onto the stack is the last thing that is gonna pop out. Imagine a bucket
         full of apples. The first apple that you put inside the bucket is the last one that you can pull out (of course if you don't
         just turn the bucket upside down :D).
@@ -295,27 +295,27 @@ The Stack
         0x7fff4444 - 4 = 0x7fff4440. You will see this in greater detail in the next few paragraphs.
 
 
-        OK. You may want me to cut the bullshit and show you some real thing, right? Ok. How about we see a simple C program? Hell No!
-        We're just getting started. Besides kidding, There still some major things you need to in order to fully understand even a simple
+        OK, you may want me to cut the bullshit and show you some real stuff, right? How about we see a simple C program? Hell no!
+        We're just getting started. Kidding aside, there are still some major things you need to know in order to fully understand even a simple
         "Hello World" code in Assembly. So stick with me and be patient.
 
 
 Caller - Callee Convention
 
-        Caller Save Registers mean that when ever you want to call a function, save these registers (EAX,EDX,ECX  32-bit or RAX,EDX,ECX
-        for 64-bit) somehow so when the execution is handed over to the function, your data will remain intact. That means caller is
+        Caller Save Registers mean that whenever you want to call a function, save these registers (EAX,EDX,ECX  32-bit or RAX,EDX,ECX
+        for 64-bit) somehow so when the execution is handed over to the function, your data will remain intact. That means the caller is
         responsible of saving these registers in order to prevent their destruction when the function modifies the values held in these
-        registers. The caller is also responsible for restoring the saved values in registers when execution gets back to him.
+        registers. The caller is also responsible for restoring the saved values in registers when execution gets back to it.
 
-        Callee Save Registers means that when the function (the callee) need more registers than those which are already saved by Caller,
-        Callee is responsible to save those values before going to its actual execution. The registers that the callee is responsible for
-        are EBP, EBX, ESI, EDI (RBP, RBX, RSI, RDI 64-bit). The callee is responsible to restore these saved values back their place before
-        handing the execution back to caller.
+        Callee Save Registers means that when the function (the callee) needs more registers than those which are already saved by the caller,
+        callee is responsible for saving those values before going to its actual execution point. The registers that the callee is responsible for
+        are EBP, EBX, ESI, EDI (RBP, RBX, RSI, RDI 64-bit). The callee is responsible for restoring these saved values back to their place before
+        handing the execution back to the caller.
 
 
 Structure of Registers
 
-        Every registers is divided into some smaller pieces as follows:
+        Every register is divided into some smaller pieces like below:
 
         63                                 0
         +----------------------------------+
@@ -419,21 +419,21 @@ Structure of Registers
 
 
 
-        You can access the small portions of registers in an assembly code. The concept of accessing and using these small portions becomes
-        clear in shellcoding when you want your shellcode to be as small as possible. We will see this in action in later chapters.
+You can access the small portions of registers in an assembly code. The concept of accessing and using these small portions becomes
+clear in shellcoding when you want your shellcode to be as small as possible. We will see this in action in later chapters.
 
-Here's some Instructions for you but before you begin you must know the basic syntax of an assembly instruction. We have 2 different notations of
+Here are some instructions for you but before you begin, you must know the basic syntax of an assembly instruction. We have 2 different notations of
 assembly, Intel notation and AT&T notation.
-  In Intel Notation after the instruction, first the destination is mentioned followed by a comma and the source.
+  In Intel notation after the instruction, first the destination is mentioned followed by a comma and the source.
 
         instruction destination, source
 
-  In AT&T notation after the instruction, first comes the source followed by a comma and then the destination. Every registers has a percent sign (%)
+  In AT&T notation after the instruction, first comes the source followed by a comma and then the destination. Every register has a percent sign(%)
   appended to the beginning of it. It looks like this:
 
         instruction %source, %destination
 
-*** NOTE: The precent sign is only applied to registers. It is not applied to immediate values.
+*** NOTE: The percent sign is only applied to the registers. It is not applied to the immediate values.
 
 
 1.
@@ -446,12 +446,12 @@ assembly, Intel notation and AT&T notation.
 
 
 
-        YES! The first instruction for you to learn is NOP. Better to wipe that smile off your face and tell me what NOP does? Ha? Nothing?
-        Well, You're wrong! NOP actually does something. NOP instruction is this:
+YES! The first instruction for you to learn is NOP. NOP stands for No Operation. Better to wipe that smile off your face and tell me what NOP does. Ha? Nothing?
+Well, you're wrong! NOP actually does something. A NOP instruction is like this:
 
         XCHG eax,eax
 
-It conceptually does nothing but behind the scene, it actually doing something. It exchanges (XCHG as you guessed) the value in EAX with EAX.
+It conceptually does nothing, but behind the scene it exchanges (XCHG as you guessed) the value in EAX with EAX.
 
 2.
 
@@ -466,16 +466,16 @@ It conceptually does nothing but behind the scene, it actually doing something. 
 
 
 
-        PUSH instruction pushes either byte, a word, a dword or a quadword onto the stack.
-        For this part of tutorial I will only explain pushing a dword (4-byte value) onto the stack. The rest is just a matter of seconds to
-        understand and fit. In order to fully understand what a push instruction does, you have to see it by demonstration. For the following
-        instructions:
+PUSH instruction pushes either a byte, a word, a dword or a quadword onto the stack.
+For this part of tutorial I will only explain pushing a dword (4-byte value) onto the stack. The rest of them takes seconds to
+understand. In order to fully understand what a push instruction does, you have to see it by demonstration. For the following
+instructions:
 
 (1)     PUSH 0x41414141
 (2)     PUSH 0x42424242
 (3)     PUSH 0x43434343
 
-Consider ESP points to some address that hold the content 0xDEADBEEF (0) before executing the 3 lines above. After the execution of each PUSH
+Consider ESP points to some address that holds the content 0xDEADBEEF(0) before executing the 3 lines above. After the execution of each PUSH
 instruction, ESP gets decremented by 4 and the value will be pushed on to the stack and the new ESP will point to it.
 
 (0)                     (1)                     (2)                     (3)
@@ -501,11 +501,11 @@ ESP = 0x7fffff50        ESP = 0x7ffff4C         ESP = 0x7fffff48        ESP = 0x
 
 
 
- POP is instruction is exactly the opposite of a PUSH instruction. It pops (moves) whatever value that ESP is currently pointing at to a register
- and will increment ESP by 4. If you look at the demonstration below, if we assume the EAX holds the value 0xDEADCE11 before execution of the
- following 3 lines of assembly, by issuing a PUSH EAX instruction (1), the current value at the address that ESP is pointing to at the time (CCCC or
- 0x43434343) will be popped off the stack and it will show up in EAX register and ESP will be incremented by 4. Notice that popping values off the
- stack will not completely destroy the popped value. It just moves it to the register as the instruction says and adds 4 to ESP.
+POP is an instruction that is exactly the opposite of a PUSH instruction. It pops(moves) whatever value that ESP is currently pointing at to another register
+and will increment ESP by 4(in the case of a DWORD). If you look at the demonstration below, assuming EAX holds the value 0xDEADCE11 before the execution of the
+following 3 lines by issuing a PUSH EAX instruction(1). The current value at the address that ESP is pointing to at the time (CCCC or
+0x43434343) will be popped off the stack and it will show up in the EAX register and ESP will be incremented by 4. Notice that popping values off the
+stack will not completely destroy the popped value. It just moves it to the register as the instruction defines and adds 4 bytes to ESP.
 
 (1)     POP EAX
 (2)     POP EAX
@@ -542,15 +542,15 @@ ESP--> | C C C C  |             | C C C C  |             | C C C C  |           
 
 
 
-        One of the most important instructions for you to understand is CALL instruction and its conventions. Understanding calling conventions is
-        crucial in the field of Reverse Engineering. So before I tell you what happens when executing a CALL instructions, let's dive into calling
-        conventions. It defines how the code calls a function (subroutine) and how the parameters are passed to the function. It is mostly dependent
-        to the compiler and it can be configured to which convention to use but there are few of them and the most commonly used ones are CDECL and
-        STDCALL conventions.
+One of the most important instructions for you to understand is the CALL instruction and its conventions. Understanding the calling conventions is
+crucial in the field of reverse engineering. So before I tell you what happens while executing a CALL instruction, let's dive into the calling
+conventions themselves. The calling conventions define how the code calls a function(subroutine) and how the parameters are passed to the function.
+It is mostly dependent on the compiler and it can be configured to use a certain convention. But there are few of them and the most commonly used ones
+are CDECL and STDCALL conventions.
 
 CDECL:
-        "C Declaration" is the most commonly used convention for all C code and some c++. In CDECL, the caller must push the parameters of the
-        function that it's gonna be called (callee) onto the stack from left to right. So for example if we have this function in C:
+"C Declaration" is the most commonly used convention for all C code and some C++. In CDECL, the caller must push the parameters of the
+function that are gonna be called(callee) onto the stack from left to right. So for example if we have this function in C:
 
         func (int a, int b){
                 ...
@@ -563,19 +563,19 @@ CDECL:
                 return 0;
 }
 
-The value "b" and then "a" must be pushed onto the stack (left to right) before calling "func". The after calling the function "func", callee
-(func) must save the previous stack frame pointer and create a new stack frame. Wait a minute! WTF? Stack Frame??? OH! I forgot to tell you though :D.
-Here, I will explain it now. Each Function has its own stack frame. A stack frame is simply (by-convention) an area that is every function's
-playground in order to store local variable, etc. By calling a function, after passing the parameters, the called function must set up its own new
-stack frame by executing 2 simple instructions as follows:
+The value "b" and then "a" must be pushed onto the stack (left to right) before calling "func". After calling the function "func", callee(func)
+must save the previous stack frame pointer and create a new stack frame. Wait a minute! WTF? What's a stack frame? Oops! I forgot to tell you that. (:D)
+Here, I will explain it now. Each function has its own stack frame. A stack frame is simply(by convention) an area that is every function's
+playground in order to store local variables, etc. By calling a function, after passing the parameters, the called function must set up its own new
+stack frame by executing 2 simple instructions as below:
 
 (1)     PUSH ESP
 (2)     MOV EBP,ESP
 
-Line (1) saves the current stack pointer onto the stack, then on line (2) will copy it to EBP register which always points to the bottom (start of)
-the stack. The both EBP and ESP hold the same value. Then after the function starts executing its main functionalities, ESP will point somewhere lower
-than EPB (a frame full of local variables, etc). A CALL instruction will push the address of next instruction just after the CALL instruction onto to
-the stack and will change the EIP with the address of the first line of the function's code section. Here's a demonstration for you see the whole
+Line(1) saves the current stack pointer onto the stack, then on line(2) it will copy it to the EBP register which always points to the bottom (start of)
+the stack. Both EBP and ESP hold the same value. Then after the function starts executing its main functions, ESP will point somewhere lower
+than EPB (a frame full of local variables, etc.). A CALL instruction will push the address of next instruction just after the CALL instruction onto to
+the stack and will change the EIP with the address of the first line of the function's code section. Here's a demonstration for you to see the whole
 picture:
 .
 .
@@ -622,8 +622,8 @@ func:
        +----------+                    +----------+
        |   100    |                    |   100    |
        +----------+                    +----------+
-ESP+-> |addr of(4)|                    |addr of(4)| ---> You'll see the exact reason why this address must be push onto the stack later but I briefly
-       +----------+                    +----------+      tell you that it is there for when the function is done and wants to return to caller.
+ESP+-> |addr of(4)|                    |addr of(4)| ---> You'll see the exact reason why this address must be pushed onto the stack later but I can
+       +----------+                    +----------+      tell you that it is there for when the function is done and wants to return to the caller.
                             NEW ESP+-> |SAVED EBP | SAVED EPB = 0x7fffff60 *You will see
                                        +----------+             why this value must be saved
                                             .                   before going any further.
@@ -637,17 +637,17 @@ ESP+-> |addr of(4)|                    |addr of(4)| ---> You'll see the exact re
 
 In CDECL calling convention, function's return value will be put in EAX or EDX:EAX for primitive data types and after returning, caller is responsible
 for cleaning up the stack. So here we wrap it up in the list below:
-  1. Most common calling convention for all C code and some c++ code.
-  2. The called function (callee) expects it parameter to be pushed onto the stack from left to right.
-  3. First thing that callee does is saving the old stack frame (PUSH EBP) and setting up a new one (MOV EBP,ESP). This procedure is called "Function
-  Prologue".
+  1. Most common calling convention for all C code and some C++ code.
+  2. The called function(the callee) expects its parameter to be pushed onto the stack from left to right.
+  3. First thing that the callee does is saving the old stack frame(PUSH EBP) and setting up a new one(MOV EBP,ESP). This procedure is called
+     "Function Prologue".
   4. Returns data in EAX or EDX:EAX registers.
   5. Caller is responsible for cleaning up the stack.
 
 
 STDCALL:
-  The only difference between STDCALL and CDECL is that in STDCALL, callee is responsible for cleaning up the stack. This calling convention is mainly
-  used by Microsoft C++ code e.g. WIN32 API. You will see this in action in "Win32 Shellcoding Chapter".
+  The only difference between STDCALL and CDECL is that in STDCALL, the callee is responsible for cleaning up the stack. This calling convention is
+  mainly used by Microsoft C++ code (e.g. WIN32 API). You will see this in action in the "Win32 Shellcoding" chapter.
 
 5.
      ___ ___ _____
@@ -655,16 +655,16 @@ STDCALL:
     |   / _|  | |
     |_|_\___| |_|
 
-    We have 2 forms of Return Instruction:
-      1. It translates to the instruction "POP EIP". It means it pops whatever value in on top of the stack and put it into EIP. This method is used
-         by a CDECL convention as caller is responsible for the stack clean-up.
-      2. It does exactly as number 1, plus, it increments ESP by a given value i.e. "RET 0x08" in the previous demonstration, after reverting the
-         previous stack frame, it pops the value pointer by ESP (address of (4)) and then increments ESP by 8 which will remove the arguments b and a
-         that were pushed on to the stack before. If you pay close attention, you will recognize that this action represents a STDCALL convention
-         where callee is responsible for cleaning up the stack.
+We have 2 forms of Return Instruction:
+    1. It translates to the instruction "POP EIP". It means it pops whatever value is on top of the stack and puts it into EIP. This method is used
+       by a CDECL convention as caller is responsible for the stack clean-up.
+    2. It does exactly as number 1, plus it increments ESP by a given value(i.e. "RET 0x08" in the previous demonstration) after reverting the
+       previous stack frame, it pops the value pointer by ESP(address of (4)) and then increments ESP by 8 which will remove the arguments b and a
+       that were pushed on to the stack before. If you pay close attention, you will recognize that this action represents a STDCALL convention
+       where the callee is responsible for cleaning up the stack.
 
-         *** Note: In terms of exploitation, specifically Buffer Overflows, changing the return address (addr of (4) in above demonstration) means
-             gaining control of the EIP register which holds the key to the program's execution path.
+*** Note: In terms of exploitation, specifically buffer overflows, changing the return address(address of (4) in above demonstration) means
+    gaining control of the EIP register which holds the key to the program's execution path.
 
 
 6.
@@ -673,14 +673,14 @@ STDCALL:
     | |\/| | (_) \ V /
     |_|  |_|\___/ \_/
 
-    A MOV instruction simply copies from source to destination (notice that you have this in your background processes of your brain since we saw it
-    when explaining the stack and calling conventions). We can move data in 3 different ways:
+  A MOV instruction simply copies from source to destination(notice that you have this in the background process of your brain since we saw it
+when explaining the stack and calling conventions). We can move data in 3 different ways:
       1. Register to Register
       2. Memory to Register / Register to Register
       3. Immediate to Register / Immediate to Memory
 
-   As you guessed MOV instruction can't move data from memory to memory. The memory addresses in a most of the assembly instruction are used in way
-   called r/m32 which will be explained in later chapters.
+   As you it guessed the MOV instruction can't move data from memory to memory. The memory addresses in most of the assembly instructions are used in
+a way called r/m32 which will be explained in later chapters.
 
 
 Now let's take a look at a very simple piece of code:
@@ -695,14 +695,14 @@ example1.c                              sub:                           main:
           return 0xf00d;               |                             | 0040101E ret                 |
         }                              |                             |                              |
 ---------------------------------------+-----------------------------+------------------------------+
-*** Note: This piece of code is compiled without any optimization and security protection etc. Your assembly instruction may look different but don't
+*** Note: This piece of code is compiled without any optimization and security protection. Your assembly instruction may look different but don't
 worry because this example serves the educational purpose as we have it in the simplest way. You will see more complicated and up-to-date instructions
-as you go along this book.
+as you go along in this book.
 
-    If we assume that the first thing that is gonna start executing, is main(), this piece of code is gonna call the function sub() and then sub() is
-gonna return the hex value 0xbeef and main is not gonna use it in anyway and return 0xf00d and exit.
-    In the assembly code, we assume the entry point of our program is main(). The first 2 instructions are the function prologue as we discussed
-before. It saves the previous stack frame (PUSH EBP). This is done based on a simple fact that main() is not the first function that is called to
+  If we assume that the first thing that's gonna start executing is main(), this piece of code is gonna call the function sub() and then sub() is
+gonna return the hex value 0xBEEF and main is not gonna use it in anyway and return 0xF00D and exit.
+  In assembly code, we assume the entry point of our program is main(). The first 2 instructions are the function prologue as we discussed
+before. It saves the previous stack frame(PUSH EBP). This is done based on a simple fact that main() is not the first function that is called to
 start executing. There are tons of them, you can check it in gdb if you're interested but for now we assume main() is the entry point. Later it
 creates its own stack frame (MOV EBP,ESP). After executing those 2 lines, the stack should look like this:
 
@@ -721,9 +721,9 @@ ESP -> |SAVED EPB | --> Save the previous stack frame
        EBP = 7fffff50
        ESP = 7fffff50
 
-       Now when the Call Instruction is gonna execute, the address of the very next instruction after the call instruction in main() is gonna get
-pushed on to the stack which ins this case is 0x00401018 (MOV EAX,0xF00D) and EIP will be point to the first instruction in sub() which is 0x00401000
-(PUSH EBP). Se when that happens the stack will look like this:
+  Now when the call Instruction is gonna execute, the address of the very next instruction after the call instruction in main() is gonna get
+pushed on to the stack which in this case is 0x00401018 (MOV EAX,0xF00D) and EIP will be point to the first instruction in sub() which is 0x00401000
+(PUSH EBP). See when that happens the stack will look like this:
 
        +----------+
        |Saved EIP | --> Return to whoever called main()
@@ -731,7 +731,7 @@ pushed on to the stack which ins this case is 0x00401018 (MOV EAX,0xF00D) and EI
        |SAVED EPB | --> Save the previous stack frame
        +----------+
 ESP -> | 18104000 | --> Address of the next instruction after the call. Pay attention that this address must be in Little-Endian format since it's
-       +----------+     saved in memory. Also as a side effect of a Call instruction, ESP get decremented by 4.
+       +----------+     saved in memory. Also as a side effect of a call instruction, ESP gets decremented by 4.
        |          |
        +----------+
 
@@ -739,8 +739,8 @@ ESP -> | 18104000 | --> Address of the next instruction after the call. Pay atte
        EBP = 7fffff50
        ESP = 7fffff4C
 
-       The only thing that sub() does is returning 0xBEEF. As it was mentioned before, EAX register is mostly used for functions' return value. After
-executing the function's prologue (PUSH EBP and MOV EBP,ESP), the hex value 0xBEEF is gonna be put in EAX. Here's how the stack will look like:
+  The only thing that sub() does is returning 0xBEEF. As it was mentioned before, the EAX register is mostly used for the function's return value.
+  after executing the function's prologue(PUSH EBP and MOV EBP,ESP), the hex value 0xBEEF is gonna be put in EAX. Here's how the stack will look like:
 
         +----------+
         |Saved EIP | --> Return to whoever called main()
@@ -749,7 +749,7 @@ executing the function's prologue (PUSH EBP and MOV EBP,ESP), the hex value 0xBE
         +----------+
         | 18104000 | --> Address of the next instruction after the call. Pay attention that this address must be in Little-Endian format since it's
         +----------+     saved in memory.
- ESP -> | 50ffff7f | --> Previous EBP (stack frame) will be push on to the stack and ESP will get decremented as a side effect of PUSH instruction.
+ ESP -> | 50ffff7f | --> Previous EBP(stack frame) will be push on to the stack and ESP will get decremented as a side effect of PUSH instruction.
         +----------+     This address is also saved in memory in Little-Endian format.
         |          |
         +----------+
@@ -759,9 +759,9 @@ executing the function's prologue (PUSH EBP and MOV EBP,ESP), the hex value 0xBE
         ESP = 7fffff48
         EAX = 0000BEEF
 
-        Now the the return value of the fuction sub() has been put in EAX register, it's time get back to main(). The next instruction to execute is
-POP EBP instruction. As mentiond before a POP instruction, gets whatever value that ESP currently points at and puts in in the register that is
-written in front of it. ESP is currently has the value 0x7FFFFF48 which points to the value 50FFFF7f (Little-Endian). So after executing POP EBP
+  Now the return value of the function sub() has been put in EAX register, it's time get back to main(). The next instruction to execute is
+the POP EBP instruction. As mentioned before, a POP instruction, gets whatever value that ESP currently points at and puts in in the register that is
+written in front of it. ESP currently has the value of 0x7FFFFF48 which points to the value 50FFFF7F(Little-Endian). So after executing POP EBP
 instruction, the stack will look like this:
 
         +----------+
@@ -769,10 +769,10 @@ instruction, the stack will look like this:
         +----------+
         |SAVED EPB | --> Save the previous stack frame
         +----------+
-ESP --> | 18104000 | --> Address of the next instruction after the call. We will use this to return the execution to main. As a side effect of POP
+ESP --> | 18104000 | --> Address of the next instruction after the call. We will use this to return the execution to main. As a side effect of the POP
         +----------+     instruction, ESP is incremented by 4.
-        | 50ffff7f | --> Previous EBP (stack frame) will be popped off the stack and gets put in EBP register. This value will not be completely
-        +----------+     wiped off the stack but we the program has nothing to do with and it the OS' concern not us.
+        | 50ffff7f | --> Previous EBP (stack frame) will be popped off the stack and gets put in the EBP register. This value will not be completely
+        +----------+     wiped off the stack but the program has nothing to do with it and it's the OS' concern not us.
         |          |
         +----------+
 
@@ -781,17 +781,17 @@ ESP --> | 18104000 | --> Address of the next instruction after the call. We will
         ESP = 7fffff4C
         EAX = 0000BEEF
 
-        Now we got back to our previous stack frame by popping the saved EBP back to EBP register, it's time to go back to main. By execution the RET
-instruction, what's gonna happen is that whatever value that ESP currently points at is gonna pop off the stack and appear in EIP register. So here is
-the stack after executing the RET instruction:
+  Now we got back to our previous stack frame by popping the saved EBP back to the EBP register, it's time to go back to main. When RET is
+executed, what's gonna happen is that whatever value that ESP currently points at is gonna pop off the stack and appear in the EIP register. So here
+is the stack after executing the RET instruction:
 
         +----------+
         |Saved EIP | --> Return address to whoever called main()
         +----------+
 ESP --> |SAVED EPB | --> ESP point here after executing the RET instruction.
         +----------+
-        | 18104000 | --> Address of the next instruction after the call. We will use this to return the execution to main. As a side effect of POP
-        +----------+     instruction, ESP is incremented by 4.
+        | 18104000 | --> Address of the next instruction after the call. We will use this to return the execution to main. As a side effect of the
+        +----------+     POP instruction, ESP is incremented by 4.
         |undefined |
         +----------+
         |          |
@@ -802,27 +802,27 @@ ESP --> |SAVED EPB | --> ESP point here after executing the RET instruction.
         ESP = 7fffff50
         EAX = 0000BEEF
 
-        EIP points to the instruction just after the CALL sub() instruction which is MOV EAX,0xF00D. Now after executing this, EAX register will hold
-the value 0xF00D and the stack will remain the same. Now what's gonna happen after executing the RET instruction in main() ? The same thing we saw
-sub(). The Saved EBP (previous stack frame before calling main()) will be popped off the stack and EBP will be reset again to that value. Then RET
-will put the "SaveD EIP" value into EIP and decrement ESP by 4 and return to whatever function (probably a kernel module, I don't know).
+  EIP points to the instruction just after the CALL sub() instruction which is MOV EAX,0xF00D. Now after executing this, the EAX register will hold
+the value 0xF00D and the stack will remain the same. Now what's gonna happen after executing the RET instruction in main()? The same thing we saw in
+sub(). The saved EBP(previous stack frame before calling main()) will be popped off the stack and EBP will be reset again to that value. Then RET
+will put the saved EIP value into EIP and decrement ESP by 4 and return to whatever function it was at(probably a kernel module, I don't know).
 
-        Well that was fairly easy but it was a good example for you to understand how calling and returning from calls work. Before we jump to our
-next example, here I introduce you to r/32:
+  Well that was fairly easy but it was a fairly good example for you to understand how calling and returning from calls work. Before we jump to our
+next example, here I introduce you to R/M32:
 
-        Whenever you see the term R/M32 in Intel's Manual or such, it means it can get the value you're looking for using a combination of a register
-pointing to a memory location plus some offset or optionally an scale multiplier. I guess you may doing your WTF gesture now (:D). What that means is
-that you specify a register that points to a memory location that your/program needs and based on that address you may add some offset to it to access
+  Whenever you see the term R/M32 in Intel's manual or such, it means it can get the value you're looking for using a combination of a register
+pointing to a memory location plus some offset or optionally a scale multiplier. I guess you may be doing your WTF gesture now (:D). What that means is
+that you specify a register that points to a memory location that your program needs and based on that address you may add some offset to it to access
 the exact value you want. For example, imagine after calling a function, that function wants to move some value from previous stack frame to some
-register to work with. That actually happens every time a function wants to access the parameters passed to it. If you remember correctly, as
-mentioned before, right before a call instruction, the parameters passed to the function must be push onto the stack from right to left. So when the
+register to work with. That actually happens every time a function wants to access the parameters passed to it. If you remember as mentioned before,
+right before a call instruction, the parameters passed to the function must be pushed onto the stack from right to left. So when the
 called function wants to access those parameters, if we assume that the function's prologue is executed and the very first instruction after it is to
-return it's parameter back (just for simplicity's sake), that instruction would be as follows:
+return its parameter back (just for the sake of simplicity), that instruction would be as follows:
 
-(00401003)      mov eax, [ebp + 8]  --> take EBP and add 8 bytes to it and go to that memory address and take whatever is in there put it in EAX.
+(00401003)      mov eax, [ebp + 8]  --> Take EBP, add 8 bytes to it, go to that memory address and take whatever is in there and put it in EAX.
 
                 +----------+
-                |Func Param| --> This value is pushed onto the stack just before the call since it is the functions's paramemter.
+                |Func Param| --> This value is pushed onto the stack just before the call since it is the function's parameter.
                 +----------+
         ESP --> |SAVED EIP | --> Return address to whoever called the function.
                 +----------+
@@ -840,18 +840,19 @@ return it's parameter back (just for simplicity's sake), that instruction would 
 
 
 
-        Now one thing you may have noticed is the brackets. So here's a rule which applies to 99% of the time you see a register inside brackets:
+Now one thing you may have noticed is the brackets. So here's a rule which applies 99% of the time you see a register inside brackets:
 
-            A register (plus the index or scale) simply means that: go to the memory address at that location and get whatever actual value is in
-            there and do whatever is asked for. We need the content in that memory address, not the address itself.
+        A register(plus the index or scale) simply means that: go to the memory address at that location and get whatever actual value is in
+        there and do whatever is asked for. We need the content in that memory address, not the address itself.
 
         So if we sum up R/M32 it would be:
 
           [Base index*scale + displacement]
 
-        where Base is a register such as EAX,EBX,ESP,EBP, etc and index again is another register multiplied by a scale plus the Displacement (offset)
-        In the above example, we only used Base plus Displacement which happens to be the most common R/M32 form you will see. Remember that all of
-        these parts in the brackets are optional which means that you can put a hardcoded memory address inside the bracket, i.e. [7FFFFF58].
+        Where Base is a register such as EAX, EBX, ESP, EBP, etc. and index again is another register multiplied by a scale plus the
+        displacement(offset). In the above example, we only used Base plus displacement which happens to be the most common R/M32 form you will see.
+        Remember that all of these parts in the brackets are optional which means that you can put a hardcoded memory address inside the
+        bracket(i.e. [7FFFFF58]).
 
 Here are some new instructions for you to continue to the next example:
 
@@ -861,9 +862,9 @@ Here are some new instructions for you to continue to the next example:
       / _ \| |) | |) |
      /_/ \_\___/|___/
 
-     Fairly easy, right? It takes the source and adds it to the destination and put the final value in the destination.
+     Fairly easy, right? It takes the source and adds it to the destination and puts the final value in the destination. For example:
 
-          add eax,0x10 ---> will add decimal value 16 (or hex 10) to EAX and updates EAX with the result.
+          add eax,0x10 ---> will add decimal value 16(or hex 10) to EAX and updates EAX with the result.
 
 8.
 
@@ -872,7 +873,7 @@ Here are some new instructions for you to continue to the next example:
      \__ \ |_| | _ \
      |___/\___/|___/
 
-      Exactly like ADD instruction but it does subtraction instead of addition.
+      Exactly like the ADD instruction but it does subtraction instead of addition.
 
 9.
 
@@ -881,14 +882,14 @@ Here are some new instructions for you to continue to the next example:
      | |__| _| / _ \
      |____|___/_/ \_\
 
-     Remember when I told you 99% of the time when you see R/M32 and the brackets, means that go to the memory address ang get the actual content not
-the memory address? Well that 1% applies to LEA instruction.
+  Remember when I told you 99% of the time when you see R/M32 and the brackets, it means go to the memory address and get the actual content not
+the memory address? Well that 1% applies to the LEA instruction.
 
       lea eax,[ebp + 8]
 
-      LEA (Load Effective Address) means that the program only needs the actual address not the content. When you get the address, put it (load it) in
-the register specified as destination. Above example means take the address in EBP and add it by 4 and put the result (which is an address not the
-content pointed by it) and put it in EAX.
+  LEA (Load Effective Address) means that the program only needs the actual address not the content. When you get the address, put it (load it) in
+the register specified as destination. The above example means take the address in EBP and add it by 4 and put the result(which is an address not the
+content pointed at by it) and put it in EAX.
 
 10.
       ___ _  _ _
@@ -911,7 +912,7 @@ which moves the hex value of 10 (or 16 decimal) in EAX and the does a SHL on EAX
      |        16         | |     00010000      | |       0x10        |
      +-------------------+ +-------------------+ +-------------------+
 
-     SHL is a bitwise operation which means it deals with the binary format data. We take the binary value 1010 and shift it one time to left. The
+     SHL is a bitwise operation which means it deals with the binary format data. We take the binary value 1010 and shift it once to left. The
 effect of this action is shown below:
 
   00010000   ------>  0010000[]  --->   final result: 00100000 ----> To decimal:  32  ---> To hex: 0x20
@@ -944,10 +945,10 @@ of 2.
       / _ \| .` | |) |
      /_/ \_\_|\_|___/
 
-     AND instruction and the next 2 instruction that you'll see are very useful in terms of stack alignment, addressing, shellcoding and encoding the
-shellcode that you want to shove into the stack (or heap, or other locations when you use an egghunter). AND instruction takes the source and the
+  AND instruction and the next 2 instructions that you'll see are very useful in terms of stack alignment, addressing, shellcoding and encoding the
+shellcode that you want to shove into the stack(or heap or other locations when you use an egghunter). AND instruction takes the source and the
 destination, turns them into binary, and performs a bit-by-bit AND operation and puts the result in destination register. If you don't remember how
-AND operation works, here's a refresher:
+the AND operation works, here's a refresher:
 
                 +---+---+-------+
                 | A | B | A & B |
@@ -962,7 +963,7 @@ AND operation works, here's a refresher:
                 +---+---+-------+
 
 
-      If we have the instructions below,
+      If we have the instructions below:
 
                 mov eax, 0x12345678
                 and eax, 0x45454545
@@ -972,8 +973,8 @@ AND operation works, here's a refresher:
 AND   ----------             ---------------------------------------
       0x00044440   <-----    0000 0000 0000 0100 0100 0100 0100 0000
 
-      the new value which is 0x44440 will be put in EAX. AND instruction accepts a register or an R/M32 (or R/M64 for 64-bit) form as destination. As
-a source, you can use an immediate, a register or an R/M32 (or R/M64).
+      The new value which is 0x44440 will be put in EAX. The AND instruction accepts a register or an R/M32(or an R/M64 for 64-bit) form as
+      destination. As a source, you can use an immediate, a register or an R/M32(or R/M64).
 
 14.
        ___  ___
@@ -981,7 +982,7 @@ a source, you can use an immediate, a register or an R/M32 (or R/M64).
      | (_) |   /
       \___/|_|_\
 
-      OR instruction like AND instruction performs a bitwise operation. You can check the table below as a refresher on OR operation:
+      The OR instruction like AND instruction performs a bitwise operation. You can check the table below as a refresher on the OR operation:
 
                 +---+---+-------+
                 | A | B | A or B|
@@ -995,7 +996,7 @@ a source, you can use an immediate, a register or an R/M32 (or R/M64).
                 | 1 | 1 |   1   |
                 +---+---+-------+
 
-      If we have the instructions below,
+      If we have the instructions below:
 
                     mov eax, 0x12345678
                     and eax, 0x45454545
@@ -1011,8 +1012,8 @@ a source, you can use an immediate, a register or an R/M32 (or R/M64).
         >  < (_) |   /
        /_/\_\___/|_|_\
 
-       XOR or "eXclusive OR" is a very useful instruction for zeroing out registers in terms of shellcoding. XOR operation is slightly different than
-OR and AND operations.
+       XOR or "eXclusive OR" is a very useful instruction for zeroing out registers in terms of shellcoding. The XOR operation is slightly different
+       than the OR and AND operations.
 
                 +---+---+-------+
                 | A | B |A xor B|
@@ -1026,18 +1027,18 @@ OR and AND operations.
                 | 1 | 1 |   0   |
                 +---+---+-------+
 
-        Imagine we're trying to encode our shellcode (You'll see this in action in later chapters) and we need a clean state of the register EAX. You
-may say "Hah! I just do a MOV EAX,0" but are you sure that works? Think again! You can't pass a Null-Byte (0x00) in your buffer so that is a big
-problem if you don't know about XOR. Here's how we can zero out EAX register with a bit of creativity:
+        Imagine we're trying to encode our shellcode(you'll see this in action in later chapters) and we need a clean state of the EAX register. You
+may say "Hah! I just do a MOV EAX,0" but are you sure that works? Think again! You can't pass a Null-Byte(0x00) to your buffer so that is a big
+problem if you don't know about XOR. Here's how we can zero out the EAX register with a bit of creativity:
 
         xor eax, eax
 
-        That's all it takes. Remember the result of an XOR operation is 1 if and only if the operands are different (loo at the table above again).
+        That's all it takes. Remember the result of an XOR operation is 1 if and only if the operands are different(look again at the table above).
 So XOR-ing a value with itself will always result in zero.
 
 
-        Now it's the time for our second example but this time I want you to do exercises step by step. I'm using an
-Ubuntu VM version 16.04.1 LTS (on VMware). First of all, here's the code in C which we are going to rip apart:
+        Now is the time for our second example but this time I want you to do some exercises step by step. I'm using an
+Ubuntu VM version 16.04.1 LTS(on VMware). First of all, here's the code in C which we are going to rip apart:
 
 example2.c
 -----------------------------------------------------------------------------------
@@ -1052,7 +1053,7 @@ int main(int argc, char ** argv){
 	return sub(argc,a);
 }
 -----------------------------------------------------------------------------------
-Compile and Build program using clang (not GCC) just for convenience:
+Compile and build the program using clang(not GCC) just for convenience:
 
   bash#> clang -o example2 example2.c -m32 -fno-stack-protector -Wl,-z,relro,-z,now,-z,noexecstack -static
 
@@ -1070,12 +1071,12 @@ Now you need to create this file named cmd in order to make it easy for us while
             display/16xw $esp
             break main
 
-using our previously cmd file:
+using our previous cmd file:
   bash#> gdb -x cmd example2
 
 Now issuing the commands:
       (gdb) disassemble main
-      Dump of assembler code for function main:
+      Dump of assembler code for the main function:
          0x080488a0 <+0>:	  push   ebp
          0x080488a1 <+1>: 	mov    ebp,esp
          0x080488a3 <+3>:	  sub    esp,0x18
@@ -1097,9 +1098,9 @@ Now issuing the commands:
          0x080488dc <+60>:	add    esp,0x18
          0x080488df <+63>:	pop    ebp
          0x080488e0 <+64>:	ret
-      End of assembler dump.
+      End of the assembler dump.
       (gdb) disassemble sub
-      Dump of assembler code for function sub:
+      Dump of assembler code for the sub function:
          0x08048880 <+0>:	  push   ebp
          0x08048881 <+1>:	  mov    ebp,esp
          0x08048883 <+3>:	  sub    esp,0x8
@@ -1113,13 +1114,13 @@ Now issuing the commands:
          0x0804889b <+27>:	add    esp,0x8
          0x0804889e <+30>:	pop    ebp
          0x0804889f <+31>:	ret
-      End of assembler dump.
+      End of the assembler dump.
 
 ***Note: If you need some guidance or tutorial on using gdb or linux, look for it elsewhere, not here!!
 
         Alright! We start analyzing the assembly line by line and match it with our high-level C code. Starting with line <+0> of main(), we can see
 it's saving the old stack frame and creating its own. Then it pushes ESP down by issuing a SUB ESP,0x18 on line <+3>. In order to make sense of that,
-we convert 0x18 to decimal which gives us 24. So it is reserving 24 bytes on the stack (why?). Here is how the stack looks like:
+we convert 0x18 to decimal which gives us 24. So it is reserving 24 bytes on the stack(why?). Here is how the stack looks like:
 
                     +------------+
             EBP + C |            |
@@ -1152,7 +1153,7 @@ we convert 0x18 to decimal which gives us 24. So it is reserving 24 bytes on the
 
        They are asking for some values beyond our current stack frame. Looks weird? No! Remember the calling conventions and how the parameters of a
 function get pushed onto the stack? That's exactly it and it's asking for main()'s parameters argc and *argv[]. One important note here is that
-whenever you see EBP plus something, 99% of the times it refering to some parameters passed for the called function. In this case, some function
+whenever you see EBP plus something, 99% of the time it's referring to some parameters passed for the called function. In this case, some function
 called main() and main() is asking for its parameters argc and argv. So we complete our picture of the stack:
 
                     +------------+
@@ -1178,16 +1179,16 @@ called main() and main() is asking for its parameters argc and argv. So we compl
                     +------------+
 
 
-                    EAX = pointer to the start of argv[] array
-                    ECX = hold the number of command line arguments when executing the program in the command line. For example:
+                    EAX = Pointer to the start of argv[] array
+                    ECX = Holds the number of command line arguments when executing the program in the command line. For example:
                     bash#> ./program 100
                     has 2 command line arguments.
 
-    Line <+12> corresponds to the first line in main(). The uninitialized variable a gets a NULL (0x00) value. Quickly note that different compilers
+    Line <+12> corresponds to the first line in main(). The uninitialized variable "a" gets a NULL(0x00) value. Quickly note that different compilers
 and architectures handle the uninitialized variables differently. For example they may end up in HEAP or even don't end up anywhere until they get
 initialized.
     On lines <+19> and <+22> of main, those command-line arguments that we saw previously which were moved to EAX and ECX, now get copied onto the
-stack. This time relative addressing of EBP minus something is used. This type of addresses (EBP minus something) 99% of the time represent local
+stack. This time relative addressing of EBP minus something is used. This type of addresses(EBP minus something) 99% of the time represent local
 variables and the function's own variables and procedures. SO after these 2 line:
 
             mov DWORD PTR [ebp-0x4],ecx
@@ -1220,7 +1221,7 @@ the stack will look like this:
 
 
         Line <+25> gets the pointer to the start of argv[] array and puts that address in EAX and on line <+28> it says: go to the start of the array,
-then go 4 bytes forward and take what ever values is in there and put it in EAX. If we picture it, it would make more sense:
+then go 4 bytes forward and take whatever value is in there and put it in EAX. If we picture it, it would make more sense:
 
             <+25>:	mov    eax,DWORD PTR [ebp-0xc]
             <+28>:	mov    eax,DWORD PTR [eax+0x4]
@@ -1228,7 +1229,7 @@ then go 4 bytes forward and take what ever values is in there and put it in EAX.
 
             argv[] --> {./example2,0x100,.....}
                        ^           ^
-                       |           |__ the command-line argument that we pass to the program. as an example, here we used number 256
+                       |           |__ the command-line argument that we pass to the program. As an example, here we used the number 256
                        |__ start of argv array
 
                        bash#> ./example2 256
@@ -1237,7 +1238,7 @@ then go 4 bytes forward and take what ever values is in there and put it in EAX.
                        argv[1] is 0x100 or 256
                        I hope it's clear now ;D
 
-        Then on line <+31> just before we call atoi() funtion, we need to push its parameter on to the stack which is argc.
+        Then on line <+31> just before we call atoi() funtion, we need to push its parameter onto the stack which is argc.
 
                       <+31>:	mov    DWORD PTR [esp],eax
         After that we call atoi on line <+> which makes our stack like this:
@@ -1251,7 +1252,7 @@ then go 4 bytes forward and take what ever values is in there and put it in EAX.
                       +------------+
               EBP --> | SAVED EBP  |[]
                       +------------+
-              EBP - 4 |int a = argc| ESP + 14   ***Note: this address was first filled with 0x00 and then filled with the value of argc.
+              EBP - 4 |int a = argc| ESP + 14   ***Note: This address was first filled with 0x00 and then filled with the value of argc.
                       +------------+
               EBP - 8 | ECX = argc | ESP + 10
                       +------------+
@@ -1266,7 +1267,7 @@ then go 4 bytes forward and take what ever values is in there and put it in EAX.
 
         We're not gonna go through atoi() function right now. As we learned before, it's gonna pick up its parameter from [EBP + 0x8] (note that after
 SAVED EIP is on address [EBP + 0x4]) and return the value in EAX and use the saved EIP to get back to main(). Then the returned value in EAX will be
-place onto stack at [EBP - 0x10]. Then on line <+42> pointer to argv[] is copied to EAX and on line <+45> the integer value of argc is copied in ECX.
+place onto stack at [EBP - 0x10]. Then on line <+42> pointer to argv[] is copied to EAX and on line <+45> the integer value of argc is copied to ECX.
 These values EXA,ECX will be placed at [ESP] and [ESP + 0x4] respectively to be ready to call sub().
 
                       +------------+
@@ -1293,10 +1294,10 @@ These values EXA,ECX will be placed at [ESP] and [ESP + 0x4] respectively to be 
 
 
         Now we have everything set up to call sub(). After calling sub() and past the function's prologue, it reserves 8 bytes for its stack frame.
-On line <+6> and <+9> it takes the local variables from previous stack frame (main()'s) and copies them in EAX and ECX respectively. Then it places
+On line <+6> and <+9> it takes the local variables from previous stack frame(main()'s) and copies them in EAX and ECX respectively. Then it places
 those values onto its own stack frame at [EBP - 0x4] for ECX and [EBP -0x8] for EAX. Then again on line <+18> it places the value of [EBP - 0x4] which
 is integer value of 2 in EAX. Then on line <+21> we have a shift logical left instruction with shifting of one bit which translates to multiply  by 2
-to power of one and then the next line of instruction, the value of [EBP - 0x8] which is 256(the imaginary value we passed on command line) will be
+to the power of one and then the next line of instruction, the value of [EBP - 0x8] which is 256(the imaginary value we passed on command line) will be
 added to EAX. The final result will be in EAX and returned to main().
 
                   +------------+
@@ -1316,9 +1317,9 @@ added to EAX. The final result will be in EAX and returned to main().
                   EAX = 2*2+256 = 260
 
         Now it's time to return to main(). Knowing that sub's return value of 260 in in EAX, it wipes down its stack frame in line <+27> by adding 8
-to ESP. Then it pops the value in ESP (after adding 8 to ESP) which is the SAVED EBP into EBP register. Then it uses the SAVED EIP to return to main()
+to ESP. Then it pops the value in ESP(after adding 8 to ESP) which is the SAVED EBP into EBP register. Then it uses the SAVED EIP to return to main()
 (line <+60>).
-        The same story fits to the remaining instruction in main. It wipes up the stack frame by adding 0x18 (24 decimal) to ESP. Pops SAVED EBP back
+        The same story fits to the remaining instruction in main. It wipes up the stack frame by adding 0x18(24 decimal) to ESP. Pops SAVED EBP back
 to EBP register and returns to whoever called main().
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1339,14 +1340,14 @@ Unconditional Jump:
 
 
         A JMP instruction is an unconditional jump. All it does is simply changing the value of EIP with the given address. For example the piece of
-code below will simply changes the EIP value with a hardcoded address:
+code below will simply change the EIP value with a hardcoded address:
 
                         ____ EIP before = 0xsomething
                       /
        JMP 0x00401000
                       \______ EIP after = 0x00401000
 
-        Using hardcoded addresses is rarely seen and also not recommended because it highly reduces the reliability of code. Hence we use relative
+        Using hardcoded addresses is rarely seen and also not recommended because it highly reduces the reliability of code. Hence we use the relative
 form of addressing by using registers. For example the assembly code below is highly used in vanilla stack-based overflows when we want to redirect
 the execution flow to our injected shellcode on the stack:
 
@@ -1360,14 +1361,14 @@ the execution flow to our injected shellcode on the stack:
                 jmp eax
 
         **NOTE: We're gonna see more in-depth discussions on stack overflows later. So don't worry if you don't have a clue what I'm talking about.
-Just know that JMP instruction is an unconditional jump and will change the execution flow, no questions asked.
+Just know that the JMP instruction is an unconditional jump and will change the execution flow, no questions asked.
 
 
 Conditional Jumps:
 
-        A conditional jump is based on checking a single value in EFLAGS register that is a result of a comparison. For us to understand how they
-work, we need to dive into explaining EFLAGS register and all of its tiny parts. Obviously that's not convenient to explain every little thing inside
-it. You're not reading the Intel's Manual anyway. So here we go:
+        A conditional jump is based on checking a single value in EFLAGS register that is the result of a comparison. For us to understand how they
+work, we need to dive into explaining the EFLAGS register and all of its tiny parts. Obviously that's not convenient to explain every little thing
+inside it. You're not reading Intel's manual anyway. So here we go:
 
 
  ___ ___ _      _   ___ ___
@@ -1375,5 +1376,5 @@ it. You're not reading the Intel's Manual anyway. So here we go:
 | _|| _|| |__ / _ \ (_ \__ \
 |___|_| |____/_/ \_\___|___/
 
-        EFLAGS is a register that has a lot of flags! No, shit! (:D). But it is really what it's about. Flags that control certain parts of the
+        EFLAGS is a register that has a lot of flags! No, shit! (:D). But that's really what it's about. Flags that control certain parts of the
 program and its connection with the OS.
