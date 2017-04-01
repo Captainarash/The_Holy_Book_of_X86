@@ -88,6 +88,9 @@ Introduction:
         If you wanna learn Assembly and its structure, reversing basics, Segmentation, Paging, etc. keep on reading. I highly recommend you check
 opensecuritytraining.info website and watch Intro to x86 videos as you read this book.
 
+        You need Intel Developer's Manual as a quick reference throughout this book. You can download it from the link below:
+        https://software.intel.com/sites/default/files/managed/39/c5/325462-sdm-vol-1-2abcd-3abcd.pdf
+
 =====================================================================================================================================================
 
 Table of Content:
