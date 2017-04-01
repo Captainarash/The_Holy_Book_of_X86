@@ -1376,5 +1376,76 @@ inside it. You're not reading Intel's manual anyway. So here we go:
 | _|| _|| |__ / _ \ (_ \__ \
 |___|_| |____/_/ \_\___|___/
 
-        EFLAGS is a register that has a lot of flags! No, shit! (:D). But that's really what it's about. Flags that control certain parts of the
-program and its connection with the OS.
+        EFLAGS is a register that has a lot of flags! No, shit! (:D). But it is really what it's about. Flags that control certain parts of the
+program and its connection with the OS. These flags are the bits of the EFLAGS register which can be set to 1 or 0. These values are mostly changed 
+after a comparison or after executing some instruction that has a direct effect on the state of these bits (flags). Here's the structure of EFLAGS 
+register containing its different flags:
+
++=========+==============+===============================+==========+
+|   Bit   | Abbreviation |          Description          | Category |
++=========+==============+===============================+==========+
+|                         FLAGS (16-bit)                            |
++-------------------------------------------------------------------+
+| 0       | CF           | Carry Flag                    | Status   |
++---------+--------------+-------------------------------+----------+
+| 1       |              | Reserved, Always 1 in EFLAGS  |          |
++---------+--------------+-------------------------------+----------+
+| 2       | PF           | Parity Flag                   | Status   |
++---------+--------------+-------------------------------+----------+
+| 3       |              | Reserved                      |          |
++---------+--------------+-------------------------------+----------+
+| 4       | AF           | Adjust Flag                   | Status   |
++---------+--------------+-------------------------------+----------+
+| 5       |              | Reserved                      |          |
++---------+--------------+-------------------------------+----------+
+| 6       | ZF           | Zero Flag                     | Status   |
++---------+--------------+-------------------------------+----------+
+| 7       | SF           | Sign Flag                     | Status   |
++---------+--------------+-------------------------------+----------+
+| 8       | TF           | Trap Flag                     | Control  |
++---------+--------------+-------------------------------+----------+
+| 9       | IF           | Interrupt Enable Flag         | Control  |
++---------+--------------+-------------------------------+----------+
+| 10      | DF           | Direction Flag                | Control  |
++---------+--------------+-------------------------------+----------+
+| 11      | OF           | Overflow Flag                 | Status   |
++---------+--------------+-------------------------------+----------+
+| 12-13   | IOPL         | I/O Privilege Level           | System   |
++---------+--------------+-------------------------------+----------+
+| 14      | NT           | Nested Task Flag              | System   |
++---------+--------------+-------------------------------+----------+
+| 15      |              | Reserved (Always 1 on x86)    |          |
++---------+--------------+-------------------------------+----------+
+|                        EFLAGS (32-bit)                            |
++-------------------------------------------------------------------+
+| 16      | RF           | Resume Flag                   | System   |
++---------+--------------+-------------------------------+----------+
+| 17      | VM           | Virtual x86 Mode Flag         | System   |
++---------+--------------+-------------------------------+----------+
+| 18      | AC           | Alignment Check               | System   |
++---------+--------------+-------------------------------+----------+
+| 19      | VIF          | Virtual Interrupt Flag        | System   |
++---------+--------------+-------------------------------+----------+
+| 20      | VIP          | Virtual Interrupt Pending     | System   |
++---------+--------------+-------------------------------+----------+
+| 21      | ID           | Able to use CPUID instruction | System   |
++---------+--------------+-------------------------------+----------+
+| 22 - 31 |              | Reserved                      |          |
++---------+--------------+-------------------------------+----------+
+|                        RFLAGS (64-bit)                            |
++-------------------------------------------------------------------+
+| 32 - 63 |              | Reserved                      |          |
++---------+--------------+-------------------------------+----------+
+
+        Well that's a long list and I don't expect you to memorized them. For now, we just have to know about these flags:
+
+        Zero Flag (ZF): This flag will be set to 1 if comparing 2 things is results in equality.
+        Sign Flag (SF): As its name represents, it determines if you're dealing with a signed integer or an unsigned integer.
+        Carry Flag (CF): Remember when you were in elementary school and the teacher said if we want to add 9 to 6:
+
+           Carry (1)    9 
+                  |   + 6 
+                  |   -----
+                  |__  1  5
+
+        Ehem. That's the best way I can describe it. You will see it more in action later.
