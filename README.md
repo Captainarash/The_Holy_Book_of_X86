@@ -9,7 +9,7 @@ For More Tutorials and Info, Please visit:
 www.kernelfarm.com
 https://www.linkedin.com/in/arash-t-c-3a277bbb
 https://twitter.com/KernelFarm
-
+arashtc@yahoo.com
 
 
 A complete guide to x86 architecture, assembly, memory management, paging, segmentation, SMM, BIOS.... 
