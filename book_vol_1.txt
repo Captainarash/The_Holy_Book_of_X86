@@ -1573,4 +1573,5 @@ int main()
 }
 
       The noticeable difference is that in assembly, the condition is check differently compared to the way it's checked in high level source code.
-This can be due to several reason like compiler conventions, optimization, OS, etc.
+This can be due to several reason like compiler conventions, optimization, OS, etc. First "else" condition is check which is a less than or equal to
+b (opposite of a greater than b). 
