@@ -1503,3 +1503,74 @@ with EAX. Comparing the values 16 and 1 is done by subtracting 1 from 16. Obviou
 the jump, EIP will point to line (3). This will increment ECX again by 1. After looping 16 times, ECX will be 0x10 and the CMP instruction
 (subtracting 16 - 16) will result in 0 and ZF will be set to 1. This time the condition for JNE is not met and jump will not be take and EIP will
 point to line (6).
+
+        It's a good time to take a look at our 3rd example in order to better understand conditional jumps. This time we won't show you the source
+code first and we dive into assembly. This will be our first reversing experience. This time, our assembly is 64-bit.
+
+(gdb) disassemble main
+Dump of assembler code for function main:
+   0x0000000100000f70 <+0>:	  push   rbp
+   0x0000000100000f71 <+1>:	  mov    rbp,rsp
+   0x0000000100000f74 <+4>:	  mov    DWORD PTR [rbp-0x4],0x0
+   0x0000000100000f7b <+11>:	mov    DWORD PTR [rbp-0x8],0x5
+   0x0000000100000f82 <+18>:	mov    DWORD PTR [rbp-0xc],0x6
+   0x0000000100000f89 <+25>:	mov    eax,DWORD PTR [rbp-0x8]
+   0x0000000100000f8c <+28>:	cmp    eax,DWORD PTR [rbp-0xc]
+   0x0000000100000f8f <+31>:	jle    0x100000fa1 <main+49>
+   0x0000000100000f95 <+37>:	mov    DWORD PTR [rbp-0x4],0xffffffff
+   0x0000000100000f9c <+44>:	jmp    0x100000fa8 <main+56>
+   0x0000000100000fa1 <+49>:	mov    DWORD PTR [rbp-0x4],0x0
+   0x0000000100000fa8 <+56>:	mov    eax,DWORD PTR [rbp-0x4]
+   0x0000000100000fab <+59>:	pop    rbp
+   0x0000000100000fac <+60>:	ret
+End of assembler dump.
+
+        Okie Dockie! First two lines (line <+0> and <+1> in main) are pretty familiar; function prologue. On line <+4> through <+18> after setting up
+the new stack frame, we save the value zero at RBP - 4, value 5 at RBP - 8 and value 6 at RBP - 12. This pretty much looks like the process of
+initializing local variables. We can be sure value 5 and 6 are local variables of integer type but as we saw in our previous examples, 0 can be an
+uninitialized variable or something that only exists in the assembly not the source. By now we can guess that our source code might look like this:
+
+main()
+{
+int a = 5;
+int b = 6;
+}
+
+        On line <+25> we see one of these local variables is moved to EAX followed by a compare instruction that checks these 2 local variables
+together. On line <+31> we see a new instruction (Here's a good time to check the manual ;p). JLE (Jump if Less than or Equal to) will check the
+value at RBP - 12 which is number 6 with the value in EAX which is 5. This compare instruction will change the affected flags as follows:
+
+        ZF = 0
+        SF = 1
+        OF = 0
+        CF = 1
+
+        JLE instruction will take the jump if and only if ZF = 1 or SF not be equal to OF (Overflow Flag). As we can see, EFLAGS register shows that
+this condition is met, so the jump is taken. After taking the jump we land on line <+49> which will put zero in EAX, pop the previous stack frame
+back into RBP and return. We now noticed that RBP - 4 (the suspicious value of 0) was indeed something in assembly only and not in the source. It was
+only used for our return value. Our best guess for the source code is:
+
+int main() //int is used because the return values are integers
+{
+  int a = 5;
+  int b = 6;
+  if(a<b)
+    return 0;
+  else
+    return -1; //if JLE does not meet its condition, the jump will not be take and the value 0xffffffff will be return which is -1
+}
+
+        That's pretty much the source code that was used but do you want to see the real source code?
+
+int main()
+{
+  int a = 5;
+  int b = 6;
+  if(a>b)
+    return -1;
+  else
+    return 0;
+}
+
+      The noticeable difference is that in assembly, the condition is check differently compared to the way it's checked in high level source code.
+This can be due to several reason like compiler conventions, optimization, OS, etc.
