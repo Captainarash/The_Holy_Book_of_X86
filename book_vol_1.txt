@@ -1572,6 +1572,26 @@ int main()
     return 0;
 }
 
-      The noticeable difference is that in assembly, the condition is check differently compared to the way it's checked in high level source code.
+        The noticeable difference is that in assembly, the condition is check differently compared to the way it's checked in high level source code.
 This can be due to several reason like compiler conventions, optimization, OS, etc. First "else" condition is check which is a less than or equal to
-b (opposite of a greater than b). 
+b (opposite of a greater than b).
+
+        By far we know 17 different instructions. 90% of any given program is filled with these instructions that we learned thus far. But we keep
+pushing forward anyway. Next instruction.
+
+19.
+  ___ __  __ _   _ _
+ |_ _|  \/  | | | | |
+  | || |\/| | |_| | |__
+ |___|_|  |_|\___/|____|
+
+        IMUL is a Signed Multiply instruction. This instruction is used when we want to multiply by any number that is not a power of 2. IMUL has
+three different ways to work with (Actually it's not just 3 different ways. It's 13 but we only mention 3, maybe 4. You can take a look at all 13
+different ways in Intel's Manual, volume 2A - Page 3-443. BTW it's Page 3-443 not page 3 to 443 :D)
+
+        (1) -->  imul r/m32       --------->  EDX:EAX = EAX x r/m32  -------->  Final result 64 bits
+                 imul r/m64       --------->  RDX:EAX = RAX x r/m64  -------->  Final result 128 bits
+
+        In this way, it's gonna take the R/M32 value and multiply it by whatever is inside EAX and put the result back in to EDX:EAX in a way that
+        EDX will contain the higher 32 bits and EAX will contain the lower 32 bits. For 64-bit version, you switch EDX and EAX with RDX and RAX
+        respectively.
