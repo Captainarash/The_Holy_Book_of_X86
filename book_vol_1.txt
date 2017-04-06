@@ -1595,3 +1595,45 @@ different ways in Intel's Manual, volume 2A - Page 3-443. BTW it's Page 3-443 no
         In this way, it's gonna take the R/M32 value and multiply it by whatever is inside EAX and put the result back in to EDX:EAX in a way that
         EDX will contain the higher 32 bits and EAX will contain the lower 32 bits. For 64-bit version, you switch EDX and EAX with RDX and RAX
         respectively.
+
+       (2) -->  imul reg32, r/m32   -------> reg32 = reg32 x r/m32
+                imul reg64, r/m64   -------> reg64 = reg64 x r/m64
+
+                You really want me to explain this one? Come on! Christ!!!
+
+       (3) -->  imul reg32, r/m32, immediate   ----->  reg32 = r/m32 x immediate
+                imul reg64, r/m64, immediate   ----->  reg64 = r/m64 x immediate
+
+                Yeah, Yeah! I know! It's the first time you see an instruction with 3 operands. Well, you better look in the manual every once in a
+                while. You may find interesting thing in there :p
+
+20.
+
+  ___ _____   __
+ |   \_ _\ \ / /
+ | |) | | \ V /
+ |___/___| \_/
+
+       DIV is Unsigned Division. It has 2 forms in general.
+
+       (1) div r/m8
+
+               This will divide AX by the given r/m8 and will store the quotient in AL and the remainder in AH. These are small portions of EAX if
+               remember, but I draw the table for you here again:
+
+                +-----------------+
+                |       EAX       |
+                +-----------------+
+                |EXTENDED|   AX   |  you take whatever inside AX, divide it by the given r/m8 value.
+                +-----------------+
+                |        |AH  | AL|  you store the result back to AX; the quotient in AL and the remainder in AH.
+                +--------+--------+
+                31       16   8   0
+
+
+       (2) div r/m16
+           div r/m32
+           div r/m64
+
+                For r/m16 form, it takes the value DX:AX and divides it by the given r/m16 value. Then it stores the quotient in AX and the remainder
+                in DX. If you use your imagination now, for r/m32 and r/m64 it a matter of switch DX and AX with EDX, EAX, RDX and RAX respectively.
