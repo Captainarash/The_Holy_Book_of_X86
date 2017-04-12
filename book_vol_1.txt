@@ -1637,3 +1637,52 @@ different ways in Intel's Manual, volume 2A - Page 3-443. BTW it's Page 3-443 no
 
                 For r/m16 form, it takes the value DX:AX and divides it by the given r/m16 value. Then it stores the quotient in AX and the remainder
                 in DX. If you use your imagination now, for r/m32 and r/m64 it a matter of switch DX and AX with EDX, EAX, RDX and RAX respectively.
+
+        Time for our next example. This time we're gonna see something a little bit different. And again we're only gonna see the assembly and not the
+source code. Don't panic. Alright, here we go:
+
+(gdb) set disassembly-flavor intel
+(gdb) disassemble main
+Dump of assembler code for function main:
+   0x0804840b <+0>:	lea    ecx,[esp+0x4]              }
+   0x0804840f <+4>:	and    esp,0xfffffff0             } -----> what the hell are these???
+   0x08048412 <+7>:	push   DWORD PTR [ecx-0x4]        }
+   0x08048415 <+10>:	push   ebp
+   0x08048416 <+11>:	mov    ebp,esp
+   0x08048418 <+13>:	push   ecx
+   0x08048419 <+14>:	sub    esp,0x14
+   0x0804841c <+17>:	mov    DWORD PTR [ebp-0x14],0x5
+   0x08048423 <+24>:	mov    DWORD PTR [ebp-0x10],0x6
+   0x0804842a <+31>:	mov    eax,DWORD PTR [ebp-0x14]
+   0x0804842d <+34>:	imul   eax,DWORD PTR [ebp-0x10]
+   0x08048431 <+38>:	mov    DWORD PTR [ebp-0xc],eax
+   0x08048434 <+41>:	sub    esp,0x8
+   0x08048437 <+44>:	push   DWORD PTR [ebp-0xc]
+   0x0804843a <+47>:	push   0x80484e0
+   0x0804843f <+52>:	call   0x80482e0 <printf@plt>
+   0x08048444 <+57>:	add    esp,0x10
+   0x08048447 <+60>:	mov    eax,0x0
+   0x0804844c <+65>:	mov    ecx,DWORD PTR [ebp-0x4]
+   0x0804844f <+68>:	leave
+   0x08048450 <+69>:	lea    esp,[ecx-0x4]
+   0x08048453 <+72>:	ret
+End of assembler dump.
+(gdb)
+
+        Before we begin reversing, we need to understand the first 3 lines and their purpose. Now we start by asking ourselves, what is ESP + 0x4 ?
+Why is it copied into ECX? The first instruction saves an special address which is an offset to ESP and pastes it into ECX. Now if you take a look at
+the bottom of this chunk of assembly, on line <+69>, this address is recovered back into ESP. So we understand the first line now: it's saving the ESP
+value before doing anything. But hey! Didn't we do that by the famous "Function Prologue" of "Push EBP" and "MOV EBP,ESP"? Yes buy take a look at the
+next instruction on line <+4>. Let's break it down:
+
+        and esp,0xfffffff0
+
+        if we assume ESP is at address 0x7fffff56, this instruction will do a bitwise "AND" operation to zero out that least significant byte in ESP.
+
+        and 7 f f f f f 5 6
+            f f f f f f f 0
+            ---------------
+            7 f f f f f 5 0  ---> New ESP
+
+        Buy why? Because of optimization and performance. In order to have a better performance on memory calculations, OS optimizes the stack
+addresses to start at a 16-byte boundary. This speeds up calculations and addressing which will result in a better performance.  
