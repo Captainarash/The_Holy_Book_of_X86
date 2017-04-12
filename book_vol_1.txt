@@ -1685,4 +1685,44 @@ next instruction on line <+4>. Let's break it down:
             7 f f f f f 5 0  ---> New ESP
 
         Buy why? Because of optimization and performance. In order to have a better performance on memory calculations, OS optimizes the stack
-addresses to start at a 16-byte boundary. This speeds up calculations and addressing which will result in a better performance.  
+addresses to start at a 16-byte boundary. This speeds up calculations and addressing which will result in a better performance. I think you pretty
+much got the idea. On line <+7>, the real ESP which is at a 0x4-byte offset to ECX, will be pushed onto the stack. If you take a look at 2-3 line
+after this you see ECX is pushed onto the stack. So why pushing [ECX-0x4]? This is getting complicated right? No! The answer requires a keen memory.
+[ECX-0x4] is [ESP + 0x4 - 0x4] right? So it's [ESP] which holds the value of the very next instruction after calling main(). It's the return address!
+
+        Line <+10> and <+11> is what we new before about a function prologue. Now add those 3 new lines above it to your definition on function
+prologue. After that, ECX is pushed onto the stack save its value if later instructions and function calls are gonna use ECX register. Maybe a stack
+representation would give you the full picture. So after executing line <+14> which reserves some space for main's local variables, stack should look
+like this:
+
+                        +----------+
+                   ECX  | X X X X  |
+                        +----------+
+(before alignment) ESP  | SAVED EIP| --> Assuming ESP was at 0x7fffff56
+                        +----------+
+                        | Skipped  |
+                        +----------+
+                        +----------+  -> ESP will be at 0x7fffff50 after the "and" instruction
+  (after alignment)ESP  | SAVED EIP|
+                        +----------+ --> and by pushing [ECX - 0x4] the return address will show up here --> 0x7fffff4c
+                        | SAVED EBP|
+                        +----------+
+                        | SAVED ECX| --> This must be saved in order to be able to get back to original unaligned ESP
+                        +----------+                                        and getting back to whoever called main().
+                        |          |
+                        +----------+
+                        |          |
+                        +----------+
+                        |          |
+                        +----------+
+                        |          |
+                        +----------+
+                        |          |
+                        +----------+
+                        |          |
+                        +----------+
+          Final ESP     |          | --> After "SUB ESP,0x14"  which is reserving space for main's local variables, ESP will be at 0x7fffff38
+                        +----------+
+
+**Note: There is an alternative good answer in this link:
+http://stackoverflow.com/questions/1147623/trying-to-understand-the-main-disassembly-first-instructions
