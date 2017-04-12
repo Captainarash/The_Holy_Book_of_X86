@@ -1,0 +1,5 @@
+        Here I will mention some extra resources and exercises for those who just leave their computer only for food and ... ehem (:D).
+
+Extra miles:
+        1. https://github.com/wapiflapi/exrs/blob/master/reverse/r1
+        Hint: run the binary first. use some of your GDB Kung Fu to find the holy string.
