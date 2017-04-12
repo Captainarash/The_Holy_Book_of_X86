@@ -1770,3 +1770,45 @@ hold the value 30. Later this value is placed onto the stack at [EBP - 0xC]. Our
                         EBP = 0x7fffff48
                         ESP = 0x7fffff30
                         EAX = 0x1E
+
+        Moving on to the next instruction, we see ESP is again subtracted by 0x8. Reserving space again? Hmm... Although we have empty spaces in our
+stack but it is reserving more space. Let's move on and see what happens next. We see the result of the multiply, is now push onto the stack. The next
+two instructions after it, is pushing the address of the very next instruction after the call and then calling printf(). Now we can be sure it is
+going to print the value 30 on the screen.
+
+        0x08048437 <+44>:	push   DWORD PTR [ebp-0xc]  ----> Pushing the parameter needed for the function printf() onto the stack.
+        0x0804843a <+47>:	push   0x80484e0            ----> Saving the return Address in order to get back to main() after executing printf().
+        0x0804843f <+52>:	call   0x80482e0 <printf@plt> ----> Calling printf();
+
+                        +----------+
+                   ECX  | X X X X  |
+                        +----------+
+(before alignment) ESP  | SAVED EIP| --> Assuming ESP was at 0x7fffff56
+                        +----------+
+                        | Skipped  |
+                        +----------+
+                        +----------+  -> ESP will be at 0x7fffff50 after the "and" instruction
+ (after alignment) ESP  | SAVED EIP|
+                        +----------+ --> and by pushing [ECX - 0x4] the return address will show up here --> 0x7fffff4c
+              EBP -->   | SAVED EBP|
+                        +----------+ --> 0x7fffff48
+              EBP - 0x4 | SAVED ECX| --> This must be saved in order to be able to get back to original unaligned ESP
+                        +----------+                                        and getting back to whoever called main().
+              EBP - 0x8 |          |
+                        +----------+
+              EBP - 0xC |   0x1E   |
+                        +----------+
+             EBP - 0x10 |   0x6    |
+                        +----------+
+             EBP - 0x14 |   0x5    |
+                        +----------+
+                        |          |
+         Previous ESP   +----------+  ---> This address (0x7fffff30) doesn't matter anymore. I just mentioned it for calculations.
+                        |  8 bytes |
+                        + reserved +
+                        |sub esp,8 |
+                        +----------+  ---> 0x7fffff28
+                        |  0xIE    |  --> This is number 30 which is a parameter passed to the function printf().
+                        +----------+
+              New ESP   | SAVED EIP|  --> Return address to get back to main() when printf() is done.
+                        +----------+ --> 0x7fffff20
