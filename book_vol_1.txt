@@ -1701,12 +1701,12 @@ like this:
 (before alignment) ESP  | SAVED EIP| --> Assuming ESP was at 0x7fffff56
                         +----------+
                         | Skipped  |
-                        +----------+
+                        | 6 bytes  |
                         +----------+  -> ESP will be at 0x7fffff50 after the "and" instruction
-  (after alignment)ESP  | SAVED EIP|
+ (after alignment) ESP  | SAVED EIP|
                         +----------+ --> and by pushing [ECX - 0x4] the return address will show up here --> 0x7fffff4c
                         | SAVED EBP|
-                        +----------+
+            EBP --->    +----------+ --> 0x7fffff48
                         | SAVED ECX| --> This must be saved in order to be able to get back to original unaligned ESP
                         +----------+                                        and getting back to whoever called main().
                         |          |
@@ -1717,12 +1717,56 @@ like this:
                         +----------+
                         |          |
                         +----------+
-                        |          |
-                        +----------+
-                        |          |
-                        +----------+
-          Final ESP     |          | --> After "SUB ESP,0x14"  which is reserving space for main's local variables, ESP will be at 0x7fffff38
+          Final ESP     |          | --> After "SUB ESP,0x14"  which is reserving space for main's local variables, ESP will be at 0x7fffff30
                         +----------+
 
+
+                        EPB = 0x7fffff48
+                        ESP = 0x7fffff30
 **Note: There is an alternative good answer in this link:
 http://stackoverflow.com/questions/1147623/trying-to-understand-the-main-disassembly-first-instructions
+
+       Moving on to the next instructions, on line <+17> and <+24> we see two numbers are placed on onto the stack. Number 5 will be placed at EBP - 0x14
+and number 6 will be placed on EBP - 0x10. Thus far, we have 2 should have 2 local variables:
+
+        int a = 5;
+        int b = 6;
+
+**Note2: We can now recognize the sequence of instructions used to define local variables.
+
+       Next, on line <+31> we see on of our local variables is copied into EAX followed by an IMUL instruction. If we check closely, we can see,
+variable a or number 5, is copied into EAX and then, on line <+34> we have:
+
+        imul eax, DWORD PTR [EBP-0x10]
+
+        which means multiply whatever is inside [EBP-0x10] by EAX and put the result back in EAX. For this example, it multiplies 5 by 6 and EAX will
+hold the value 30. Later this value is placed onto the stack at [EBP - 0xC]. Our Stack will be like this:
+
+                        +----------+
+                   ECX  | X X X X  |
+                        +----------+
+(before alignment) ESP  | SAVED EIP| --> Assuming ESP was at 0x7fffff56
+                        +----------+
+                        | Skipped  |
+                        +----------+
+                        +----------+  -> ESP will be at 0x7fffff50 after the "and" instruction
+ (after alignment) ESP  | SAVED EIP|
+                        +----------+ --> and by pushing [ECX - 0x4] the return address will show up here --> 0x7fffff4c
+              EBP -->   | SAVED EBP|
+                        +----------+ --> 0x7fffff48
+              EBP - 0x4 | SAVED ECX| --> This must be saved in order to be able to get back to original unaligned ESP
+                        +----------+                                        and getting back to whoever called main().
+              EBP - 0x8 |          |
+                        +----------+
+              EBP - 0xC |   0x1E   |
+                        +----------+
+             EBP - 0x10 |   0x6    |
+                        +----------+
+             EBP - 0x14 |   0x5    |
+                        +----------+
+          Final ESP     |          | --> After "SUB ESP,0x14"  which is reserving space for main's local variables, ESP will be at 0x7fffff30
+                        +----------+
+
+                        EBP = 0x7fffff48
+                        ESP = 0x7fffff30
+                        EAX = 0x1E
