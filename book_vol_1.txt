@@ -1776,8 +1776,8 @@ stack but it is reserving more space. Let's move on and see what happens next. W
 two instructions after it, is pushing the address of the very next instruction after the call and then calling printf(). Now we can be sure it is
 going to print the value 30 on the screen.
 
-        0x08048437 <+44>:	push   DWORD PTR [ebp-0xc]  ----> Pushing the parameter needed for the function printf() onto the stack.
-        0x0804843a <+47>:	push   0x80484e0            ----> Saving the return Address in order to get back to main() after executing printf().
+        0x08048437 <+44>:	push   DWORD PTR [ebp-0xc]    ----> Pushing the parameter needed for the function printf() onto the stack.
+        0x0804843a <+47>:	push   0x80484e0              ----> Saving the return Address in order to get back to main() after executing printf().
         0x0804843f <+52>:	call   0x80482e0 <printf@plt> ----> Calling printf();
 
                         +----------+
@@ -1803,12 +1803,44 @@ going to print the value 30 on the screen.
              EBP - 0x14 |   0x5    |
                         +----------+
                         |          |
-         Previous ESP   +----------+  ---> This address (0x7fffff30) doesn't matter anymore. I just mentioned it for calculations.
+         Previous ESP   +----------+  ---> This address (0x7fffff30) will be used later. :)
                         |  8 bytes |
                         + reserved +
                         |sub esp,8 |
                         +----------+  ---> 0x7fffff28
-                        |  0xIE    |  --> This is number 30 which is a parameter passed to the function printf().
+                        |  0xIE    |  ---> This is number 30 which is a parameter passed to the function printf().
                         +----------+
-              New ESP   | SAVED EIP|  --> Return address to get back to main() when printf() is done.
-                        +----------+ --> 0x7fffff20
+              New ESP   | SAVED EIP|  ---> Return address to get back to main() when printf() is done.
+                        +----------+  ---> 0x7fffff20
+
+        Rest of the instructions are closing scene. On line <+57>, we wipe off a part of the stack by adding 16 bytes to it. This will recover ESP to
+point to "Previous ESP". Then the value 0 is put inside EAX.
+
+                        0x08048444 <+57>:	add    esp,0x10
+                        0x08048447 <+60>:	mov    eax,0x0
+
+        Now on line <+65> the saved value of ECX will be recovered into ECX again. And then on line <+69> we use [ECX - 0x4] (ECX was a 4-byte offset
+to ESP, remember?) to restore the original unaligned ESP. That's it!
+
+                        0x0804844c <+65>:	mov    ecx,DWORD PTR [ebp-0x4]
+                        0x0804844f <+68>:	leave
+                        0x08048450 <+69>:	lea    esp,[ecx-0x4]
+                        0x08048453 <+72>:	ret
+
+        I noticed that I haven't told you about "leave" instruction. Leave is nothing but :
+
+        mov esp,ebp
+        pop ebp
+
+        which the same as what we saw in previous examples when a function wants to restore the caller's stack frame and return. SO anyways, we
+reversed example4 completely and here's the result we got for the high-level source code:
+
+#include <stdio.h>   ---> because we used printf()
+int main()    ----> main() must be an integer because the final return value which we saw in EAX on line <+60> is an integer.
+{
+int a = 5;
+int b = 6;
+int c = a*b;       ---> because of the IMUL instruction on our 2 local variables above.
+printf("%d", c);   ---> because the result of the multiplication was printed to screen.
+return 0;          ---> the final return value in EAX is 0.
+}
