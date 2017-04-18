@@ -1918,7 +1918,7 @@ executable.
 
         name_of_const    equ  $ - name_of_const_in_question
 
-        ...tha f**k? Yeah, I know :D. "equ" mean "=". $ means "here"! It literally means, the address of "here" exactly. This is mostly used right
+        ...tha f**k? Yeah, I know :D. "equ" mean "=". $ means "here"! It literally means the address of "here" exactly. This is mostly used right
 after declaring a variable or constant. So if we say:
 
         something    db     "What?"
@@ -1942,3 +1942,54 @@ SECTION .DATA:
 message        db        "Hello Wolrd!",0xa     ;0xa is "new-line" character. Check ASCII to HEX table if you want ;)
 length        equ         $ - message
 ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        Now that we have our constants set up, we still can't finish the "Hello World" program and move on with our lives. We still miss something
+very important in our knowledge base. That important something is "System Calls".
+
+  _____   _____    ___   _   _    _
+ / __\ \ / / __|  / __| /_\ | |  | |
+ \__ \\ V /\__ \ | (__ / _ \| |__| |__
+ |___/ |_| |___/  \___/_/ \_\____|____|
+
+        A Sys Call or a System Call is a term used to define the process of handing execution to the kernel. To be honest, in order to explain a
+sys call correctly, you also need to know something called "Ring Level". But I don't wanna throw you in the rabbit hole. So I simplify it for now and
+later in the 2nd volume, we're gonna live inside the rabbit hole, like it or not. We have 4 rings in computer architecture starting from ring 0 to
+ring 3. Ring 0 has the most privilege and ring 3 has the least. Here I break it down for you:
+
+        Ring 0 :  Kernel or the OS, (Kernel Space)
+        Ring 1 & 2:  Nothing Special, it's rarely used, probably some OS utilities
+        Ring 3:  Programs, Users (User Space)
+
+       A process in ring 3 can't do things in ring 0. It simply doesn't have the privilege. On the other hand, a process in ring 0 can literally do
+whatever it wants. So imagine a ring 3 process wants to execute something but that something requires ring 0 privilege. What should be done here? The
+process should call some process in ring 0 and hand the execution to ring 0. If the process (or the code) is legitimate and ok, ring 0 will accept the
+request, execute the requested code and returns the execution flow to the caller with the appropriate result. This is called a Sys Call.
+(in a nutshell).
+
+        Sys Calls on Linux are done by "int 0x80"(32-bit) or "syscall"(64-bit only) instruction. Don't mistake it with integer, it's an interrupt.
+There is a reason why it's called an interrupt. You'll see the magic in volume 2 when we read about Interrupt Handling and IRQL and interrupts in
+general. On Windows, Sys Calls (or interrupts) are done differently. You'll learn more about it in volume 2 when we talk about windows internals. For
+now, we focus on Linux. On Linux, after calling the kernel by  "int 0x80" or "syscall" instruction, the operator will pick up the phone (this is
+serious :D) and tells you:
+
+        press 0	if you need read	sys_read	fs/read_write.c
+        press 1 if you need	write	sys_write	fs/read_write.c
+        press 2	if you need open	sys_open	fs/open.c
+        press 3 if you need	close	sys_close	fs/open.c
+        press 4 if you need	stat	sys_newstat	fs/stat.c
+        press 5 if you need	fstat	sys_newfstat	fs/stat.c
+        press 6 if you need	lstat	sys_newlstat	fs/stat.c
+        press 7 if you need	poll	sys_poll	fs/select.c
+        press 8 if you need	lseek	sys_lseek	fs/read_write.c
+        .
+        .
+        .
+
+        And it goes on and on and on until it finishes all 313 options that they offer. (Please don't make a conspiracy theory out of it). Now we all
+know nobody is down with listening to all 313 options and then press the button, so we must pick our desired option in advance. For that, we have a
+structure and based on that, we prepare everything that we need in advance and then make the call. The list above is for 64-bit version. Sys call
+index numbers and order are different in 64-bit mode and the option are also expanded to 313. Before they were only 190. IT is also very important to
+know that "int 0x80" and "syscall" handle the calls differently and each of them have their own uses and conventions. and guess what, they are not the
+only instructions for this purpose. 'int 0x80' is mostly referred to as "the legacy" way of calling the kernel. So what we're gonna do is to
+write the hello.asm program in both versions so you would have a clear understanding how they work and recognize their differences. Keep that in mind
+that the version of the Linux kernel that your using may is also important but it doesn't affect us now :D.
