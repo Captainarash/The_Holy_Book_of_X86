@@ -1844,3 +1844,101 @@ int c = a*b;       ---> because of the IMUL instruction on our 2 local variables
 printf("%d", c);   ---> because the result of the multiplication was printed to screen.
 return 0;          ---> the final return value in EAX is 0.
 }
+------------------------------------------------------------------------------------------------
+
+        While examining a program inside a debugger, often time we see 2 instructions that do a very simple task. These 2 instructions are introduced
+here as one:
+
+
+21.
+      ___ _  _  ___
+     |_ _| \| |/ __|
+      | || .` | (__
+     |___|_|\_|\___|
+
+       ___  ___ ___
+      |   \| __/ __|
+      | |) | _| (__
+      |___/|___\___|
+
+
+        Increment/Decrement instruction accepts only 1 r/m32 value and increments/decrements it by 1. That doesn't anymore explanation :D
+
+        How about writing our "Hello World!" program in ASM now, hmm? Perhaps this is the only time you see "Hello World" at almost the end of a book
+when learning a new language. Well, there is a little twist here, I try to explain as clear as possible. First we need to know the architecture of a
+program in Assembly. There are 3 different section (Well, the most important and general ones) that forms up an assembly program:
+
+          .TEXT : .TEXT section is where all the code goes. In other words, it's the section that holds the main execution flow of the program. You
+          may here folks refer to this section as "CODE" section.
+
+          .DATA : In this section, all the constants are defined. You can not change the values here throughout the execution.
+
+          .BSS : ...and all the variables reside in this section.
+
+       Alright, open up a new file and name it whatever you want and save it with ".asm" extension (I'm doing it on Ubuntu). Let's define 2
+sections that we need for our "Hello World" program in the file "hello.asm", .TEXT and .DATA (Since we're only gonna use constants!):
+
+hello.asm
+------------------------------------------------------------------------------------------------------------------------------------------------------
+SECTION .TEXT
+
+
+
+
+
+SECTION .DATA
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        This is the syntax that should be used to define sections in ASM. In almost every programming language, the starting point of the program is
+the "main()" function. In Assembly, the starting point is "_start" (Underline start). Since this function must be globally recognized throughout whole
+program, we declare it as GLOBAL:
+
+hello.asm
+------------------------------------------------------------------------------------------------------------------------------------------------------
+SECTION .TEXT
+        global _start
+_start:
+
+
+
+SECTION .DATA
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        Now we can start writing our "Hello World" Program. Keep that in mind that every function that we have in our program, must be declared in
+.TEXT section before doing anything (right after SECTION .TEXT). This should be done in order for the program to be linked correctly to its binary
+executable.
+        What should we do before printing to screen? Defining the string we want to print. We do that in .DATA section. The syntax for it is:
+
+        name_of_const    db    value    ;This is a comment! Ehem, db is "Define Byte" and what it does is that it places the value in memory and
+                                        ;labels it so we can access it by a name.
+
+        Later, we need to specify the length of the constant (or string, in this case) that we defined earlier. This mat be a little bit tricky:
+
+        name_of_const    equ  $ - name_of_const_in_question
+
+        ...tha f**k? Yeah, I know :D. "equ" mean "=". $ means "here"! It literally means, the address of "here" exactly. This is mostly used right
+after declaring a variable or constant. So if we say:
+
+        something    db     "What?"
+        length       equ     $ - something
+
+        it means:
+                Declare the string "what?" and save the address of its beginning to the constant "something". Now something holds the address of the
+                start of that string we declared.
+
+        So here's our hello.asm file now:
+
+hello.asm
+------------------------------------------------------------------------------------------------------------------------------------------------------
+SECTION .TEXT
+        global _start
+_start:
+
+
+
+SECTION .DATA:
+message        db        "Hello Wolrd!",0xa     ;0xa is "new-line" character. Check ASCII to HEX table if you want ;)
+length        equ         $ - message
+------------------------------------------------------------------------------------------------------------------------------------------------------
