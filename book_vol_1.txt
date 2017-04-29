@@ -2048,3 +2048,5 @@ bash#> nasm -f elf hello.asm
 bash#> ./hello
 Hello World!
 bash#>
+        A very important thing to know here is that I ran this code on Ubuntu. On FreeBSD and other UNIX-like systems index numbers or the way we pass
+the arguments may be different. For example on FreeBSD, you have to push the parameters onto the stack instead of moving them. 
