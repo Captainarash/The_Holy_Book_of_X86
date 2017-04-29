@@ -1939,7 +1939,7 @@ _start:
 
 
 SECTION .DATA:
-message        db        "Hello Wolrd!",0xa     ;0xa is "new-line" character. Check ASCII to HEX table if you want ;)
+message        db        "Hello World!",0xa     ;0xa is "new-line" character. Check ASCII to HEX table if you want ;)
 length        equ         $ - message
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1985,11 +1985,66 @@ serious :D) and tells you:
         .
         .
 
-        And it goes on and on and on until it finishes all 313 options that they offer. (Please don't make a conspiracy theory out of it). Now we all
+        And it goes on and on and on until it finishes all 313 options that they offer. (Please don't make a conspiracy theory out of it.). Now we all
 know nobody is down with listening to all 313 options and then press the button, so we must pick our desired option in advance. For that, we have a
 structure and based on that, we prepare everything that we need in advance and then make the call. The list above is for 64-bit version. Sys call
-index numbers and order are different in 64-bit mode and the option are also expanded to 313. Before they were only 190. IT is also very important to
+index numbers and order are different in 64-bit mode and the option are also expanded to 313. Before they were only 190. It is also very important to
 know that "int 0x80" and "syscall" handle the calls differently and each of them have their own uses and conventions. and guess what, they are not the
 only instructions for this purpose. 'int 0x80' is mostly referred to as "the legacy" way of calling the kernel. So what we're gonna do is to
 write the hello.asm program in both versions so you would have a clear understanding how they work and recognize their differences. Keep that in mind
-that the version of the Linux kernel that your using may is also important but it doesn't affect us now :D.
+that the version of the Linux kernel that your using may be also important but it doesn't affect us now.
+
+        First, we go for 32-bit, using "int 0x80" instruction. Wait a second, do we know how to pass the arguments to the function which "int 0x80" is
+calling? As we learned before from Caller-Callee conventions, in order to call a function, we need to push its required parameters onto the stack or
+move them to proper registers right before the call instruction. The required paramemters for sys_write should be copied to EAX, EBX, ECX, EDX.
+
+        EAX takes the index number (press 4 if you need sys_write... yeah! that one!)
+        EBX takes the file descriptor. For standard output, the number is 1.
+        ECX hold a pointer to the start of the string you want to print.
+        EDX tells how much is the length of the string. (Where is the end? Until where you should be printing...)
+
+        you may wonder how do I know these numbers? I googled. I'm not a robot. Believe me :D So our hello.asm program will be like this:
+
+hello.asm
+------------------------------------------------------------------------------------------------------------------------------------------------------
+SECTION .TEXT
+        global _start
+_start:
+        mov eax,4
+        mov ebx,1
+        mov ecx,message   ; message is a pointer to the start of our message. Look at .DATA section
+        mov edx,length    ; length is telling how many characters should be printed starting from "the starting pointer"
+        int 0x80
+
+SECTION .DATA:
+message        db        "Hello World!",0xa     ;0xa is "new-line" character. Check ASCII to HEX table if you want ;)
+length        equ         $ - message
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        Haha! We did it. Yeees! No. I have to stop ypu there. What's gonna happen next? shouldn't we close the damn program? :D. the index number for
+exiting a program is 1 for 32-bit and it should be in EAX. So here will be our final hello.asm:
+
+hello.asm
+------------------------------------------------------------------------------------------------------------------------------------------------------
+SECTION .TEXT
+        global _start
+_start:
+        mov eax,4
+        mov ebx,1
+        mov ecx,message   ; message is a pointer to the start of our message. Look at .DATA section
+        mov edx,length    ; length is telling how many characters should be printed starting from "the starting pointer"
+        int 0x80
+
+        mov eax,1
+        int 0x80
+
+SECTION .DATA:
+message        db        "Hello World!",0xa     ;0xa is "new-line" character. Check ASCII to HEX table if you want ;)
+length        equ         $ - message
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        Now go ahead and create an  executable from hell.asm using NASM and execute it. Here's the commands for it:
+bash#> nasm -f elf hello.asm
+bash#> ./hello
+Hello World!
+bash#>
