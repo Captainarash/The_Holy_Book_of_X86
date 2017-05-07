@@ -2043,10 +2043,60 @@ message        db        "Hello World!",0xa     ;0xa is "new-line" character. Ch
 length        equ         $ - message
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        Now go ahead and create an  executable from hell.asm using NASM and execute it. Here's the commands for it:
+        Now go ahead and create an executable from hell.asm using NASM and execute it. Here's the commands for it:
 bash#> nasm -f elf hello.asm
 bash#> ./hello
 Hello World!
 bash#>
         A very important thing to know here is that I ran this code on Ubuntu. On FreeBSD and other UNIX-like systems index numbers or the way we pass
-the arguments may be different. For example on FreeBSD, you have to push the parameters onto the stack instead of moving them. 
+the arguments may be different. For example on FreeBSD, you have to push the parameters onto the stack instead of moving them into registers. As I
+promised before, we gonna write the hello.asm for 64-bit Linux too.  This time we use "syscall" instruction (Fast System Call as the manual says).
+As mentioned before, index numbers in 64-bit mode is different than 32-bit mode. This time sys_write is at index 1. It takes 3 parameters like before:
+outout, message, length. These 3 parameters must be in RDI, RSI,RDX respectively. RAX will hold the index number for syscall which is 1 (again,
+sys_write is at index 1 on 64-bit mode).
+
+hello64.asm
+------------------------------------------------------------------------------------------------------------------------------------------------------
+SECTION .TEXT
+        global _start
+_start:
+        mov    rax, 1          ; sys_write
+        mov    rdi, 1          ; stdout
+        mov    rsi, message    ; pointer to the start of our string
+        mov    rdx, length     ; length of our string
+        syscall
+
+
+SECTION .DATA:
+        message        db        "Hello World!",0xa     ;0xa is "new-line" character.
+        length        equ         $ - message
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        Again, we need to close and exit. Remeber in C code we write, return(0)? That zero as you know means successfully executed and now exit. We do
+that here when we use syscall. Index number for exit in 64-bit mode is 60 (in EAX) and the return value (0) must be in RDI. Here is our final program:
+
+hello64.asm
+------------------------------------------------------------------------------------------------------------------------------------------------------
+SECTION .TEXT
+        global _start
+_start:
+        mov    rax, 1          ; sys_write
+        mov    rdi, 1          ; stdout
+        mov    rsi, message    ; pointer to the start of our string
+        mov    rdx, length     ; length of our string
+        syscall
+
+        mov    rax, 60         ; sys_exit
+        mov    rdi, 0          ; return value
+        syscall
+
+SECTION .DATA:
+        message        db        "Hello World!",0xa     ;0xa is "new-line" character.
+        length        equ         $ - message
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+bash#> nasm -f elf64 -o hello64.o hello64.asm
+bash#> ld -o hello64 hello64.o
+bash#> ./hello64
+Hello World!
+bash#>
