@@ -187,7 +187,7 @@ Binary-Decimal-Hex Refresher:
 
 Negative numbers:
         Negative numbers in x86 architecture may seem a little bit weird at first. A negative Number named N with the
-        positive value of P, is P's one's complement plus one.
+        positive value of P, is P's two's complement which is equal to one's complement plus one.
         Holy shit! What was that again? OK! It is very simple and clear if you see it in action.
 
         P = 1 in decimal = 0x01 in Hex = 00000001 in Binary.
@@ -234,27 +234,28 @@ Little Endian or Big Endian?
         doesn't matter in computer architecture, right? Well, I don't know exactly. Probably not. But what matters is that Intel
         Architecture is "Little-Endian". So what's up with that?
 
-        In a Little-Endian Architecture, addresses are stored in RAM starting from the lowest nibble (nibble is each 4-bit
-        (1 byte) piece). For example, this is what happens if you want to store the address 0x12345678 in memory:
+        In a Little-Endian Architecture, values are stored in RAM starting from the lowest byte. For example, this is what happens if 
+        you want to store the address 0x12345678 in memory:
 
         0x12345678  -->  0x12 0x34 0x56 0x78  -->
                                                 |                                          |
         Into RAM    <--  0x78 0x56 0x34 0x12 <--
 
-        So it's simple. It just starts storing from that lowest nibble up to the highest nibble.
+        So it's simple. It just starts storing from that lowest byte up to the highest byte.
 
 
-        In Big-Endian Architecture, addresses are stored in RAM as they are. Network traffic is Big-Endian.
+        In Big-Endian Architecture, values are stored in RAM as they are. Network traffic is Big-Endian.
         PowerPC, ARM, SPARC, MIPS, etc. are Big-Endian unless otherwise configured.
 
-        *** Note: Register values are always Big-Endian. Little-Endian only applies to RAM(Memory).
+        *** Note: Register values are always Big-Endian. Little-Endian only applies when writing to and reading from RAM (Memory).
 
 
 REGISTERS:
 
 
         Registers are small memory storage areas built into the processor. They are still a volatile type of memory storage so if you power off
-        your PC, you're gonna lose the state of your registers. Intel architecture defines 8 General Purpose Registers(GPR) as follows:
+        your PC, you're gonna lose the state of your registers. Intel architecture defines 8 General Purpose Registers (GPR) for 32 bit platforms 
+        and 16 GRP for 64 bit platforms as follows:
 
         32-bit         |        64-bit
 ------------------------------------------------
@@ -275,10 +276,25 @@ REGISTERS:
                        |
         ESP            |            RSP
                        |
+                       |            R8
+                       |                       
+                       |            R9
+                       |                       
+                       |            R10
+                       |                       
+                       |            R11
+                       |               
+                       |            R12
+                       |               
+                       |            R13
+                       |               
+                       |            R14
+                       |               
+                       |            R15                                  
 
 
         Each of the registers above are 4 bytes long in the 32-bit version, and 8 bytes long in the 64-bit version. Beside those General
-        Purpose Registers, we have EIP(RIP for 64-bit) which is called the Instruction Pointer which holds the current flow of the execution;
+        Purpose Registers, we have EIP (RIP for 64-bit) which is called the Instruction Pointer which holds the current flow of the execution;
         and we have EFLAGS, which is a 32-bit long register of registers. Yeah, I know that might sound crazy but I will explain them fully
         in later chapters.
 
@@ -287,8 +303,8 @@ REGISTERS:
         in action in order to recognize its usability in different scenarios. EBX is the Base Pointer for data section and EDX is the I/O pointer
         but let's save these conventions for later chapters. ECX is mostly used as a counter for repetitive instructions i.e. for a
         loop. ESI and EDI are used as Source Index and Destination Index respectively i.e. copying a string value. ESP is the stack pointer
-        which always points to the top of the current stack. EPB is the base pointer which always(actually not always :D) points to the bottom
-        of the current stack by convention. I have to mention that these are only some conventions and you don't have to use them in the
+        which always points to the top of the current stack. EBP is the base pointer which always (actually not always :D) points to the bottom
+        of the current stack frame by convention. I have to mention that these are only some conventions and you don't have to use them in the
         exact way. It is simply for simplicity and readability for your code.
 
 The Stack
@@ -358,7 +374,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   CX   |
                          +-----------------+
-                         |        | CH| CL |
+                         |        |CH | CL |
                          +--------+--------+
                          31       16   8   0
 
@@ -370,7 +386,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   DX   |
                          +-----------------+
-                         |        | DH| DL |
+                         |        |DH | DL |
                          +--------+--------+
                          31       16   8   0
 
@@ -382,7 +398,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   SI   |
                          +-----------------+
-                         31                0
+                         31       16       0
 
         63                                 0
         +----------------------------------+
@@ -392,7 +408,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   DI   |
                          +-----------------+
-                         31                0
+                         31       16       0
 
         63                                 0
         +----------------------------------+
@@ -402,7 +418,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   BP   |
                          +-----------------+
-                         31                0
+                         31       16       0
 
         63                                 0
         +----------------------------------+
@@ -412,7 +428,104 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   SP   |
                          +-----------------+
-                         31                0
+                         31       16       0
+
+        63                                 0
+        +----------------------------------+
+        |               R8                 |
+        +----------------+-----------------+
+        |   RESERVED     |       R8D       |
+        +----------------------------------+
+                         |EXTENDED|  R8W   |
+                         +-----------------+
+                         |        |   |R8L |
+                         +--------+--------+
+                         31       16   7   0
+
+        63                                 0
+        +----------------------------------+
+        |               R9                 |
+        +----------------+-----------------+
+        |   RESERVED     |       R9D       |
+        +----------------------------------+
+                         |EXTENDED|  R9W   |
+                         +-----------------+
+                         |        |   |R9L |
+                         +--------+--------+
+                         31       16   7   0
+
+        63                                 0
+        +----------------------------------+
+        |               R10                |
+        +----------------+-----------------+
+        |   RESERVED     |       R10D      |
+        +----------------------------------+
+                         |EXTENDED|  R10W  |
+                         +-----------------+
+                         |        |   |R10L|
+                         +--------+--------+
+                         31       16   7   0
+
+        63                                 0
+        +----------------------------------+
+        |               R11                |
+        +----------------+-----------------+
+        |   RESERVED     |       R11D      |
+        +----------------------------------+
+                         |EXTENDED|  R11W  |
+                         +-----------------+
+                         |        |   |R11L|
+                         +--------+--------+
+                         31       16   7   0
+
+        63                                 0
+        +----------------------------------+
+        |               R12                |
+        +----------------+-----------------+
+        |   RESERVED     |       R12D      |
+        +----------------------------------+
+                         |EXTENDED|  R12W  |
+                         +-----------------+
+                         |        |   |R12L|
+                         +--------+--------+
+                         31       16   7   0
+
+        63                                 0
+        +----------------------------------+
+        |               R13                |
+        +----------------+-----------------+
+        |   RESERVED     |       R13D      |
+        +----------------------------------+
+                         |EXTENDED|  R13W  |
+                         +-----------------+
+                         |        |   |R13L|
+                         +--------+--------+
+                         31       16   7   0
+
+        63                                 0
+        +----------------------------------+
+        |               R14                |
+        +----------------+-----------------+
+        |   RESERVED     |       R14D      |
+        +----------------------------------+
+                         |EXTENDED|  R14W  |
+                         +-----------------+
+                         |        |   |R14L|
+                         +--------+--------+
+                         31       16   7   0
+
+        63                                 0
+        +----------------------------------+
+        |               R15                |
+        +----------------+-----------------+
+        |   RESERVED     |       R15D      |
+        +----------------------------------+
+                         |EXTENDED|  R15W  |
+                         +-----------------+
+                         |        |   |R15L|
+                         +--------+--------+
+                         31       16   7   0
+
 
         63                                 0
         +----------------------------------+
@@ -423,7 +536,6 @@ Structure of Registers
                          |EXTENDED|  FLAGS |
                          +-----------------+
                          31                0
-
 
 
 
@@ -558,7 +670,7 @@ are CDECL and STDCALL conventions.
 
 CDECL:
 "C Declaration" is the most commonly used convention for all C code and some C++. In CDECL, the caller must push the parameters of the
-function that are gonna be called(callee) onto the stack from left to right. So for example if we have this function in C:
+function that are gonna be called(callee) onto the stack from right to left. So for example if we have this function in C:
 
         func (int a, int b){
                 ...
@@ -571,25 +683,25 @@ function that are gonna be called(callee) onto the stack from left to right. So 
                 return 0;
 }
 
-The value "b" and then "a" must be pushed onto the stack (left to right) before calling "func". After calling the function "func", callee(func)
+The value "b" and then "a" must be pushed onto the stack (right to left) before calling "func". After calling the function "func", callee(func)
 must save the previous stack frame pointer and create a new stack frame. Wait a minute! WTF? What's a stack frame? Oops! I forgot to tell you that. (:D)
 Here, I will explain it now. Each function has its own stack frame. A stack frame is simply(by convention) an area that is every function's
 playground in order to store local variables, etc. By calling a function, after passing the parameters, the called function must set up its own new
 stack frame by executing 2 simple instructions as below:
 
-(1)     PUSH ESP
+(1)     PUSH EBP
 (2)     MOV EBP,ESP
 
 Line(1) saves the current stack pointer onto the stack, then on line(2) it will copy it to the EBP register which always points to the bottom (start of)
 the stack. Both EBP and ESP hold the same value. Then after the function starts executing its main functions, ESP will point somewhere lower
-than EPB (a frame full of local variables, etc.). A CALL instruction will push the address of next instruction just after the CALL instruction onto to
+than EBP (a frame full of local variables, etc.). A CALL instruction will push the address of next instruction just after the CALL instruction onto to
 the stack and will change the EIP with the address of the first line of the function's code section. Here's a demonstration for you to see the whole
 picture:
 .
 .
 .
-(1)     PUSH 0x64
-(2)     PUSH 0xC8
+(1)     PUSH 0xC8
+(2)     PUSH 0x64
 (3)     CALL func
 (4)     PUSH 0x12C
 .
@@ -646,7 +758,7 @@ ESP+-> |addr of(4)|                    |addr of(4)| ---> You'll see the exact re
 In CDECL calling convention, function's return value will be put in EAX or EDX:EAX for primitive data types and after returning, caller is responsible
 for cleaning up the stack. So here we wrap it up in the list below:
   1. Most common calling convention for all C code and some C++ code.
-  2. The called function(the callee) expects its parameter to be pushed onto the stack from left to right.
+  2. The called function(the callee) expects its parameter to be pushed onto the stack from right to left.
   3. First thing that the callee does is saving the old stack frame(PUSH EBP) and setting up a new one(MOV EBP,ESP). This procedure is called
      "Function Prologue".
   4. Returns data in EAX or EDX:EAX registers.
@@ -697,7 +809,7 @@ example1.c                              sub:                           main:
 ---------------------------------------+-----------------------------+------------------------------+
         int sub(){                     | 00401000 push ebp           | 00401010 push ebp            |
           return 0xbeef;               | 00401001 mov ebp,esp        | 00401001 mov ebp,esp         |
-        }                              | 00401003 mov eax,0xBEEF     | 00401013 call sub(40100h)    |
+        }                              | 00401003 mov eax,0xBEEF     | 00401013 call sub(401000h)   |
         int main(){                    | 00401008 pop ebp            | 00401018 mov eax,0xF00D      |
           sub();                       | 00401009 ret                | 0040101D pop ebp             |
           return 0xf00d;               |                             | 0040101E ret                 |
@@ -896,7 +1008,7 @@ the memory address? Well that 1% applies to the LEA instruction.
       lea eax,[ebp + 8]
 
   LEA (Load Effective Address) means that the program only needs the actual address not the content. When you get the address, put it (load it) in
-the register specified as destination. The above example means take the address in EBP and add it by 4 and put the result(which is an address not the
+the register specified as destination. The above example means take the address in EBP and add it by 8 and put the result(which is an address not the
 content pointed at by it) and put it in EAX.
 
 10.
@@ -920,7 +1032,7 @@ which moves the hex value of 10 (or 16 decimal) in EAX and the does a SHL on EAX
      |        16         | |     00010000      | |       0x10        |
      +-------------------+ +-------------------+ +-------------------+
 
-     SHL is a bitwise operation which means it deals with the binary format data. We take the binary value 1010 and shift it once to left. The
+     SHL is a bitwise operation which means it deals with the binary format data. We take the binary value 00010000 and shift it once to left. The
 effect of this action is shown below:
 
   00010000   ------>  0010000[]  --->   final result: 00100000 ----> To decimal:  32  ---> To hex: 0x20
@@ -1081,6 +1193,11 @@ Now you need to create this file named cmd in order to make it easy for us while
 
 using our previous cmd file:
   bash#> gdb -x cmd example2
+
+
+We configure the debugger to use Intel syntax for the code
+      (gdb) set disassembly-flavor intel
+
 
 Now issuing the commands:
       (gdb) disassemble main
@@ -1249,7 +1366,7 @@ then go 4 bytes forward and take whatever value is in there and put it in EAX. I
         Then on line <+31> just before we call atoi() funtion, we need to push its parameter onto the stack which is argc.
 
                       <+31>:	mov    DWORD PTR [esp],eax
-        After that we call atoi on line <+> which makes our stack like this:
+        After that we call atoi on line <+34> which makes our stack like this:
 
                       +------------+
               EBP + C |  *argv[]   |   ----> mov eax, DWORD PTR [ebp + 0xc] will copy the content in this address to EAX.
@@ -1446,9 +1563,9 @@ register containing its different flags:
 | 32 - 63 |              | Reserved                      |          |
 +---------+--------------+-------------------------------+----------+
 
-        Well that's a long list and I don't expect you to memorized them. For now, we just have to know about these flags:
+        Well that's a long list and I don't expect you to memorize them. For now, we just have to know about these flags:
 
-        Zero Flag (ZF): This flag will be set to 1 if comparing 2 things is results in equality.
+        Zero Flag (ZF): This flag will be set to 1 if comparing 2 things results in equality.
         Sign Flag (SF): As its name represents, it determines if you're dealing with a signed integer or an unsigned integer.
         Carry Flag (CF): Remember when you were in elementary school and the teacher said if we want to add 9 to 6:
 
@@ -1557,7 +1674,7 @@ int main() //int is used because the return values are integers
   if(a<b)
     return 0;
   else
-    return -1; //if JLE does not meet its condition, the jump will not be take and the value 0xffffffff will be return which is -1
+    return -1; //if JLE does not meet its condition, the jump will not be taken and the value 0xffffffff will be return which is -1
 }
 
         That's pretty much the source code that was used but do you want to see the real source code?
@@ -1677,14 +1794,14 @@ next instruction on line <+4>. Let's break it down:
 
         and esp,0xfffffff0
 
-        if we assume ESP is at address 0x7fffff56, this instruction will do a bitwise "AND" operation to zero out that least significant byte in ESP.
+        if we assume ESP is at address 0x7fffff56, this instruction will do a bitwise "AND" operation to zero out that least significant nibble in ESP.
 
         and 7 f f f f f 5 6
             f f f f f f f 0
             ---------------
             7 f f f f f 5 0  ---> New ESP
 
-        Buy why? Because of optimization and performance. In order to have a better performance on memory calculations, OS optimizes the stack
+        But why? Because of optimization and performance. In order to have a better performance on memory calculations, OS optimizes the stack
 addresses to start at a 16-byte boundary. This speeds up calculations and addressing which will result in a better performance. I think you pretty
 much got the idea. On line <+7>, the real ESP which is at a 0x4-byte offset to ECX, will be pushed onto the stack. If you take a look at 2-3 line
 after this you see ECX is pushed onto the stack. So why pushing [ECX-0x4]? This is getting complicated right? No! The answer requires a keen memory.
@@ -1777,7 +1894,7 @@ two instructions after it, is pushing the address of the very next instruction a
 going to print the value 30 on the screen.
 
         0x08048437 <+44>:	push   DWORD PTR [ebp-0xc]    ----> Pushing the parameter needed for the function printf() onto the stack.
-        0x0804843a <+47>:	push   0x80484e0              ----> Saving the return Address in order to get back to main() after executing printf().
+        0x0804843a <+47>:	push   0x80484e0              ----> ** Isn't this the pointer to the format string used with printf()? ** Saving the return Address in order to get back to main() after executing printf().
         0x0804843f <+52>:	call   0x80482e0 <printf@plt> ----> Calling printf();
 
                         +----------+
@@ -1832,7 +1949,7 @@ to ESP, remember?) to restore the original unaligned ESP. That's it!
         mov esp,ebp
         pop ebp
 
-        which the same as what we saw in previous examples when a function wants to restore the caller's stack frame and return. SO anyways, we
+        which is the same as what we saw in previous examples when a function wants to restore the caller's stack frame and return. So anyways, we
 reversed example4 completely and here's the result we got for the high-level source code:
 
 #include <stdio.h>   ---> because we used printf()
@@ -1862,14 +1979,14 @@ here as one:
       |___/|___\___|
 
 
-        Increment/Decrement instruction accepts only 1 r/m32 value and increments/decrements it by 1. That doesn't anymore explanation :D
+        Increment/Decrement instruction accepts only 1 r/m32 value and increments/decrements it by 1. That doesn't need anymore explanation :D
 
         How about writing our "Hello World!" program in ASM now, hmm? Perhaps this is the only time you see "Hello World" at almost the end of a book
 when learning a new language. Well, there is a little twist here, I try to explain as clear as possible. First we need to know the architecture of a
-program in Assembly. There are 3 different section (Well, the most important and general ones) that forms up an assembly program:
+program in Assembly. There are 3 different sections (Well, the most important and general ones) that forms up an assembly program:
 
           .TEXT : .TEXT section is where all the code goes. In other words, it's the section that holds the main execution flow of the program. You
-          may here folks refer to this section as "CODE" section.
+          may hear folks refer to this section as "CODE" section.
 
           .DATA : In this section, all the constants are defined. You can not change the values here throughout the execution.
 
@@ -1906,7 +2023,7 @@ SECTION .DATA
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        Now we can start writing our "Hello World" Program. Keep that in mind that every function that we have in our program, must be declared in
+        Now we can start writing our "Hello World" Program. Keep in mind that every function that we have in our program, must be declared in
 .TEXT section before doing anything (right after SECTION .TEXT). This should be done in order for the program to be linked correctly to its binary
 executable.
         What should we do before printing to screen? Defining the string we want to print. We do that in .DATA section. The syntax for it is:
@@ -1914,7 +2031,7 @@ executable.
         name_of_const    db    value    ;This is a comment! Ehem, db is "Define Byte" and what it does is that it places the value in memory and
                                         ;labels it so we can access it by a name.
 
-        Later, we need to specify the length of the constant (or string, in this case) that we defined earlier. This mat be a little bit tricky:
+        Later, we need to specify the length of the constant (or string, in this case) that we defined earlier. This may be a little bit tricky:
 
         name_of_const    equ  $ - name_of_const_in_question
 
@@ -1957,7 +2074,7 @@ later in the 2nd volume, we're gonna live inside the rabbit hole, like it or not
 ring 3. Ring 0 has the most privilege and ring 3 has the least. Here I break it down for you:
 
         Ring 0 :  Kernel or the OS, (Kernel Space)
-        Ring 1 & 2:  Nothing Special, it's rarely used, probably some OS utilities
+        Ring 1 & 2:  Nothing Special, it's not used by most of the OSs
         Ring 3:  Programs, Users (User Space)
 
        A process in ring 3 can't do things in ring 0. It simply doesn't have the privilege. On the other hand, a process in ring 0 can literally do
@@ -2052,7 +2169,7 @@ bash#>
 the arguments may be different. For example on FreeBSD, you have to push the parameters onto the stack instead of moving them into registers. As I
 promised before, we gonna write the hello.asm for 64-bit Linux too.  This time we use "syscall" instruction (Fast System Call as the manual says).
 As mentioned before, index numbers in 64-bit mode is different than 32-bit mode. This time sys_write is at index 1. It takes 3 parameters like before:
-outout, message, length. These 3 parameters must be in RDI, RSI,RDX respectively. RAX will hold the index number for syscall which is 1 (again,
+stdout, message, length. These 3 parameters must be in RDI, RSI,RDX respectively. RAX will hold the index number for syscall which is 1 (again,
 sys_write is at index 1 on 64-bit mode).
 
 hello64.asm
