@@ -9,13 +9,28 @@ For More Tutorials and Info, Please visit:
 www.kernelfarm.com
 https://www.linkedin.com/in/arash-t-c-3a277bbb
 https://twitter.com/KernelFarm
-arashtc@yahoo.com
 
 
 A complete guide to x86 architecture, assembly, memory management, paging, segmentation, SMM, BIOS.... 
 This book tends to overview and teach x86 subjects in the eyes of a reverse engineer, malware analyst or a hacker. We are not gonna teach you how to build an OS or other subjects that are not related to those mentioned above.
 
-This Book will be completed and published in 3 volumes. I try to update the content as I write the book.
+This Book will be completed and published in 3 volumes. I try to update the content as I write the book. The Hardcopy of the volume 1 & 2 may become available for purchase on Amazon later if necessary.
 
+Here's a quick overview of the content:
 
-In order to avoid messing up the ASCII arts used in this book, please open the files in Microsoft WordPad, ATOM, Vim or similar text editors that can be configured to read ASCII format.
+Volume 1:
+  Introduction to Intel x86 Assembly
+  Learn the most frequently used assembly instructions and their coventions
+  Reverse Engineer simple binaries
+
+Volume 2:
+  Section 1: Raw Intel Architecture
+    Introduction to Intel x86 Architecture
+    Privilege Rings
+    Segmentation
+    Paging
+    Cache Control  --- (Current Progress of the book)
+    Interrupts and Exceptions
+
+  Section 2: Windows Internals
+  Section 3: Linux Internals
