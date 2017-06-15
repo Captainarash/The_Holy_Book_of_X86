@@ -19,8 +19,10 @@ A complete guide to x86 architecture, assembly, memory management, paging, segme
 
 ##### Volume 1: Pure Assembly    
   - Introduction to Intel x86 Assembly    
-  - Learn the most frequently used assembly instructions and their coventions    
-  - Reverse Engineer simple binaries    
+  - Learn the most frequently used assembly instructions and their conventions    
+  - Reverse Engineer simple binaries  
+  - Control structures and loops
+  - Write simple applications in pure assembly
 
 ##### Volume 2: Internals    
 
