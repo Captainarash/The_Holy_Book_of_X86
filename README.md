@@ -34,5 +34,6 @@ A complete guide to x86 architecture, assembly, memory management, paging, segme
   - Cache Control
   - Interrupts and Exceptions
 ###### Section 2: Windows Internals
+  - A journey to explore PE files
 ###### Section 3: Linux Internals
 
