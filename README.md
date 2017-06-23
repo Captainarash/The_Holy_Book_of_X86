@@ -15,7 +15,7 @@ A complete guide to x86 architecture, assembly, memory management, paging, segme
 
 > This Book will be completed and published in 3 volumes. I try to update the content as I write the book. The Hardcopy of the volume 1 & 2 may become available for purchase on Amazon later if necessary.
 
-### Here's a quick overview of the content:    
+### Here's a quick overview of the content (current content):    
 
 ##### Volume 1: Pure Assembly    
   - Introduction to Intel x86 Assembly    
@@ -27,13 +27,13 @@ A complete guide to x86 architecture, assembly, memory management, paging, segme
 ##### Volume 2: Internals    
 
 ###### Section 1: Raw Intel Architecture    
-  -  Introduction to Intel x86 Architecture    
-  -  Privilege Rings
+  - Introduction to Intel x86 Architecture    
+  - Privilege Rings
   - Segmentation
   - Paging
   - Cache Control
   - Interrupts and Exceptions
 ###### Section 2: Windows Internals
-  - A journey to explore PE files
+  - Exploring PE files
 ###### Section 3: Linux Internals
 
