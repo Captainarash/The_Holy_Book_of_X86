@@ -11,7 +11,7 @@ For More Tutorials and Info, Please visit:
 A complete guide to x86 architecture, assembly, memory management, paging, segmentation, SMM, BIOS....    
 
     This book tends to overview and teach x86 subjects in the eyes of a reverse engineer, malware analyst or a 
-    hacker. We are not gonna teach you how to build an OS or other subjects that are not related to those 
+    hacker. We're not going to teach you how to build an OS or other subjects that are not related to those 
     mentioned above.
 
 > This Book will be completed and published in 3 volumes. I try to update the content as I write the book. The Hardcopy of the volume 1 & 2 may become available for purchase on Amazon later if necessary.
