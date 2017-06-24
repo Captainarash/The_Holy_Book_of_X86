@@ -27,13 +27,12 @@ A complete guide to x86 architecture, assembly, memory management, paging, segme
 ##### Volume 2: Internals    
 
 ###### Section 1: Raw Intel Architecture    
-  - Introduction to Intel x86 Architecture    
-  - Privilege Rings
-  - Segmentation
-  - Paging
-  - Cache Control
-  - Interrupts and Exceptions
+  - Chapter 0x01: Introduction to Intel x86 Architecture    
+  - Chapter 0x02: Segmentation
+  - Chapter 0x03: Paging
+  - Chapter 0x04: Cache Control
+  - Chapter 0x05: Interrupts and Exceptions
 ###### Section 2: Windows Internals
-  - Exploring PE files
+  - Chapter 0x06: Exploring PE files
 ###### Section 3: Linux Internals
 
