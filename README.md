@@ -5,7 +5,8 @@ Delivered to you by **Arash TC** with the spirit of OpenSecurityTraining
 For More Tutorials and Info, Please visit:    
 **http://www.kernelfarm.com**    
 **https://www.linkedin.com/in/arash-t-c-3a277bbb**    
-**https://twitter.com/KernelFarm**    
+**https://twitter.com/KernelFarm**   
+**https://twitter.com/arash_tc**
 
 A complete guide to x86 architecture, assembly, memory management, paging, segmentation, SMM, BIOS....    
 
