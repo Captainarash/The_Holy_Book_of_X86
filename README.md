@@ -37,3 +37,6 @@ A complete guide to x86 architecture, assembly, memory management, paging, segme
   - Chapter 0x06: Exploring PE files
 ###### Section 3: Linux Internals
 
+## If you want to support the author:
+    ##### Please buy the Kindle or the Paperback version of Volume 1 on Amazon or CreateSpace eStore:
+    CreateSpace eStore: https://www.createspace.com/7244052
