@@ -2010,7 +2010,7 @@ SECTION .DATA
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
         This is the syntax that should be used to define sections in ASM. In almost every programming language, the starting point of the program is
-the "main()" function. In Assembly, the starting point is "_start" (Underline start). Its a convention which has been around. It's not a must. Since this function must be globally recognized throughout whole
+the "main()" function. In Assembly, the starting point is "_start" (Underline start). This convention has been around for a while. It's not a must. Since this function must be globally recognized throughout whole
 program, we declare it as GLOBAL:
 
 hello.asm
