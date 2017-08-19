@@ -197,7 +197,8 @@ Negative numbers:
         Now what happens if you add one to it and convert it to Hex?
         Flipped_P + 1 = 11111110 + 00000001 = 11111111 ---> 0xFF in Hex.
 
-        So negative one in x86 Hex format would be 0xFF. You can take a look at the following table to completely comprehend it.
+        So negative one in x86 Hex format would be 0xFF. You can take a look at the following table to completely
+	comprehend it.
 
         +-------------------------------------------------------+
         |     P    |Flipped_P (One's Complement|Two's Complement|
@@ -247,7 +248,7 @@ Little Endian or Big Endian?
         In Big-Endian Architecture, values are stored in RAM as they are. Network traffic is Big-Endian.
         PowerPC, ARM, SPARC, MIPS, etc. are Big-Endian unless otherwise configured.
 
-        *** Note: Register values are always Big-Endian. Little-Endian only applies when writing to and reading from RAM (Memory).
+        *** Note: Register values are always Big-Endian. Little-Endian only applies to when writing to and reading from RAM (Memory).
 
 
 REGISTERS:
@@ -255,7 +256,7 @@ REGISTERS:
 
         Registers are small memory storage areas built into the processor. They are still a volatile type of memory storage so if you power off
         your PC, you're gonna lose the state of your registers. Intel architecture defines 8 General Purpose Registers (GPR) for 32 bit platforms 
-        and 16 GRP for 64 bit platforms as follows:
+        and 16 GPRs for 64 bit platforms as follows:
 
         32-bit         |        64-bit
 ------------------------------------------------
@@ -293,19 +294,19 @@ REGISTERS:
                        |            R15                                  
 
 
-        Each of the registers above are 4 bytes long in the 32-bit version, and 8 bytes long in the 64-bit version. Beside those General
+        Each of the registers above is 4 bytes long in the 32-bit version, and 8 bytes long in the 64-bit version. Beside those General
         Purpose Registers, we have EIP (RIP for 64-bit) which is called the Instruction Pointer which holds the current flow of the execution;
         and we have EFLAGS, which is a 32-bit long register of registers. Yeah, I know that might sound crazy but I will explain them fully
         in later chapters.
 
 
-        EAX is mostly used when a function wants to return a value and it is also used for lots of different purposes. You have to see them
+        EAX is mostly used when a function wants to return a value and it is also used for lots of different purposes. You have to see it
         in action in order to recognize its usability in different scenarios. EBX is the Base Pointer for data section and EDX is the I/O pointer
         but let's save these conventions for later chapters. ECX is mostly used as a counter for repetitive instructions i.e. for a
         loop. ESI and EDI are used as Source Index and Destination Index respectively i.e. copying a string value. ESP is the stack pointer
         which always points to the top of the current stack. EBP is the base pointer which always (actually not always :D) points to the bottom
         of the current stack frame by convention. I have to mention that these are only some conventions and you don't have to use them in the
-        exact way. It is simply for simplicity and readability for your code.
+        exact way. It is simply for simplicity and readability of your code.
 
 The Stack
 
@@ -314,7 +315,7 @@ The Stack
         data structure, meaning that the first thing that is pushed onto the stack is the last thing that is gonna pop out. Imagine a bucket
         full of apples. The first apple that you put inside the bucket is the last one that you can pull out (of course if you don't
         just turn the bucket upside down :D).
-        Stack grows down from higher memory addresses to lower memory addresses. For example, if the stack starts from address 0x7fff4444
+        Stack grows down from higher memory addresses to lower memory addresses. For example, if the stack starts at address 0x7fff4444
         (ESP), the next DWORD (4 bytes, remember?) that you push onto the stack, decrements the stack by 4 bytes and then ESP will point to
         0x7fff4444 - 4 = 0x7fff4440. You will see this in greater detail in the next few paragraphs.
 
@@ -540,7 +541,7 @@ Structure of Registers
 
 
 You can access the small portions of registers in an assembly code. The concept of accessing and using these small portions becomes
-clear in shellcoding when you want your shellcode to be as small as possible. We will see this in action in later chapters.
+clear in shellcoding when you want your shellcode to be as small as possible.
 
 Here are some instructions for you but before you begin, you must know the basic syntax of an assembly instruction. We have 2 different notations of
 assembly, Intel notation and AT&T notation.
@@ -548,12 +549,12 @@ assembly, Intel notation and AT&T notation.
 
         instruction destination, source
 
-  In AT&T notation after the instruction, first comes the source followed by a comma and then the destination. Every register has a percent sign(%)
+  In AT&T notation, after the instruction, first comes the source followed by a comma and then the destination. Every register has a percent sign(%)
   appended to the beginning of it. It looks like this:
 
         instruction %source, %destination
 
-*** NOTE: The percent sign is only applied to the registers. It is not applied to the immediate values.
+*** NOTE: The percent sign is only applied to the registers. It doesn't apply to the immediate values.
 
 
 1.
@@ -596,7 +597,7 @@ instructions:
 (3)     PUSH 0x43434343
 
 Consider ESP points to some address that holds the content 0xDEADBEEF(0) before executing the 3 lines above. After the execution of each PUSH
-instruction, ESP gets decremented by 4 and the value will be pushed on to the stack and the new ESP will point to it.
+instruction, ESP gets decremented by 4 and the value will be pushed on to the stack and the new ESP will point at it.
 
 (0)                     (1)                     (2)                     (3)
        +----------+           +----------+            +----------+            +----------+
@@ -621,9 +622,9 @@ ESP = 0x7fffff50        ESP = 0x7ffff4C         ESP = 0x7fffff48        ESP = 0x
 
 
 
-POP is an instruction that is exactly the opposite of a PUSH instruction. It pops(moves) whatever value that ESP is currently pointing at to another register
+POP is exactly the opposite of a PUSH instruction. It pops(moves) whatever value that ESP is currently pointing at to another register
 and will increment ESP by 4(in the case of a DWORD). If you look at the demonstration below, assuming EAX holds the value 0xDEADCE11 before the execution of the
-following 3 lines by issuing a PUSH EAX instruction(1). The current value at the address that ESP is pointing to at the time (CCCC or
+following 3 lines by issuing a PUSH EAX instruction(1). The current value at the address that ESP is pointing at, at the time (CCCC or
 0x43434343) will be popped off the stack and it will show up in the EAX register and ESP will be incremented by 4. Notice that popping values off the
 stack will not completely destroy the popped value. It just moves it to the register as the instruction defines and adds 4 bytes to ESP.
 
@@ -670,7 +671,7 @@ are CDECL and STDCALL conventions.
 
 CDECL:
 "C Declaration" is the most commonly used convention for all C code and some C++. In CDECL, the caller must push the parameters of the
-function that are gonna be called(callee) onto the stack from right to left. So for example if we have this function in C:
+function that is gonna be called(callee) onto the stack from right to left. So for example if we have this function in C:
 
         func (int a, int b){
                 ...
@@ -685,7 +686,7 @@ function that are gonna be called(callee) onto the stack from right to left. So 
 
 The value "b" and then "a" must be pushed onto the stack (right to left) before calling "func". After calling the function "func", callee(func)
 must save the previous stack frame pointer and create a new stack frame. Wait a minute! WTF? What's a stack frame? Oops! I forgot to tell you that. (:D)
-Here, I will explain it now. Each function has its own stack frame. A stack frame is simply(by convention) an area that is every function's
+Here, I will explain it now. Each function has its own stack frame. A stack frame is simply(by convention) an area that is a function's
 playground in order to store local variables, etc. By calling a function, after passing the parameters, the called function must set up its own new
 stack frame by executing 2 simple instructions as below:
 
@@ -694,7 +695,7 @@ stack frame by executing 2 simple instructions as below:
 
 Line(1) saves the current stack pointer onto the stack, then on line(2) it will copy it to the EBP register which always points to the bottom (start of)
 the stack. Both EBP and ESP hold the same value. Then after the function starts executing its main functions, ESP will point somewhere lower
-than EBP (a frame full of local variables, etc.). A CALL instruction will push the address of next instruction just after the CALL instruction onto to
+than EBP (a frame full of local variables, etc.). A CALL instruction will push the address of the next instruction just after the CALL instruction onto to
 the stack and will change the EIP with the address of the first line of the function's code section. Here's a demonstration for you to see the whole
 picture:
 .
@@ -767,7 +768,11 @@ for cleaning up the stack. So here we wrap it up in the list below:
 
 STDCALL:
   The only difference between STDCALL and CDECL is that in STDCALL, the callee is responsible for cleaning up the stack. This calling convention is
-  mainly used by Microsoft C++ code (e.g. WIN32 API). You will see this in action in the "Win32 Shellcoding" chapter.
+  mainly used by Microsoft C++ code (e.g. WIN32 API). You may have seen __stdcall declaration when using a function in Windows 
+  API by ʥrst ʥnding its address in some windows Library (e.g. ZwQueryInformationProcess in ntdll.dll). In a high-level                                                   language such as C++, STDCALL is defined this way:
+
+return-type __stdcall function-name[(argument-list)]
+
 
 5.
      ___ ___ _____
@@ -1019,7 +1024,7 @@ content pointed at by it) and put it in EAX.
 
 
      In order to understand SHL or Shift Logical Left we need to use a number as an example and work with it. Imagine you have the instructions below
-which moves the hex value of 10 (or 16 decimal) in EAX and the does a SHL on EAX by 1:
+which moves the hex value of 10 (or 16 decimal) in EAX and then does a SHL on EAX by 1:
 
      mov eax, 0x10
      shl eax, 1
@@ -1056,7 +1061,7 @@ of 2.
       mov eax, 0x10
       shr eax, 2
 
-      After executing the instructions above, what would be the value of EAX? (DIY)
+      After executing the instructions above, what will be the value of EAX? (DIY)
 
 
 13.
@@ -1305,12 +1310,12 @@ called main() and main() is asking for its parameters argc and argv. So we compl
 
 
                     EAX = Pointer to the start of argv[] array
-                    ECX = Holds the number of command line arguments when executing the program in the command line. For example:
+                    ECX = Holds the number of command-line arguments when executing the program in the command line. For example:
                     bash#> ./program 100
-                    has 2 command line arguments.
+                    has 2 command-line arguments.
 
     Line <+12> corresponds to the first line in main(). The uninitialized variable "a" gets a NULL(0x00) value. Quickly note that different compilers
-and architectures handle the uninitialized variables differently. For example they may end up in HEAP or even don't end up anywhere until they get
+ and architectures handle the uninitialized variables differently. For example they may end up in HEAP or even don't end up anywhere until they get
 initialized.
     On lines <+19> and <+22> of main, those command-line arguments that we saw previously which were moved to EAX and ECX, now get copied onto the
 stack. This time relative addressing of EBP minus something is used. This type of addresses(EBP minus something) 99% of the time represent local
@@ -1444,7 +1449,7 @@ added to EAX. The final result will be in EAX and returned to main().
         Now it's time to return to main(). Knowing that sub's return value of 260 in in EAX, it wipes down its stack frame in line <+27> by adding 8
 to ESP. Then it pops the value in ESP(after adding 8 to ESP) which is the SAVED EBP into EBP register. Then it uses the SAVED EIP to return to main()
 (line <+60>).
-        The same story fits to the remaining instruction in main. It wipes up the stack frame by adding 0x18(24 decimal) to ESP. Pops SAVED EBP back
+        The same story fits to the remaining instructions in main. It wipes up the stack frame by adding 0x18(24 decimal) to ESP. Pops SAVED EBP back
 to EBP register and returns to whoever called main().
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1485,9 +1490,6 @@ the execution flow to our injected shellcode on the stack:
 
                 sub eax,0x100
                 jmp eax
-
-        **NOTE: We're gonna see more in-depth discussions on stack overflows later. So don't worry if you don't have a clue what I'm talking about.
-Just know that the JMP instruction is an unconditional jump and will change the execution flow, no questions asked.
 
 
 Conditional Jumps:
@@ -1963,7 +1965,7 @@ return 0;          ---> the final return value in EAX is 0.
 }
 ------------------------------------------------------------------------------------------------
 
-        While examining a program inside a debugger, often time we see 2 instructions that do a very simple task. These 2 instructions are introduced
+        While examining a program inside a debugger, often times we see 2 instructions that do a very simple task. These 2 instructions are introduced
 here as one:
 
 
@@ -2008,7 +2010,7 @@ SECTION .DATA
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
         This is the syntax that should be used to define sections in ASM. In almost every programming language, the starting point of the program is
-the "main()" function. In Assembly, the starting point is "_start" (Underline start). Since this function must be globally recognized throughout whole
+the "main()" function. In Assembly, the starting point is "_start" (Underline start). Its a convention which has been around. It's not a must. Since this function must be globally recognized throughout whole
 program, we declare it as GLOBAL:
 
 hello.asm
