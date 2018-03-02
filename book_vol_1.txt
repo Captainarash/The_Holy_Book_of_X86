@@ -189,6 +189,9 @@ Binary-Decimal-Hex Refresher:
 As a rule of thumb, a number represented in base x can't have x in its digits and instead, it will add one to the carry and increment the left most
 digit. (make sure you understand this statement).
 
+Since we have only bits, how do we recognize a negative from a positive number? Well, there is a flag named signed flag (SF) in a register call EFLAGS
+which determines of the number must be treated as a signed number or not. But that's as far as it tells you which means you still need to figure out
+the sign of the number.  
 
 Negative numbers:
         Negative numbers in x86 architecture may seem a little bit weird at first. A negative Number named N with the
