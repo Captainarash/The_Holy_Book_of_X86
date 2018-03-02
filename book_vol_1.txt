@@ -100,11 +100,15 @@ Since the book is not finished yet, it's not so convenient to put a table of con
 
 =====================================================================================================================================================
 
-
-
 Data Types:
 
-        There are 5 different data types to deal with in the world of Assembly. They are as follows:
+In the world of computers, we have the notion of Data Type. String, integer, float, double, char and such are examples of these data types. Down to
+machine level, there are but chunks of bytes which first define the length of the data, second, the length of machine level instruction (which we'll
+refer to them as assembly instructions from now on), third, depending on the instruction processing the data, it will determine the exact type (i.e.
+float in case of floating point instructions, signed or unsigned integer depending on the EFLAGS register, etc.).
+
+Now let's see how these data types are defined in terms of size. There are 5 different data types to deal with in the world of Assembly.
+
         Byte: A byte is simply an 8-bit value (1 byte) and the C equivalent of a Byte is when you define a character like:
         char alpha = 'a';
 
@@ -144,10 +148,9 @@ Data Types:
 
 
 Binary-Decimal-Hex Refresher:
-        If you don't know how to work with Hexadecimal and Binary values, I have to tell you to stop reading this and
-        go kill yourself. Seriously? Ok. Here's a refresher for you:
+        If you don't know how to work with Hexadecimal and Binary values, Here's a refresher for you:
 
-                        +-------------------- +-------------------- +--------------------
+                        +-------------------+ +-------------------+ +-------------------+
                         | Decimal (base 10) | | Binary (Base 2)   | |   HEX  (Base 16)  |
                         +-------------------+ +-------------------+ +-------------------+
                         |        00         | |       0000        | |       0x00        |
@@ -183,6 +186,8 @@ Binary-Decimal-Hex Refresher:
                         |        15         | |       1111        | |       0x0F        |
                         +-------------------+ +-------------------+ +-------------------+
 
+As a rule of thumb, a number represented in base x can't have x in its digits and instead, it will add one to the carry and increment the left most
+digit. (make sure you understand this statement).
 
 
 Negative numbers:
@@ -235,7 +240,7 @@ Little Endian or Big Endian?
         doesn't matter in computer architecture, right? Well, I don't know exactly. Probably not. But what matters is that Intel
         Architecture is "Little-Endian". So what's up with that?
 
-        In a Little-Endian Architecture, values are stored in RAM starting from the lowest byte. For example, this is what happens if 
+        In a Little-Endian Architecture, values are stored in RAM starting from the lowest byte. For example, this is what happens if
         you want to store the address 0x12345678 in memory:
 
         0x12345678  -->  0x12 0x34 0x56 0x78  -->
@@ -255,7 +260,7 @@ REGISTERS:
 
 
         Registers are small memory storage areas built into the processor. They are still a volatile type of memory storage so if you power off
-        your PC, you're gonna lose the state of your registers. Intel architecture defines 8 General Purpose Registers (GPR) for 32 bit platforms 
+        your PC, you're gonna lose the state of your registers. Intel architecture defines 8 General Purpose Registers (GPR) for 32 bit platforms
         and 16 GPRs for 64 bit platforms as follows:
 
         32-bit         |        64-bit
@@ -278,20 +283,20 @@ REGISTERS:
         ESP            |            RSP
                        |
                        |            R8
-                       |                       
+                       |
                        |            R9
-                       |                       
+                       |
                        |            R10
-                       |                       
+                       |
                        |            R11
-                       |               
+                       |
                        |            R12
-                       |               
+                       |
                        |            R13
-                       |               
+                       |
                        |            R14
-                       |               
-                       |            R15                                  
+                       |
+                       |            R15
 
 
         Each of the registers above is 4 bytes long in the 32-bit version, and 8 bytes long in the 64-bit version. Beside those General
@@ -768,7 +773,7 @@ for cleaning up the stack. So here we wrap it up in the list below:
 
 STDCALL:
   The only difference between STDCALL and CDECL is that in STDCALL, the callee is responsible for cleaning up the stack. This calling convention is
-  mainly used by Microsoft C++ code (e.g. WIN32 API). You may have seen __stdcall declaration when using a function in Windows 
+  mainly used by Microsoft C++ code (e.g. WIN32 API). You may have seen __stdcall declaration when using a function in Windows
   API by ʥrst ʥnding its address in some windows Library (e.g. ZwQueryInformationProcess in ntdll.dll). In a high-level                                                   language such as C++, STDCALL is defined this way:
 
 return-type __stdcall function-name[(argument-list)]
