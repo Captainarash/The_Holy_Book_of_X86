@@ -191,11 +191,12 @@ digit. (make sure you understand this statement).
 
 Since we have only bits, how do we recognize a negative from a positive number? Well, there is a flag named signed flag (SF) in a register call EFLAGS
 which determines of the number must be treated as a signed number or not. But that's as far as it tells you which means you still need to figure out
-the sign of the number.  
+the sign of the number.
 
 Negative numbers:
-        Negative numbers in x86 architecture may seem a little bit weird at first. A negative Number named N with the
-        positive value of P, is P's two's complement which is equal to one's complement plus one.
+        Negative numbers in x86 architecture may seem a little bit weird at first. x86 is a 2's complement architecture. A negative Number named N
+        with the positive value of P, is P's two's complement which is equal to one's complement plus one.
+
         Holy shit! What was that again? OK! It is very simple and clear if you see it in action.
 
         P = 1 in decimal = 0x01 in Hex = 00000001 in Binary.
