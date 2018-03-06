@@ -348,17 +348,14 @@ The Stack
         "Hello World" code in Assembly. So stick with me and be patient.
 
 
-Caller - Callee Convention
+Caller/Callee Saved Registers
 
-        Caller Save Registers mean that whenever you want to call a function, save these registers (EAX,EDX,ECX  32-bit or RAX,EDX,ECX
-        for 64-bit) somehow so when the execution is handed over to the function, your data will remain intact. That means the caller is
-        responsible of saving these registers in order to prevent their destruction when the function modifies the values held in these
-        registers. The caller is also responsible for restoring the saved values in registers when execution gets back to it.
+        There is a good explanation regarding caller/callee saved registers on MSDN:
 
-        Callee Save Registers means that when the function (the callee) needs more registers than those which are already saved by the caller,
-        callee is responsible for saving those values before going to its actual execution point. The registers that the callee is responsible for
-        are EBP, EBX, ESI, EDI (RBP, RBX, RSI, RDI 64-bit). The callee is responsible for restoring these saved values back to their place before
-        handing the execution back to the caller.
+        The registers RAX, RCX, RDX, R8, R9, R10, R11 are considered volatile and must be considered destroyed on 
+        function calls (unless otherwise safety-provable by analysis such as whole program optimization).
+        The registers RBX, RBP, RDI, RSI, RSP, R12, R13, R14, and R15 are considered nonvolatile and must be saved
+        and restored by a function that uses them.
 
 
 Structure of Registers
