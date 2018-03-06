@@ -186,8 +186,8 @@ Binary-Decimal-Hex Refresher:
                         |        15         | |       1111        | |       0x0F        |
                         +-------------------+ +-------------------+ +-------------------+
 
-As a rule of thumb, a number represented in base x can't have x in its digits and instead, it will add one to the carry and increment the left most
-digit. (make sure you understand this statement).
+As a rule of thumb, a number represented in base x can't have x in its digits and instead, it will add one to the carry and increment the digit on
+its left. (make sure you understand this statement).
 
 Since we have only bits, how do we recognize a negative from a positive number? Well, there is a flag named signed flag (SF) in a register call EFLAGS
 which determines of the number must be treated as a signed number or not. But that's as far as it tells you which means you still need to figure out
@@ -241,7 +241,7 @@ Negative numbers:
 
 Little Endian or Big Endian?
         Endianness comes from Jonathan Swifts' "Gulliver's Travels". It doesn't matter which way you eat your eggs and it certainly
-        doesn't matter in computer architecture, right? Well, I don't know exactly. Probably not. But what matters is that Intel
+        doesn't matter in computer architecture, right?, I don't know exactly. Probably not. But what matters is that Intel
         Architecture is "Little-Endian". So what's up with that?
 
         In a Little-Endian Architecture, values are stored in RAM starting from the lowest byte. For example, this is what happens if
@@ -263,9 +263,11 @@ Little Endian or Big Endian?
 REGISTERS:
 
 
-        Registers are small memory storage areas built into the processor. They are still a volatile type of memory storage so if you power off
-        your PC, you're gonna lose the state of your registers. Intel architecture defines 8 General Purpose Registers (GPR) for 32 bit platforms
-        and 16 GPRs for 64 bit platforms as follows:
+        Registers are small memory storage areas built into the processor. Think of them as cups which you use to hold data for manipulation. They are
+        still a volatile type of memory storage so if you power off your PC, you're gonna lose the state of your registers. Intel architecture defines
+        8 General Purpose Registers (GPR) for 32-bit platforms and 16 GPRs for 64 bit platforms as shown below. They are called general purpose
+        because, there are some special purpose registers that are used by for a specific purpose by the hardware or platform like MSR (Model-Specific
+        Register).
 
         32-bit         |        64-bit
 ------------------------------------------------
@@ -305,17 +307,17 @@ REGISTERS:
 
         Each of the registers above is 4 bytes long in the 32-bit version, and 8 bytes long in the 64-bit version. Beside those General
         Purpose Registers, we have EIP (RIP for 64-bit) which is called the Instruction Pointer which holds the current flow of the execution;
-        and we have EFLAGS, which is a 32-bit long register of registers. Yeah, I know that might sound crazy but I will explain them fully
-        in later chapters.
+        and we have EFLAGS (RFLAGS for 64-bit), which is a 32-bit (64-bit) long register That contains control flags which define some serious
+        properties during the runtime.
 
 
-        EAX is mostly used when a function wants to return a value and it is also used for lots of different purposes. You have to see it
-        in action in order to recognize its usability in different scenarios. EBX is the Base Pointer for data section and EDX is the I/O pointer
-        but let's save these conventions for later chapters. ECX is mostly used as a counter for repetitive instructions i.e. for a
-        loop. ESI and EDI are used as Source Index and Destination Index respectively i.e. copying a string value. ESP is the stack pointer
-        which always points to the top of the current stack. EBP is the base pointer which always (actually not always :D) points to the bottom
-        of the current stack frame by convention. I have to mention that these are only some conventions and you don't have to use them in the
-        exact way. It is simply for simplicity and readability of your code.
+        EAX (RAX for 64-bit) is mostly used when a function wants to return a value and it is also used for lots of different purposes. You have to
+        see it in action in order to recognize its usability in different scenarios. EBX (RBX) is the Base Pointer for data section and EDX (RDX)
+        is the I/O pointer but let's save these conventions for later (Honestly, they don't even matter!). ECX (RCX) is mostly used as a counter
+        for repetitive instructions i.e. for a loop. ESI (RSI) and EDI (RDI) are used as Source Index and Destination Index respectively i.e.
+        copying a string value. ESP (RSP) is the stack pointer which always points to the top of the current stack. EBP (RBP) is the base pointer
+        which always (actually not always :D) points to the bottom of the current stack frame by convention. Some of these conventions are there
+        to be explained and waste the readers time (sorry about that!). But, some are very important as it will becomes clear to you.
 
 The Stack
 
