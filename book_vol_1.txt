@@ -321,14 +321,26 @@ REGISTERS:
 
 The Stack
 
-        Two very important concepts you need to know, Stack and Heap. I'm gonna tell you what Stack is now and save Heap for later
-        chapters. Stack is a conceptual area of memory (RAM) which mostly holds a function's local variables. Stack has a Last-In-First-Out
-        data structure, meaning that the first thing that is pushed onto the stack is the last thing that is gonna pop out. Imagine a bucket
-        full of apples. The first apple that you put inside the bucket is the last one that you can pull out (of course if you don't
-        just turn the bucket upside down :D).
+        Two very important concepts you need to learn are Stack and Heap. I'm gonna tell you what Stack is now and save Heap for later. Stack is
+        a conceptual area of memory (RAM) which mostly holds a function's local variables. Stack has a Last-In-First-Out data structure, meaning
+        that the first thing that is pushed onto the stack is the last thing that is gonna pop out. Imagine a bucket full of apples. The first
+        apple that you put inside the bucket is the last one that you can pull out (of course if you don't just turn the bucket upside down :D).
         Stack grows down from higher memory addresses to lower memory addresses. For example, if the stack starts at address 0x7fff4444
         (ESP), the next DWORD (4 bytes, remember?) that you push onto the stack, decrements the stack by 4 bytes and then ESP will point to
-        0x7fff4444 - 4 = 0x7fff4440. You will see this in greater detail in the next few paragraphs.
+        0x7fff4444 - 4 = 0x7fff4440. Same goes for 64-bit with only the tiny difference that the stack is 8-byte aligned instead of
+        4-byte.
+
+        With the explanation given about the stack, one might think of stack as a reserved dynamic memory space for all processes which
+        continuously and randomly modify the stack by pushing and pulling. One might also imagine every process having its own chunk of memory
+        space, in a contiguous way, right next to the other processes. These are both wrong. Don't feel discouraged since you aren't familiar with
+        the concept of paging and private address space (explained in volume 2). We can barely introduce it here so you can go on with this book
+        and explain the real deal in volume 2.
+
+        Every process has a an address space entirely private to itself starting from 0x00000000 to 0x7FFFFFFF on 32-bit processes and
+        0x000'0000000 through 0x7FF'FFFFFFFF on 64-bit processes. I know what question in mind: Don't they just overlap this way? No! because
+        of the magic of paging, every process thinks that it owns all the memory. Paging will map every process' virtual address to
+        physical memory. Oh, yeah! These addresses that we deal with in computers are entirely virtual and don't represent their exact location
+        on physical memory. Paging is discussed more in depth on volume 2.
 
 
         OK, you may want me to cut the bullshit and show you some real stuff, right? How about we see a simple C program? Hell no!
