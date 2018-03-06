@@ -361,10 +361,13 @@ Caller/Callee Saved Registers
 Structure of Registers
 
         Every register is divided into some smaller pieces as demonstrated below. These smaller parts are used in optimized code with
-        maximum speed and least space allocation. Also, in the boot phase of the computer, we deal with 16-bit environment which means
-        all registers, memory addresses, values, etc. that we use should not exceed 16 bits. Examples are such environments are boot loaders,
-        legacy BIOS, etc. When the OS (64-bit version) is booted and running, we are operating in long 64-bit mode  or protected mode which gives us the
-        privilege to access the entire address space and use 64-bit registers.
+        maximum speed and least space allocation. Also, in the (pre-)boot phase of the computer, we deal with 16-bit environment called
+        Real Mode, which means all registers, memory addresses, values, etc. that we use should not exceed 16 bits. There is no paging,
+        no segmentation available. This phase talks to the hardware directly. Examples are such environments are boot loaders, legacy
+        BIOS, etc. When the OS (64-bit version) is booted and running, we are operating in long 64-bit mode  or protected mode which
+        gives us the privilege to access the entire address space and use 64-bit registers.
+
+        These subjects (protected mode, real mode, virtual address, segmentation, etc. are explained deeply in volume 2).
 
         63                                 0
         +----------------------------------+
@@ -563,9 +566,6 @@ Structure of Registers
                          31                0
 
 
-
-You can access the small portions of registers in an assembly code. The concept of accessing and using these small portions becomes
-clear in shellcoding when you want your shellcode to be as small as possible.
 
 Here are some instructions for you but before you begin, you must know the basic syntax of an assembly instruction. We have 2 different notations of
 assembly, Intel notation and AT&T notation.
