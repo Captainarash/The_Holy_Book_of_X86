@@ -567,9 +567,9 @@ Structure of Registers
 
 
 
-Here are some instructions for you but before you begin, you must know the basic syntax of an assembly instruction. We have 2 different notations of
-assembly, Intel notation and AT&T notation.
-  In Intel notation after the instruction, first the destination is mentioned followed by a comma and the source.
+Here are some instructions for you but before you begin, you must know the basic syntax of an assembly instruction. There are 2 different notations
+of assembly, Intel notation and AT&T notation.
+  In Intel notation, after the instruction, first the destination is mentioned followed by a comma and then the source.
 
         instruction destination, source
 
@@ -578,7 +578,7 @@ assembly, Intel notation and AT&T notation.
 
         instruction %source, %destination
 
-*** NOTE: The percent sign is only applied to the registers. It doesn't apply to the immediate values.
+*** NOTE: The percent sign is only applied to the registers. It doesn't apply to the immediate values. They get the dollar sign ;)
 
 
 1.
@@ -591,12 +591,12 @@ assembly, Intel notation and AT&T notation.
 
 
 
-YES! The first instruction for you to learn is NOP. NOP stands for No Operation. Better to wipe that smile off your face and tell me what NOP does. Ha? Nothing?
-Well, you're wrong! NOP actually does something. A NOP instruction is like this:
+YES! The first instruction for you to learn is NOP. NOP stands for No Operation. Better to wipe that smile off your face and tell me what NOP does.
+Ha? Nothing? Well, you're wrong! NOP actually does something. A NOP instruction is like this:
 
-        XCHG eax,eax
+        XCHG rax,rax
 
-It conceptually does nothing, but behind the scene it exchanges (XCHG as you guessed) the value in EAX with EAX.
+It conceptually does nothing, but behind the scene it exchanges (XCHG as you guessed) the value in RAX with RAX.
 
 2.
 
@@ -695,7 +695,7 @@ are CDECL and STDCALL conventions.
 
 CDECL:
 "C Declaration" is the most commonly used convention for all C code and some C++. In CDECL, the caller must push the parameters of the
-function that is gonna be called(callee) onto the stack from right to left. So for example if we have this function in C:
+function that is gonna be called (callee) onto the stack from right to left. So for example if we have this function in C:
 
         func (int a, int b){
                 ...
@@ -790,12 +790,26 @@ for cleaning up the stack. So here we wrap it up in the list below:
   5. Caller is responsible for cleaning up the stack.
 
 
+
 STDCALL:
   The only difference between STDCALL and CDECL is that in STDCALL, the callee is responsible for cleaning up the stack. This calling convention is
   mainly used by Microsoft C++ code (e.g. WIN32 API). You may have seen __stdcall declaration when using a function in Windows
   API by ʥrst ʥnding its address in some windows Library (e.g. ZwQueryInformationProcess in ntdll.dll). In a high-level                                                   language such as C++, STDCALL is defined this way:
 
 return-type __stdcall function-name[(argument-list)]
+
+
+FASTCALL:
+  64-bit Application Binary Interface uses a different calling convention called fastcall. The exact registers used in the convention are
+  different in Windows and BSD systems. But the overall convention tells that instead of pushing the parameters on the stack, the caller must
+  pass them to callee through registers. On Windows side, the registers are RCX, RDX, R8, R9 in that order. On Linux side (may subject to tiny
+  differences from model to model), the registers are RDI, RSI, RDX, RCX, R8, R9. If there are more parameters to pass, they are pass on the stack.
+  Parameters which don't fit in 1, 2, 4 or 8 bytes, and also strings, are passed by reference.
+
+
+
+  Final note on calling conventions: Of course there are more calling conventions that these that we mentioned. You should learn more about them
+  in the time of need. These conventions were the most widely used ones on different platforms. 
 
 
 5.
