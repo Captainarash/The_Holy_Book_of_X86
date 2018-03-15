@@ -113,14 +113,14 @@ Now let's see how these data types are defined in terms of size. There are 5 dif
         char alpha = 'a';
 
         Word: A word is twice the size of a byte; 16-bit value (2 bytes) and it translates to this piece of code in C:
-        short int = 'a'
+        short int n = 1
 
         DoubleWord: As its name represents, a Double-Word or a DWORD is a 32-bit value
 (4 bytes) and it would be translated to:
-        int var = 3
+        int n = 1
 
         QuadWord: A 64-bit value (8 bytes) with the C equivalent of:
-        long int var = ...
+        long int n = ...
 
         Double-QuadWord: You do the math :)
 
