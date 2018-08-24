@@ -38,6 +38,4 @@ A simple guide to x86 architecture, assembly, memory management, paging, segment
 ###### Section 3: Linux Internals
 
 ## If you want to support the author:
-     Please buy the Paperback version of Volume 1 on Amazon or CreateSpace eStore:
-    CreateSpace eStore: https://www.createspace.com/7244052
-    Amazon.com: https://www.amazon.com/Holy-Book-x86-1/dp/1974170780/ref=sr_1_1?ie=UTF8&qid=1502364426&sr=8-1&keywords=the+holy+book+of+x86
+     No need.The book is out of print :(
