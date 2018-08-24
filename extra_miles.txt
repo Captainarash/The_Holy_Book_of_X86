@@ -6,7 +6,11 @@ Extra miles:
 
         2. What does this piece of code do?
         Dump of assembler code for function func:
+<<<<<<< HEAD
            0x0000000100000ee1 <+0>:	push   rbp
+=======
+           0x0000000100000ee1 <+0>:     push   rbp
+>>>>>>> 2c7ca28e1d5ea0b823d4e36227fc4abe0ebe349d
            0x0000000100000ee2 <+1>:	mov    rbp,rsp
            0x0000000100000ee5 <+4>:	push   r15
            0x0000000100000ee7 <+6>:	push   r14
