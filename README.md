@@ -8,7 +8,7 @@ For More Tutorials and Info, Please visit:
 **https://twitter.com/KernelFarm**   
 **https://twitter.com/arash_tc**
 
-A complete guide to x86 architecture, assembly, memory management, paging, segmentation, SMM, BIOS....    
+A simple guide to x86 architecture, assembly, memory management, paging, segmentation, SMM, BIOS....    
 
     This book tends to overview and teach x86 subjects in the eyes of a reverse engineer, malware analyst or a 
     hacker. We're not going to teach you how to build an OS or other subjects that are not related to those 
