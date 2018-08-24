@@ -3,3 +3,48 @@
 Extra miles:
         1. https://github.com/wapiflapi/exrs/blob/master/reverse/r1
         Hint: run the binary first. use some of your GDB Kung Fu to find the holy string.
+
+        2. What does this piece of code do?
+        Dump of assembler code for function func:
+           0x0000000100000ee1 <+0>:	  push   rbp
+           0x0000000100000ee2 <+1>:	  mov    rbp,rsp
+           0x0000000100000ee5 <+4>:	  push   r15
+           0x0000000100000ee7 <+6>:	  push   r14
+           0x0000000100000ee9 <+8>:	  push   r13
+           0x0000000100000eeb <+10>:	push   r12
+           0x0000000100000eed <+12>:	push   rbx
+           0x0000000100000eee <+13>:	push   rax
+           0x0000000100000eef <+14>:	mov    r14,rsi
+           0x0000000100000ef2 <+17>:	mov    rbx,rdi
+           0x0000000100000ef5 <+20>:	lea    r13,[r14-0x1]
+           0x0000000100000ef9 <+24>:	cmp    r13,0x3ff
+           0x0000000100000f00 <+31>:	ja     0x100000f39 <func+88>
+           0x0000000100000f02 <+33>:	lea    r12,[r14+0x1]
+           0x0000000100000f06 <+37>:	mov    rdi,r12
+           0x0000000100000f09 <+40>:	call   0x100000f54
+           0x0000000100000f0e <+45>:	mov    r15,rax
+           0x0000000100000f11 <+48>:	mov    rdi,r15
+           0x0000000100000f14 <+51>:	mov    rsi,r12
+           0x0000000100000f17 <+54>:	call   0x100000f4e
+           0x0000000100000f1c <+59>:	test   r15,r15
+           0x0000000100000f1f <+62>:	je     0x100000f39 <func+88>
+           0x0000000100000f21 <+64>:	add    rbx,r13
+           0x0000000100000f24 <+67>:	xor    eax,eax
+           0x0000000100000f26 <+69>:	mov    cl,BYTE PTR [rbx]
+           0x0000000100000f28 <+71>:	mov    BYTE PTR [r15+rax*1],cl
+           0x0000000100000f2c <+75>:	inc    rax
+           0x0000000100000f2f <+78>:	dec    rbx
+           0x0000000100000f32 <+81>:	cmp    r14,rax
+           0x0000000100000f35 <+84>:	jne    0x100000f26 <func+69>
+           0x0000000100000f37 <+86>:	jmp    0x100000f3c <func+91>
+           0x0000000100000f39 <+88>:	xor    r15d,r15d
+           0x0000000100000f3c <+91>:	mov    rax,r15
+           0x0000000100000f3f <+94>:	add    rsp,0x8
+           0x0000000100000f43 <+98>:	pop    rbx
+           0x0000000100000f44 <+99>:	pop    r12
+           0x0000000100000f46 <+101>:	pop    r13
+           0x0000000100000f48 <+103>:	pop    r14
+           0x0000000100000f4a <+105>:	pop    r15
+           0x0000000100000f4c <+107>:	pop    rbp
+           0x0000000100000f4d <+108>:	ret
+        End of assembler dump.
