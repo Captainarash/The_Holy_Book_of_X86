@@ -6,11 +6,11 @@ Extra miles:
 
         2. What does this piece of code do?
         Dump of assembler code for function func:
-           0x0000000100000ee1 <+0>:	  push   rbp
-           0x0000000100000ee2 <+1>:	  mov    rbp,rsp
-           0x0000000100000ee5 <+4>:	  push   r15
-           0x0000000100000ee7 <+6>:	  push   r14
-           0x0000000100000ee9 <+8>:	  push   r13
+           0x0000000100000ee1 <+0>:	push   rbp
+           0x0000000100000ee2 <+1>:	mov    rbp,rsp
+           0x0000000100000ee5 <+4>:	push   r15
+           0x0000000100000ee7 <+6>:	push   r14
+           0x0000000100000ee9 <+8>:	push   r13
            0x0000000100000eeb <+10>:	push   r12
            0x0000000100000eed <+12>:	push   rbx
            0x0000000100000eee <+13>:	push   rax
@@ -21,13 +21,13 @@ Extra miles:
            0x0000000100000f00 <+31>:	ja     0x100000f39 <func+88>
            0x0000000100000f02 <+33>:	lea    r12,[r14+0x1]
            0x0000000100000f06 <+37>:	mov    rdi,r12
-           0x0000000100000f09 <+40>:	call   0x100000f54
+           0x0000000100000f09 <+40>:	call   malloc()
            0x0000000100000f0e <+45>:	mov    r15,rax
-           0x0000000100000f11 <+48>:	mov    rdi,r15
-           0x0000000100000f14 <+51>:	mov    rsi,r12
-           0x0000000100000f17 <+54>:	call   0x100000f4e
-           0x0000000100000f1c <+59>:	test   r15,r15
-           0x0000000100000f1f <+62>:	je     0x100000f39 <func+88>
+           0x0000000100000f11 <+48>:	test   r15,r15
+           0x0000000100000f14 <+51>:	je     0x100000f39 <func+88>
+           0x0000000100000f16 <+53>:	mov    rdi,r15
+           0x0000000100000f19 <+56>:	mov    rsi,r12
+           0x0000000100000f1c <+59>:	call   memset()
            0x0000000100000f21 <+64>:	add    rbx,r13
            0x0000000100000f24 <+67>:	xor    eax,eax
            0x0000000100000f26 <+69>:	mov    cl,BYTE PTR [rbx]
