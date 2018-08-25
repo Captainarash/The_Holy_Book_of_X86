@@ -8,13 +8,11 @@ For More Tutorials and Info, Please visit:
 **https://twitter.com/KernelFarm**   !!! DEPRECATED !!!
 **https://twitter.com/arash_tc** !!! DEACTIVATED !!!
 
-A simple guide to x86 architecture, assembly, memory management, paging, segmentation, SMM, BIOS....    
+A simple guide to x86 architecture, assembly, memory management, paging, segmentation, SMM (Not Available), BIOS (Not Available).    
 
     This book tends to overview and teach x86 subjects in the eyes of a reverse engineer, malware analyst or a
     hacker. We're not going to teach you how to build an OS or other subjects that are not related to those
     mentioned above.
-
-> This Book will be completed and published in 3 volumes. I try to update the content as I write the book. The Hardcopy of the volume 1 & 2 may become available for purchase on Amazon later if necessary.
 
 ### Here's a quick overview of the content (current content):    
 
@@ -35,7 +33,8 @@ A simple guide to x86 architecture, assembly, memory management, paging, segment
   - Chapter 0x05: Interrupts and Exceptions
 ###### Section 2: Windows Internals
   - Chapter 0x06: Exploring PE files
+  !!! DISCONTINUED !!!
 ###### Section 3: Linux Internals
-
+  !!! DISCONTINUED !!!
 ## If you want to support the author:
-     No need.The book is out of print :(
+     No need. The book is out of print :(
