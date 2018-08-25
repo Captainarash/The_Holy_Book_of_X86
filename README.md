@@ -32,7 +32,7 @@ A simple guide to x86 architecture, assembly, memory management, paging, segment
   - Chapter 0x04: Cache Control
   - Chapter 0x05: Interrupts and Exceptions
 ###### Section 2: Windows Internals
-  - Chapter 0x06: Exploring PE files
+  - Chapter 0x06: Exploring PE files  
   !!! DISCONTINUED !!!
 ###### Section 3: Linux Internals
   !!! DISCONTINUED !!!
