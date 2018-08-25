@@ -3,15 +3,15 @@
 ======================    
 Delivered to you by **Arash TC** with the spirit of OpenSecurityTraining    
 For More Tutorials and Info, Please visit:    
-**http://www.kernelfarm.com**    
-**https://www.linkedin.com/in/arash-t-c-3a277bbb**    
-**https://twitter.com/KernelFarm**   
-**https://twitter.com/arash_tc**
+**http://www.kernelfarm.com**   !!! Website is down !!!
+**https://www.linkedin.com/in/arash-t-c-3a277bbb**  
+**https://twitter.com/KernelFarm**   !!! DEPRECATED !!!
+**https://twitter.com/arash_tc** !!! DEACTIVATED !!!
 
 A simple guide to x86 architecture, assembly, memory management, paging, segmentation, SMM, BIOS....    
 
-    This book tends to overview and teach x86 subjects in the eyes of a reverse engineer, malware analyst or a 
-    hacker. We're not going to teach you how to build an OS or other subjects that are not related to those 
+    This book tends to overview and teach x86 subjects in the eyes of a reverse engineer, malware analyst or a
+    hacker. We're not going to teach you how to build an OS or other subjects that are not related to those
     mentioned above.
 
 > This Book will be completed and published in 3 volumes. I try to update the content as I write the book. The Hardcopy of the volume 1 & 2 may become available for purchase on Amazon later if necessary.
