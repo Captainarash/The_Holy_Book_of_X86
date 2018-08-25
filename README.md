@@ -1,10 +1,10 @@
 
 # The Holy Book of X86    
 ======================    
-Delivered to you by **Arash TC** with the spirit of OpenSecurityTraining    
+Delivered to you by **Arash Tohidi** with the spirit of OpenSecurityTraining    
 For More Tutorials and Info, Please visit:    
-**http://www.kernelfarm.com**   !!! Website is down !!!
-**https://www.linkedin.com/in/arash-t-c-3a277bbb**  
+**http://www.kernelfarm.com**   !!! WEBSITE IS DOWN !!!
+**https://www.linkedin.com/in/arash-t-c-3a277bbb**  !!! NOT ACTIVE !!!
 **https://twitter.com/KernelFarm**   !!! DEPRECATED !!!
 **https://twitter.com/arash_tc** !!! DEACTIVATED !!!
 
