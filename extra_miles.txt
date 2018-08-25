@@ -4,10 +4,10 @@ Extra miles:
         1. https://github.com/wapiflapi/exrs/blob/master/reverse/r1
         Hint: run the binary first. use some of your GDB Kung Fu to find the holy string.
 
-        2. What does this piece of code do?
+        2. Decompile this function.
         Dump of assembler code for function func:
-           0x0000000100000ee1 <+0>:	push   rbp
-           0x0000000100000ee1 <+0>:     push   rbp
+           0x0000000100000ee1 <+0>: push   rbp
+           0x0000000100000ee1 <+0>: push   rbp
            0x0000000100000ee2 <+1>:	mov    rbp,rsp
            0x0000000100000ee5 <+4>:	push   r15
            0x0000000100000ee7 <+6>:	push   r14
@@ -48,4 +48,29 @@ Extra miles:
            0x0000000100000f4a <+105>:	pop    r15
            0x0000000100000f4c <+107>:	pop    rbp
            0x0000000100000f4d <+108>:	ret
+        End of assembler dump.\
+
+        3. What does this function do? Why is it important?
+        Dump of assembler code for function func:
+           0x0000000100000eaa <+0>:	push   rbp
+           0x0000000100000eab <+1>:	mov    rbp,rsp
+           0x0000000100000eae <+4>:	mov    ecx,esi
+           0x0000000100000eb0 <+6>:	imul   ecx,edi
+           0x0000000100000eb3 <+9>:	xor    edx,edx
+           0x0000000100000eb5 <+11>:	mov    eax,ecx
+           0x0000000100000eb7 <+13>:	div    edi
+           0x0000000100000eb9 <+15>:	cmp    eax,esi
+           0x0000000100000ebb <+17>:	jne    0x100000ed1 <func+39>
+           0x0000000100000ebd <+19>:	xor    r8d,r8d
+           0x0000000100000ec0 <+22>:	xor    edx,edx
+           0x0000000100000ec2 <+24>:	mov    eax,ecx
+           0x0000000100000ec4 <+26>:	div    esi
+           0x0000000100000ec6 <+28>:	cmp    eax,edi
+           0x0000000100000ec8 <+30>:	cmove  r8d,ecx
+           0x0000000100000ecc <+34>:	mov    eax,r8d
+           0x0000000100000ecf <+37>:	pop    rbp
+           0x0000000100000ed0 <+38>:	ret
+           0x0000000100000ed1 <+39>:	xor    eax,eax
+           0x0000000100000ed3 <+41>:	pop    rbp
+           0x0000000100000ed4 <+42>:	ret
         End of assembler dump.
