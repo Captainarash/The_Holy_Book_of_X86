@@ -3,10 +3,10 @@
 ======================    
 Delivered to you by **Arash Tohidi** with the spirit of OpenSecurityTraining    
 For More Tutorials and Info, Please visit:    
-**http://www.kernelfarm.com**   !!! WEBSITE IS DOWN !!!
-**https://www.linkedin.com/in/arash-t-c-3a277bbb**  !!! NOT ACTIVE !!!
-**https://twitter.com/KernelFarm**   !!! DEPRECATED !!!
-**https://twitter.com/arash_tc** !!! DEACTIVATED !!!
+**http://www.kernelfarm.com**   !!! WEBSITE IS DOWN !!!  
+**https://www.linkedin.com/in/arash-t-c-3a277bbb**  !!! NOT ACTIVE !!!  
+**https://twitter.com/KernelFarm**   !!! DEPRECATED !!!  
+**https://twitter.com/arash_tc** !!! DEACTIVATED !!!  
 
 A simple guide to x86 architecture, assembly, memory management, paging, segmentation, SMM (Not Available), BIOS (Not Available).    
 
