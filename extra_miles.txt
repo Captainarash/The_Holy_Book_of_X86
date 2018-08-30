@@ -12,7 +12,7 @@ Extra miles:
 
         2. Decompile this function.
         Dump of assembler code for function func:
-           0x0000000100000ee1 <+0>:   push   rbp
+           0x0000000100000ee1 <+0>:    push   rbp
            0x0000000100000ee2 <+1>:	mov    rbp,rsp
            0x0000000100000ee5 <+4>:	push   r15
            0x0000000100000ee7 <+6>:	push   r14
