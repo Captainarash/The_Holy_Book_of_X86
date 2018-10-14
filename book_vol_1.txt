@@ -104,7 +104,7 @@ Data Types:
 
 In the world of computers, we have the notion of Data Type. String, integer, float, double, char and such are examples of these data types. Down to
 machine level, there are but chunks of bytes which first define the length of the data, second, the length of machine level instruction (which we'll
-refer to them as assembly instructions from now on), third, depending on the instruction processing the data, it will determine the exact type (i.e.
+refer to as assembly instructions from now on), third, depending on the instruction processing the data, it will determine the exact type (i.e.
 float in case of floating point instructions, signed or unsigned integer depending on the EFLAGS register, etc.).
 
 Now let's see how these data types are defined in terms of size. There are 5 different data types to deal with in the world of Assembly.
@@ -307,7 +307,7 @@ REGISTERS:
 
         Each of the registers above is 4 bytes long in the 32-bit version, and 8 bytes long in the 64-bit version. Beside those General
         Purpose Registers, we have EIP (RIP for 64-bit) which is called the Instruction Pointer which holds the current flow of the execution;
-        and we have EFLAGS (RFLAGS for 64-bit), which is a 32-bit (64-bit) long register That contains control flags which define some serious
+        and we have EFLAGS (RFLAGS for 64-bit), which is a 32-bit (64-bit) long register that contains control flags which define some serious
         properties during the runtime.
 
 
@@ -317,20 +317,20 @@ REGISTERS:
         for repetitive instructions i.e. for a loop. ESI (RSI) and EDI (RDI) are used as Source Index and Destination Index respectively i.e.
         copying a string value. ESP (RSP) is the stack pointer which always points to the top of the current stack. EBP (RBP) is the base pointer
         which always (actually not always :D) points to the bottom of the current stack frame by convention. Some of these conventions are there
-        to be explained and waste the readers time (sorry about that!). But, some are very important as it will becomes clear to you.
+        to be explained and waste the reader's time (sorry about that!). But, some are very important as it will becomes clear to you.
 
 The Stack
 
-        Two very important concepts you need to learn are Stack and Heap. I'm gonna tell you what Stack is now and save Heap for later. Stack is
-        a conceptual area of memory (RAM) which mostly holds a function's local variables. Stack has a Last-In-First-Out data structure, meaning
+        Two very important concepts you need to learn are the Stack and Heap. I'm gonna tell you what the Stack is now and save the Heap for later. The Stack is
+        a conceptual area of memory (RAM) which mostly holds a function's local variables. The Stack has a Last-In-First-Out data structure, meaning
         that the first thing that is pushed onto the stack is the last thing that is gonna pop out. Imagine a bucket full of apples. The first
         apple that you put inside the bucket is the last one that you can pull out (of course if you don't just turn the bucket upside down :D).
-        Stack grows down from higher memory addresses to lower memory addresses. For example, if the stack starts at address 0x7fff4444
+        The Stack grows down from higher memory addresses to lower memory addresses. For example, if the stack starts at address 0x7fff4444
         (ESP), the next DWORD (4 bytes, remember?) that you push onto the stack, decrements the stack by 4 bytes and then ESP will point to
-        0x7fff4444 - 4 = 0x7fff4440. Same goes for 64-bit with only the tiny difference that the stack is 8-byte aligned instead of
+        0x7fff4444 - 4 = 0x7fff4440. The same goes for 64-bit with only the tiny difference that the stack is 8-byte aligned instead of
         4-byte.
 
-        With the explanation given about the stack, one might think of stack as a reserved dynamic memory space for all processes which
+        With the explanation given about the stack, one might think of the stack as a reserved dynamic memory space for all processes which
         continuously and randomly modify the stack by pushing and pulling. One might also imagine every process having its own chunk of memory
         space, in a contiguous way, right next to the other processes. These are both wrong. Don't feel discouraged since you aren't familiar with
         the concept of paging and private address space (explained in volume 2). We can barely introduce it here so you can go on with this book
@@ -360,10 +360,10 @@ Caller/Callee Saved Registers
 
 Structure of Registers
 
-        Every register is divided to smaller pieces as demonstrated below. These smaller parts are used in optimized code with
-        maximum speed and least space allocation. Also, in the (pre-)boot phase of the computer, we deal with 16-bit environment called
+        Every register is divided into smaller pieces as demonstrated below. These smaller parts are used in optimized code with
+        maximum speed and least space allocation. Also, in the (pre-)boot phase of the computer, we deal with a 16-bit environment called
         Real Mode, which means all registers, memory addresses, values, etc. that we use should not exceed 16 bits. There is no paging,
-        no segmentation available. This phase talks to the hardware directly. Examples are such environments are boot loaders, legacy
+        no segmentation available. This phase talks to the hardware directly. Examples of such environments are boot loaders, legacy
         BIOS, etc. When the OS (64-bit version) is booted and running, we are operating in long 64-bit mode  or protected mode which
         gives us the privilege to access the entire address space and use 64-bit registers.
 
