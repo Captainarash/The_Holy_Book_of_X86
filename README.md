@@ -2,11 +2,12 @@
 # The Holy Book of X86    
 ======================    
 Delivered to you by **Arash Tohidi** with the spirit of OpenSecurityTraining    
-For More Tutorials and Info, Please visit:    
+For more info, please visit:   
+**https://www.linkedin.com/in/arash-tc**  
+**https://twitter.com/H4UL4**  
 **http://www.kernelfarm.com**   !!! WEBSITE IS DOWN !!!  
-**https://www.linkedin.com/in/arash-tc**  !!! NOT ACTIVE !!!  
 **https://twitter.com/KernelFarm**   !!! DEPRECATED !!!  
-**https://twitter.com/arash_tc** !!! DEACTIVATED !!!  
+
 
 A simple guide to x86 architecture, assembly, memory management, paging, segmentation, SMM (Not Available), BIOS (Not Available).    
 
