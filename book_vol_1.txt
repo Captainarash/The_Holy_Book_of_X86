@@ -596,7 +596,7 @@ Ha? Nothing? Well, you're wrong! NOP actually does something. A NOP instruction 
 
         XCHG rax,rax
 
-It conceptually does nothing, but behind the scene it exchanges (XCHG as you guessed) the value in RAX with RAX.
+It conceptually does nothing, but behind the scenes it exchanges (XCHG as you guessed) the value in RAX with RAX.
 
 2.
 
@@ -611,8 +611,8 @@ It conceptually does nothing, but behind the scene it exchanges (XCHG as you gue
 
 
 
-PUSH instruction pushes either a byte, a word, a dword or a quadword onto the stack.
-For this part of tutorial I will only explain pushing a dword (4-byte value) onto the stack. The rest of them takes seconds to
+The PUSH instruction pushes either a byte, a word, a dword or a quadword onto the stack.
+For this part of tutorial I will only explain pushing a dword (4-byte value) onto the stack. The rest of them take mere seconds to
 understand. In order to fully understand what a push instruction does, you have to see it by demonstration. For the following
 instructions:
 
@@ -621,7 +621,7 @@ instructions:
 (3)     PUSH 0x43434343
 
 Consider ESP points to some address that holds the content 0xDEADBEEF(0) before executing the 3 lines above. After the execution of each PUSH
-instruction, ESP gets decremented by 4 and the value will be pushed on to the stack and the new ESP will point at it.
+instruction, ESP gets decremented by 4 and the value will be pushed on to the stack and the new ESP will point to it.
 
 (0)                     (1)                     (2)                     (3)
        +----------+           +----------+            +----------+            +----------+
