@@ -1242,14 +1242,14 @@ We configure the debugger to use Intel syntax for the code
       (gdb) set disassembly-flavor intel
 
 
-Now issuing the commands:
+Now issue the commands:
       (gdb) disassemble main
       Dump of assembler code for the main function:
-         0x080488a0 <+0>:	  push   ebp
+         0x080488a0 <+0>:	push   ebp
          0x080488a1 <+1>: 	mov    ebp,esp
-         0x080488a3 <+3>:	  sub    esp,0x18
-         0x080488a6 <+6>:	  mov    eax,DWORD PTR [ebp+0xc]
-         0x080488a9 <+9>:	  mov    ecx,DWORD PTR [ebp+0x8]
+         0x080488a3 <+3>:	sub    esp,0x18
+         0x080488a6 <+6>:	mov    eax,DWORD PTR [ebp+0xc]
+         0x080488a9 <+9>:	mov    ecx,DWORD PTR [ebp+0x8]
          0x080488ac <+12>:	mov    DWORD PTR [ebp-0x4],0x0
          0x080488b3 <+19>:	mov    DWORD PTR [ebp-0x8],ecx
          0x080488b6 <+22>:	mov    DWORD PTR [ebp-0xc],eax
@@ -1269,11 +1269,11 @@ Now issuing the commands:
       End of the assembler dump.
       (gdb) disassemble sub
       Dump of assembler code for the sub function:
-         0x08048880 <+0>:	  push   ebp
-         0x08048881 <+1>:	  mov    ebp,esp
-         0x08048883 <+3>:	  sub    esp,0x8
-         0x08048886 <+6>:	  mov    eax,DWORD PTR [ebp+0xc]
-         0x08048889 <+9>:	  mov    ecx,DWORD PTR [ebp+0x8]
+         0x08048880 <+0>:	push   ebp
+         0x08048881 <+1>:	mov    ebp,esp
+         0x08048883 <+3>:	sub    esp,0x8
+         0x08048886 <+6>:	mov    eax,DWORD PTR [ebp+0xc]
+         0x08048889 <+9>:	mov    ecx,DWORD PTR [ebp+0x8]
          0x0804888c <+12>:	mov    DWORD PTR [ebp-0x4],ecx
          0x0804888f <+15>:	mov    DWORD PTR [ebp-0x8],eax
          0x08048892 <+18>:	mov    eax,DWORD PTR [ebp-0x4]
