@@ -1288,7 +1288,7 @@ Now issue the commands:
 
         Alright! We start analyzing the assembly line by line and match it with our high-level C code. Starting with line <+0> of main(), we can see
 it's saving the old stack frame and creating its own. Then it pushes ESP down by issuing a SUB ESP,0x18 on line <+3>. In order to make sense of that,
-we convert 0x18 to decimal which gives us 24. So it is reserving 24 bytes on the stack (why?). Here is how the stack looks like:
+we convert 0x18 to decimal which gives us 24. So it is reserving 24 bytes on the stack (why?). Here is how the stack looks:
 
                     +------------+
             EBP + C |            |
@@ -1353,11 +1353,11 @@ called main() and main() is asking for its parameters argc and argv. So we compl
                     has 2 command-line arguments.
 
     Line <+12> corresponds to the first line in main(). The uninitialized variable "a" gets a NULL(0x00) value. Quickly note that different compilers
- and architectures handle the uninitialized variables differently. For example they may end up in HEAP or even don't end up anywhere until they get
+ and architectures handle the uninitialized variables differently. For example they may end up in the HEAP or even don't end up anywhere until they get
 initialized.
-    On lines <+19> and <+22> of main, those command-line arguments that we saw previously which were moved to EAX and ECX, now get copied onto the
-stack. This time relative addressing of EBP minus something is used. This type of addresses (EBP minus something) 99% of the time represent local
-variables and the function's own variables and procedures. SO after these 2 line:
+    On lines <+19> and <+22> of main, those command-line arguments that we saw previously, which were moved to EAX and ECX, now get copied onto the
+stack. This time relative addressing of EBP minus something is used. These types of addresses (EBP minus something) 99% of the time represent local
+variables and the function's own variables and procedures. SO after these 2 lines:
 
             mov DWORD PTR [ebp-0x4],ecx
             mov DWORD PTR [ebp-0x8],eax
@@ -1388,7 +1388,7 @@ the stack will look like this:
                         +------------+
 
 
-        Line <+25> gets the pointer to the start of argv[] array and puts that address in EAX and on line <+28> it says: go to the start of the array,
+        Line <+25> gets the pointer to the start of the argv[] array and puts that address in EAX and on line <+28> it says: go to the start of the array,
 then go 4 bytes forward and take whatever value is in there and put it in EAX. If we picture it, it would make more sense:
 
             <+25>:	mov    eax,DWORD PTR [ebp-0xc]
@@ -1406,7 +1406,7 @@ then go 4 bytes forward and take whatever value is in there and put it in EAX. I
                        argv[1] is 0x100 or 256
                        I hope it's clear now ;D
 
-        Then on line <+31> just before we call atoi() funtion, we need to push its parameter onto the stack which is argc.
+        Then on line <+31> just before we call the atoi() funtion, we need to push its parameter onto the stack which is argc.
 
                       <+31>:	mov    DWORD PTR [esp],eax
         After that we call atoi on line <+34> which makes our stack like this:
@@ -1433,10 +1433,10 @@ then go 4 bytes forward and take whatever value is in there and put it in EAX. I
               ESP --> |    argc    |
                       +------------+
 
-        We're not gonna go through atoi() function right now. As we learned before, it's gonna pick up its parameter from [EBP + 0x8] (note that after
-SAVED EIP is on address [EBP + 0x4]) and return the value in EAX and use the saved EIP to get back to main(). Then the returned value in EAX will be
-place onto stack at [EBP - 0x10]. Then on line <+42> pointer to argv[] is copied to EAX and on line <+45> the integer value of argc is copied to ECX.
-These values EXA,ECX will be placed at [ESP] and [ESP + 0x4] respectively to be ready to call sub().
+        We're not gonna go through the atoi() function right now. As we learned before, it's gonna pick up its parameter from [EBP + 0x8] (note that after
+SAVED EIP is at address [EBP + 0x4]) and return the value in EAX and use the saved EIP to get back to main(). Then the returned value in EAX will be
+placed onto the stack at [EBP - 0x10]. Then on line <+42> pointer to argv[] is copied to EAX and on line <+45> the integer value of argc is copied to ECX.
+These values EAX,ECX will be placed at [ESP] and [ESP + 0x4] respectively to be ready to call sub().
 
                       +------------+
               EBP + C |  *argv[]   |   ----> mov eax, DWORD PTR [ebp + 0xc] will copy the content in this address to EAX.
