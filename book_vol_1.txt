@@ -1462,10 +1462,10 @@ These values EAX,ECX will be placed at [ESP] and [ESP + 0x4] respectively to be 
 
 
         Now we have everything set up to call sub(). After calling sub() and past the function's prologue, it reserves 8 bytes for its stack frame.
-On line <+6> and <+9> it takes the local variables from previous stack frame (main()'s) and copies them in EAX and ECX respectively. Then it places
+On line <+6> and <+9> it takes the local variables from the previous stack frame (main()'s) and copies them in EAX and ECX respectively. Then it places
 those values onto its own stack frame at [EBP - 0x4] for ECX and [EBP -0x8] for EAX. Then again on line <+18> it places the value of [EBP - 0x4] which
-is integer value of 2 in EAX. Then on line <+21> we have a shift logical left instruction with shifting of one bit which translates to multiply  by 2
-to the power of one and then the next line of instruction, the value of [EBP - 0x8] which is 256(the imaginary value we passed on command line) will be
+is the integer value of 2 in EAX. Then on line <+21> we have a shift logical left instruction with shifting of one bit which translates to multiply by 2
+to the power of one and then the next line of instruction, the value of [EBP - 0x8] which is 256 (the imaginary value we passed on command line) will be
 added to EAX. The final result will be in EAX and returned to main().
 
                   +------------+
@@ -1484,18 +1484,18 @@ added to EAX. The final result will be in EAX and returned to main().
 
                   EAX = 2*2+256 = 260
 
-        Now it's time to return to main(). Knowing that sub's return value of 260 in in EAX, it wipes down its stack frame in line <+27> by adding 8
+        Now it's time to return to main(). Knowing that sub's return value of 260 is in EAX, it wipes down its stack frame in line <+27> by adding 8
 to ESP. Then it pops the value in ESP (after adding 8 to ESP) which is the SAVED EBP into EBP register. Then it uses the SAVED EIP to return to main()
 (line <+60>).
-        The same story fits to the remaining instructions in main. It wipes up the stack frame by adding 0x18(24 decimal) to ESP. Pops SAVED EBP back
+        The same story fits to the remaining instructions in main. It wipes up the stack frame by adding 0x18 (24 decimal) to ESP. Pops SAVED EBP back
 to EBP register and returns to whoever called main().
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-        Now that we successfully analyzed our second example, it's a good time to introduce you to concept of jumps. There are a some ways to change
+        Now that we successfully analyzed our second example, it's a good time to introduce you to the concept of jumps. There are a some ways to change
 EIP's value in order to change the execution path to somewhere else in the program. One way of doing that is by using a CALL instruction as mentioned
 earlier. Remember that a CALL will push the address of the next instruction onto the stack which was referred to as SAVED EIP in our demonstrations
-of stack. A JUMP instruction won't do that. It simply changes the EIP value and this cause the execution to "jump" to that address and follow
+of stack. A JUMP instruction won't do that. It simply changes the EIP value and this causes the execution to "jump" to that address and follow
 execution. We have different kinds of jump and each of them are a convenient way to assemble a control flow or a loop in a high level language. JUMPs
 are categorized into 2 groups: Conditional and Unconditional.
 
@@ -1509,7 +1509,7 @@ Unconditional Jump:
 
 
         A JMP instruction is an unconditional jump. All it does is simply changing the value of EIP with the given address. For example the piece of
-code below will simply change the EIP value with a hardcoded address:
+code below will simply replace the EIP value with a hardcoded address:
 
                         ____ EIP before = 0xsomething
                       /
@@ -1524,7 +1524,7 @@ the execution flow to our injected shellcode on the stack:
 
                 ESP = 0x7fffff50 (start of our injected shellcode)
 
-          Or when our shellcode is at some offset to the address pointed by EAX:
+          Or when our shellcode is at some offset from the address pointed to by EAX:
 
                 sub eax,0x100
                 jmp eax
@@ -1532,7 +1532,7 @@ the execution flow to our injected shellcode on the stack:
 
 Conditional Jumps:
 
-        A conditional jump is based on checking a single value in EFLAGS register that is the result of a comparison. For us to understand how they
+        A conditional jump is based on checking a single value in the EFLAGS register that is the result of a comparison. For us to understand how they
 work, we need to dive into explaining the EFLAGS register and all of its tiny parts. Obviously that's not convenient to explain every little thing
 inside it. You're not reading Intel's manual anyway. So here we go:
 
@@ -1544,7 +1544,7 @@ inside it. You're not reading Intel's manual anyway. So here we go:
 
         EFLAGS is a register that has a lot of flags! It is really what it's about. Flags that control certain parts of the
 program and its connection with the OS. These flags are the bits of the EFLAGS register which can be set to 1 or 0. These values are mostly changed
-after a comparison or after executing some instruction that has a direct effect on the state of these bits (flags). Here's the structure of EFLAGS
+after a comparison or after executing some instruction that has a direct effect on the state of these bits (flags). Here's the structure of the EFLAGS
 register containing its different flags:
 
 +=========+==============+===============================+==========+
@@ -1625,8 +1625,8 @@ register containing its different flags:
  \___|_|  |_|_|
 
 
-        Before learning a conditional jump, you need to know how condition is determined, right? So CMP (Compare) instruction determines that
-condition. It compares the source and destination value with each other and set the appropriate bits (flags) accordingly in EFLAGS register. The CF,
+        Before learning a conditional jump, you need to know how the condition is determined, right? So the CMP (Compare) instruction determines that
+condition. It compares the source and destination values with each other and sets the appropriate bits (flags) accordingly in the EFLAGS register. The CF,
 OF, SF, ZF, AF, and PF flags are set according to the result.
 
 +--------------------------------+
@@ -1634,8 +1634,8 @@ OF, SF, ZF, AF, and PF flags are set according to the result.
 +--------------------------------+
 
         Conditional jumps have too many different instructions, each designed for a specific purpose. It's not really convenient to mention all of
-them here since it will not do you any good. We just mention a couple of them here with examples. If you are interested to read more about them
-(highly recommended), check the Intel's manual (Now you're old enough to check the manual yourself :p).
+them here since it will not do you any good. We just mention a couple of them here with examples. If you are interested in reading more about them
+(highly recommended), check Intel's manual (Now you're old enough to check the manual yourself :p).
 
 18.
      _ _  _ ___
@@ -1644,7 +1644,7 @@ them here since it will not do you any good. We just mention a couple of them he
   \__/|_|\_|___|
 
 
-        Jump if Not Equal or (JNE) checks if the Zero-Flag (ZF) is set or not. As the result of a CMP instruction sets this flag, it will take jump if
+        Jump if Not Equal or (JNE) checks if the Zero-Flag (ZF) is set or not. As the result of a CMP instruction sets this flag, it will jump if
 ZF is not set (0) and will pass to the next instruction after the JNE instruction if ZF is set (1). Here's an example:
 
     (1)    xor ecx,ecx
@@ -1655,20 +1655,20 @@ ZF is not set (0) and will pass to the next instruction after the JNE instructio
     (6)    ....
 
         This piece of assembly represents a very simple and neat loop that loops 16 times. The first instruction does an "exclusive OR" on ECX. If you
-remember correctly, this will zero out ECX. On second line we put decimal value of 16 (hex 0x10) in EAX. After incrementing ECX by 1, we compare ECX
+remember correctly, this will zero out ECX. On the second line we put the decimal value of 16 (hex 0x10) in EAX. After incrementing ECX by 1, we compare ECX
 with EAX. Comparing the values 16 and 1 is done by subtracting 1 from 16. Obviously ZF will not be set to 1 and the jump will be taken. After taking
 the jump, EIP will point to line (3). This will increment ECX again by 1. After looping 16 times, ECX will be 0x10 and the CMP instruction
-(subtracting 16 - 16) will result in 0 and ZF will be set to 1. This time the condition for JNE is not met and jump will not be take and EIP will
+(subtracting 16 - 16) will result in 0 and ZF will be set to 1. This time the condition for JNE is not met and the jump will not be taken and EIP will
 point to line (6).
 
         It's a good time to take a look at our 3rd example in order to better understand conditional jumps. This time we won't show you the source
-code first and we dive into assembly. This will be our first reversing experience. This time, our assembly is 64-bit.
+code first and just dive right into assembly. This will be our first reversing experience. This time, our assembly is 64-bit.
 
 (gdb) disassemble main
 Dump of assembler code for function main:
-   0x0000000100000f70 <+0>:	  push   rbp
-   0x0000000100000f71 <+1>:	  mov    rbp,rsp
-   0x0000000100000f74 <+4>:	  mov    DWORD PTR [rbp-0x4],0x0
+   0x0000000100000f70 <+0>:	push   rbp
+   0x0000000100000f71 <+1>:	mov    rbp,rsp
+   0x0000000100000f74 <+4>:	mov    DWORD PTR [rbp-0x4],0x0
    0x0000000100000f7b <+11>:	mov    DWORD PTR [rbp-0x8],0x5
    0x0000000100000f82 <+18>:	mov    DWORD PTR [rbp-0xc],0x6
    0x0000000100000f89 <+25>:	mov    eax,DWORD PTR [rbp-0x8]
@@ -1682,10 +1682,10 @@ Dump of assembler code for function main:
    0x0000000100000fac <+60>:	ret
 End of assembler dump.
 
-        Okie Dockie! First two lines (line <+0> and <+1> in main) are pretty familiar; function prologue. On line <+4> through <+18> after setting up
+        Okie Dokie! The first two lines (line <+0> and <+1> in main) are pretty familiar; function prologue. On line <+4> through <+18> after setting up
 the new stack frame, we save the value zero at RBP - 4, value 5 at RBP - 8 and value 6 at RBP - 12. This pretty much looks like the process of
-initializing local variables. We can be sure value 5 and 6 are local variables of integer type but as we saw in our previous examples, 0 can be an
-uninitialized variable or something that only exists in the assembly not the source. By now we can guess that our source code might look like this:
+initializing local variables. We can be sure the values 5 and 6 are local variables of integer type, but as we saw in our previous examples, 0 can be an
+uninitialized variable or something that only exists in the assembly, not the source. By now we can guess that our source code might look like this:
 
 main()
 {
@@ -1695,16 +1695,16 @@ int b = 6;
 
         On line <+25> we see one of these local variables is moved to EAX followed by a compare instruction that checks these 2 local variables
 together. On line <+31> we see a new instruction (Here's a good time to check the manual ;p). JLE (Jump if Less than or Equal to) will check the
-value at RBP - 12 which is number 6 with the value in EAX which is 5. This compare instruction will change the affected flags as follows:
+value at RBP - 12 (which is number 6) with the value in EAX (which is 5). This compare instruction will change the affected flags as follows:
 
         ZF = 0
         SF = 1
         OF = 0
         CF = 1
 
-        JLE instruction will take the jump if and only if ZF = 1 or SF not be equal to OF (Overflow Flag). As we can see, EFLAGS register shows that
+        JLE instruction will take the jump if and only if ZF = 1 or SF is not equal to OF (Overflow Flag). As we can see, the EFLAGS register shows that
 this condition is met, so the jump is taken. After taking the jump we land on line <+49> which will put zero in EAX, pop the previous stack frame
-back into RBP and return. We now noticed that RBP - 4 (the suspicious value of 0) was indeed something in assembly only and not in the source. It was
+back into RBP and return. We now notice that RBP - 4 (the suspicious value of 0) was indeed something in assembly only and not in the source. It was
 only used for our return value. Our best guess for the source code is:
 
 int main() //int is used because the return values are integers
@@ -1714,7 +1714,7 @@ int main() //int is used because the return values are integers
   if(a<b)
     return 0;
   else
-    return -1; //if JLE does not meet its condition, the jump will not be taken and the value 0xffffffff will be return which is -1
+    return -1; //if JLE does not meet its condition, the jump will not be taken and the value 0xffffffff will be returned, which is -1
 }
 
         That's pretty much the source code that was used but do you want to see the real source code?
