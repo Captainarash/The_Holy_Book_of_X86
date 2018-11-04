@@ -44,7 +44,7 @@ xxxxxxx      xxxxxxx8:::::8     8:::::8    6::::::6
    x:::::xx:::::x   8::::::88888::::::86::::::66666::::::6
   x:::::x  x:::::x   88:::::::::::::88  66:::::::::::::66
  x:::::x    x:::::x    88:::::::::88      66:::::::::66
-xxxxxxx      xxxxxxx     888888888          666666666        v0.1.5     Delivered to you by Arash TC with the spirit of OpenSecurityTraining.info
+xxxxxxx      xxxxxxx     888888888          666666666        v0.2     Delivered to you by Arash Tohidi
 
 
 
@@ -59,44 +59,13 @@ always makes a 5
 
 =====================================================================================================================================================
 
-Acknowledgement
-
-        I owe everything I know about x86 architecture to Xeno Kovah. A man who shared his class videos and slides freely available to everyone which
-is a noble act. In return to his great efforts, I decided to write this tutorial on x86 architecture and assembly and publish it for free so whoever
-is interested can learn and contribute.
-
-=====================================================================================================================================================
-
-About the Author[s]:
-
-        Arash TC is the main author and maintainer of this book. He is currently studying IT in Finland. He's got OSCP/OSCE and a long long long way
-ahead to become a pro. He will appreciate readers' comments, criticisms and contributions. His main interest is low level security and kernel
-internals.
-
-        Amir Ali Torkaman is the editor of this volume. He studies English Literature. He's very enthusiastic about Information Security and Privacy.
-That's all I can tell about him now. maybe later you see more info about him here.
-
-        Other contributors are very appreciated as they help me to complete this project and present you a book which hopefully will be flawless.
-
-        You can contact the author[s] by visiting http://www.kernelfarm.com/
-
-=====================================================================================================================================================
-
 Introduction:
 
-        This book/guide/tutorial/wiki is about assembly and x86 architecture. It's written by a low level security dude for low level security dudes.
-        If you wanna learn Assembly and its structure, reversing basics, Segmentation, Paging, etc. keep on reading. I highly recommend you check
-opensecuritytraining.info website and watch Intro to x86 videos as you read this book.
+        This book/guide/tutorial/wiki is about assembly and x86 architecture. If you wanna learn Assembly and its structure, reversing basics,
+        segmentation and paging, keep on reading.
 
         You need Intel Developer's Manual as a quick reference throughout this book. You can download it from the link below:
         https://software.intel.com/sites/default/files/managed/39/c5/325462-sdm-vol-1-2abcd-3abcd.pdf
-
-=====================================================================================================================================================
-
-Table of Content:
-
-Since the book is not finished yet, it's not so convenient to put a table of contents here for now. Just read and enjoy ;) :P
-
 
 =====================================================================================================================================================
 
