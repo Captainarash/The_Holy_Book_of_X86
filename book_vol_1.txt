@@ -204,9 +204,14 @@ Negative numbers:
    +--------------------------+
    | to |0x7fffffff|0xffffffff|
    +--------------------------+
-
-
-
+   
+   It is useful to point out that the most significant bit represents the sign:
+   
+   0 ---> number is positive, example: 00010110 (base 2) ---> 0x16 (base 16) ---> +22 (base 10).
+   1 ---> number is negative, example: 11101010 (base 2) ---> 0xEA (base 16) ---> -22 (base 10).
+   
+   Thus, for example, with 1 byte (8 bit) the range of numbers we can represent is [-128,127].
+   
 
 Little Endian or Big Endian?
         Endianness comes from Jonathan Swifts' "Gulliver's Travels". It doesn't matter which way you eat your eggs and it certainly
