@@ -221,17 +221,23 @@ Little Endian or Big Endian?
         In a Little-Endian architecture, values are stored in RAM starting from the lowest byte. For example, this is what happens if
         you want to store the address 0x12345678 in memory:
 
-        0x12345678  -->  0x12 0x34 0x56 0x78  -->
-                                                |                                          |
-        Into RAM    <--  0x78 0x56 0x34 0x12 <--
+        0x12345678  --->  0x12 0x34 0x56 0x78  ---> 
+                                                   |
+                                                   v                                         
+        Into RAM    <---  0x78 0x56 0x34 0x12  <---
 
         So it's simple. It just starts storing from that lowest byte up to the highest byte.
 
+				It's important to note that endianness matters only when handling multi-byte data types and does not affect single-byte data.
 
-        In Big-Endian architecture, values are stored in RAM as they are. Network traffic is Big-Endian.
+
+        In Big-Endian architecture, values are stored in RAM as they are.
         PowerPC, ARM, SPARC, MIPS, etc. are Big-Endian unless otherwise configured.
 
-        *** Note: Register values are always Big-Endian. Little-Endian only applies to when writing to and reading from RAM (Memory).
+				Network traffic (TCP/IP stack) is Big-Endian, thus in Little-Endian architecture data sent over the net must be converted in Big-Endian format
+				for consistency across platforms.
+
+        *** Note: Register values are always Big-Endian. Little-Endian only applies when writing to and reading from RAM (Memory).
 
 
 REGISTERS:
@@ -240,7 +246,7 @@ REGISTERS:
         Registers are small memory storage areas built into the processor. Think of them as cups which you use to hold data for manipulation. Registers are
         volatile, so if you power off your PC, you're gonna lose the state of your registers. Intel architecture defines
         8 General Purpose Registers (GPR) for 32-bit platforms and 16 GPRs for 64 bit platforms as shown below. They are called general purpose
-        because, there are some special purpose registers that are used by for a specific purpose by the hardware or platform like MSR (Model-Specific
+        because, there are some special purpose registers that are used for a specific purpose by the hardware or platform like MSR (Model-Specific
         Register).
 
         32-bit         |        64-bit
@@ -322,14 +328,17 @@ The Stack
         "Hello World" code in Assembly. So stick with me and be patient.
 
 
-Caller/Callee Saved Registers
+Calling convention - Caller/Callee Saved Registers
 
-        There is a good explanation regarding caller/callee saved registers on MSDN:
+				A calling convention is a protocol about how to call and return from functions.
 
-        The registers RAX, RCX, RDX, R8, R9, R10, R11 are considered volatile and must be considered destroyed on
-        function calls (unless otherwise safety-provable by analysis such as whole program optimization).
-        The registers RBX, RBP, RDI, RSI, RSP, R12, R13, R14, and R15 are considered nonvolatile and must be saved
-        and restored by a function that uses them.
+				Caller rules:
+        When calling a function the registers RAX, RCX, RDX, R8, R9, R10, R11 are considered volatile and must be saved into the stack 
+				by the caller, if it relies on them (unless otherwise safety-provable by analysis such as whole program optimization).
+
+				Callee rules:
+        The registers RBX, RBP, RDI, RSI, RSP, R12, R13, R14, and R15 are considered nonvolatile and must be saved and restored from
+				the stack by the callee if it modify them.
 
 
 Structure of Registers
@@ -339,7 +348,8 @@ Structure of Registers
         Real Mode, which means all registers, memory addresses, values, etc. that we use should not exceed 16 bits. There is no paging,
         no segmentation available. This phase talks to the hardware directly. Examples of such environments are boot loaders, legacy
         BIOS, etc. When the OS (64-bit version) is booted and running, we are operating in long 64-bit mode  or protected mode which
-        gives us the privilege to access the entire address space and use 64-bit registers.
+        gives us the privilege to access the entire address space (in fact, the address space used by x86_64 architecture is of 48 bit 
+				instead of 64) and use 64-bit registers.
 
         These subjects (protected mode, real mode, virtual address, segmentation, etc. are explained deeply in volume 2).
 
@@ -353,7 +363,7 @@ Structure of Registers
                          +-----------------+
                          |        |AH  | AL|
                          +--------+--------+
-                         31       16   8   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -365,7 +375,7 @@ Structure of Registers
                          +-----------------+
                          |        |BH  | BL|
                          +--------+--------+
-                         31       16   8   0
+                         31       15   7   0
 
 
         63                                 0
@@ -378,7 +388,7 @@ Structure of Registers
                          +-----------------+
                          |        |CH | CL |
                          +--------+--------+
-                         31       16   8   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -390,7 +400,7 @@ Structure of Registers
                          +-----------------+
                          |        |DH | DL |
                          +--------+--------+
-                         31       16   8   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -400,7 +410,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   SI   |
                          +-----------------+
-                         31       16       0
+                         31       15       0
 
         63                                 0
         +----------------------------------+
@@ -410,7 +420,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   DI   |
                          +-----------------+
-                         31       16       0
+                         31       15       0
 
         63                                 0
         +----------------------------------+
@@ -420,7 +430,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   BP   |
                          +-----------------+
-                         31       16       0
+                         31       15       0
 
         63                                 0
         +----------------------------------+
@@ -430,7 +440,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|   SP   |
                          +-----------------+
-                         31       16       0
+                         31       15       0
 
         63                                 0
         +----------------------------------+
@@ -442,7 +452,7 @@ Structure of Registers
                          +-----------------+
                          |        |   |R8L |
                          +--------+--------+
-                         31       16   7   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -454,7 +464,7 @@ Structure of Registers
                          +-----------------+
                          |        |   |R9L |
                          +--------+--------+
-                         31       16   7   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -466,7 +476,7 @@ Structure of Registers
                          +-----------------+
                          |        |   |R10L|
                          +--------+--------+
-                         31       16   7   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -478,7 +488,7 @@ Structure of Registers
                          +-----------------+
                          |        |   |R11L|
                          +--------+--------+
-                         31       16   7   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -490,7 +500,7 @@ Structure of Registers
                          +-----------------+
                          |        |   |R12L|
                          +--------+--------+
-                         31       16   7   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -502,7 +512,7 @@ Structure of Registers
                          +-----------------+
                          |        |   |R13L|
                          +--------+--------+
-                         31       16   7   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -514,7 +524,7 @@ Structure of Registers
                          +-----------------+
                          |        |   |R14L|
                          +--------+--------+
-                         31       16   7   0
+                         31       15   7   0
 
         63                                 0
         +----------------------------------+
@@ -526,7 +536,7 @@ Structure of Registers
                          +-----------------+
                          |        |   |R15L|
                          +--------+--------+
-                         31       16   7   0
+                         31       15   7   0
 
 
         63                                 0
@@ -537,7 +547,7 @@ Structure of Registers
         +----------------------------------+
                          |EXTENDED|  FLAGS |
                          +-----------------+
-                         31                0
+                         31       15       0
 
 
 
@@ -547,12 +557,12 @@ of assembly, Intel notation and AT&T notation.
 
         instruction destination, source
 
-  In AT&T notation, after the instruction, first comes the source followed by a comma and then the destination. Every register has a percent sign(%)
+  In AT&T notation, after the instruction, first comes the source followed by a comma and then the destination. Every register has a percent sign (%)
   appended to the beginning of it. It looks like this:
 
         instruction %source, %destination
 
-*** NOTE: The percent sign is only applied to the registers. It doesn't apply to the immediate values. They get the dollar sign ;)
+*** NOTE: The percent sign is only applied to the registers. It doesn't apply to the immediate values. They get the dollar sign ($) ;)
 
 
 1.
