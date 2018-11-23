@@ -10,9 +10,9 @@ For more info, please visit:
   
 A simple guide to x86 architecture, assembly, memory management, paging, segmentation, interrupts, etc.    
 
-    This book tries to make you have a better understanding of computers in general and helps you learn x86
-    architecture pretty fast. This book includes a crash course in x86 assembly and contains some of the core 
-    concepts of x86 architecture which you need to understand most operating systems internals.     
+    This book tries to make you have a better understanding of computers in general and helps you learn 
+    x86 architecture pretty fast. This book includes a crash course in x86 assembly and contains some of
+    the core concepts of x86 architecture which you need to understand most operating systems internals.     
   
   
 ### Here's a quick overview of the content (current content):    
@@ -38,5 +38,5 @@ A simple guide to x86 architecture, assembly, memory management, paging, segment
   
   
 ## If you want to support the author:
-     No need to purchase the print book since I'm not selling any longer. But you could help me 
-     completing the book or making it better. Just make a pull request... :)         
+     No need to purchase the print book since I'm not selling any longer. But you could help me completing 
+     the book or making it better. Just make a pull request... :)         
