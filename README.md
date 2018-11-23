@@ -5,9 +5,6 @@ Delivered to you by **Arash Tohidi** with the spirit of OpenSecurityTraining
 For more info, please visit:   
 **https://www.linkedin.com/in/arash-tc**  
 **https://twitter.com/H4UL4**  
-**http://www.kernelfarm.com**   !!! WEBSITE IS DOWN !!!  
-**https://twitter.com/KernelFarm**   !!! DEPRECATED !!!  
-
 
 A simple guide to x86 architecture, assembly, memory management, paging, segmentation, SMM (Not Available), BIOS (Not Available).    
 
