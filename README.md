@@ -4,7 +4,7 @@
 Delivered to you by **Arash Tohidi** with the spirit of OpenSecurityTraining    
 For more info, please visit:   
 [LinkedIn](https://www.linkedin.com/in/arash-tc)    
-[Twiiter](https://twitter.com/H4UL4)    
+[Twitter](https://twitter.com/H4UL4)    
 [QBloq](https://captainarash.github.io)    
   
   
