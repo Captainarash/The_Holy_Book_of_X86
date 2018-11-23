@@ -3,9 +3,11 @@
 ======================    
 Delivered to you by **Arash Tohidi** with the spirit of OpenSecurityTraining    
 For more info, please visit:   
-**https://www.linkedin.com/in/arash-tc**  
-**https://twitter.com/H4UL4**  
-
+[LinkedIn](https://www.linkedin.com/in/arash-tc)    
+[Twiiter](https://twitter.com/H4UL4)    
+[QBloq](https://captainarash.github.io)    
+  
+  
 A simple guide to x86 architecture, assembly, memory management, paging, segmentation, SMM (Not Available), BIOS (Not Available).    
 
     This book tends to overview and teach x86 subjects in the eyes of a reverse engineer, malware analyst or a
@@ -35,4 +37,4 @@ A simple guide to x86 architecture, assembly, memory management, paging, segment
 ###### Section 3: Linux Internals
   !!! DISCONTINUED !!!
 ## If you want to support the author:
-     No need. The book is out of print :(
+     No need to purchase the print book since I'm not selling any longer. But you could help me completing the book or making it better. Just make a pull request... :)         
