@@ -10,9 +10,8 @@ For more info, please visit:
   
 A simple guide to x86 architecture, assembly, memory management, paging, segmentation, SMM (Not Available), BIOS (Not Available).    
 
-    This book tends to overview and teach x86 subjects in the eyes of a reverse engineer, malware analyst or a
-    hacker. We're not going to teach you how to build an OS or other subjects that are not related to those
-    mentioned above.
+    This book tends to overview and teach x86 subjects in order to make you have a better understanding
+    of computers in general and help you learn x86 pretty fast.    
 
 ### Here's a quick overview of the content (current content):    
 
