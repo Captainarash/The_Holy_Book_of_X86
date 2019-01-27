@@ -59,13 +59,51 @@ always makes a 5
 
 =====================================================================================================================================================
 
-Introduction:
+What is this?
 
         This book/guide/tutorial/wiki is about assembly and x86 architecture. If you wanna learn Assembly and its structure, reversing basics,
         segmentation and paging, keep on reading.
 
         You need Intel Developer's Manual as a quick reference throughout this book. You can download it from the link below:
         https://software.intel.com/sites/default/files/managed/39/c5/325462-sdm-vol-1-2abcd-3abcd.pdf
+
+=====================================================================================================================================================
+
+WTF?
+
+The first question we may ask is how a computer works. This question is start of a very long journey. To fully understand how a computer works,
+we need to learn all sorts of stuff such as basic electronics, digital logic, low level programming, operating systems and different CPU
+architectures. This list can go on with a lot more subjects which are fields of studies on their own.
+
+What we try to learn in this book - or some say crash course - is to learn about the x86 architecture (discussed in volume 2) and assembly language.
+When we write code in a higher level language - such as C - a compilation process kicks in to convert or translate our high-level, human-readable
+code to some lower-level piece of code that CPU can understand. See, the CPU does not understand if, else, int f = 2 and so on. It only deals with
+1's and 0's.
+
+The CPU can only understand basic arithmetics, logical operations and some more. It can retain and remember values using a memory module and it can
+manage its state and resources through a set of rules. If we take the most modern CPU and break down all its features, it can be basically described
+as arithmetics and memory operations. So, to make a CPU to understand and run your fancy applications, it first needs to be  translate to a set of
+extremely low-level operations. And that is what we will be discussing in this file.
+
+We will start off by explaining data types, some binary and hex arithmetics, some basics about x86 architecture and later on learn the most frequently
+used assembly instructions that you will encounter 90% of the time during your reverse engineering.
+
+=====================================================================================================================================================
+
+Will I learn all about x86?
+No. If you want to learn all about x86, read the manual and follow the works of some genius reversers and hackers out there.
+
+Should I learn x86 or ARM?
+Both. Learn both. Go ahead and learn even more architectures if you're interested. But x86 is a great start.
+
+I hate your book and I think it sucks. I don't understand the explanations. What should I do?
+Well, nobody forced you to read this file. There are other alternatives out there. Some much better than mine.
+
+I love your work and want to support you. What should I do?
+Hmm. I don't really know but thanks.
+
+I already know x86 assembly and want to learn architectural stuff. Do you explain those anywhere?
+Yes. Read the volume 2.
 
 =====================================================================================================================================================
 
@@ -204,14 +242,14 @@ Negative numbers:
    +--------------------------+
    | to |0x7fffffff|0xffffffff|
    +--------------------------+
-   
+
    It is useful to point out that the most significant bit represents the sign:
-   
+
    0 ---> number is positive, example: 00010110 (base 2) ---> 0x16 (base 16) ---> +22 (base 10).
    1 ---> number is negative, example: 11101010 (base 2) ---> 0xEA (base 16) ---> -22 (base 10).
-   
+
    Thus, for example, with 1 byte (8 bit) the range of numbers we can represent is [-128,127].
-   
+
 
 Little Endian or Big Endian?
         Endianness comes from Jonathan Swifts' "Gulliver's Travels". It doesn't matter which way you eat your eggs and it certainly
@@ -221,9 +259,9 @@ Little Endian or Big Endian?
         In a Little-Endian architecture, values are stored in RAM starting from the lowest byte. For example, this is what happens if
         you want to store the address 0x12345678 in memory:
 
-        0x12345678  --->  0x12 0x34 0x56 0x78  ---> 
+        0x12345678  --->  0x12 0x34 0x56 0x78  --->
                                                    |
-                                                   v                                         
+                                                   v
         Into RAM    <---  0x78 0x56 0x34 0x12  <---
 
         So it's simple. It just starts storing from that lowest byte up to the highest byte.
@@ -333,7 +371,7 @@ Calling convention - Caller/Callee Saved Registers
 				A calling convention is a protocol about how to call and return from functions.
 
 				Caller rules:
-        When calling a function the registers RAX, RCX, RDX, R8, R9, R10, R11 are considered volatile and must be saved into the stack 
+        When calling a function the registers RAX, RCX, RDX, R8, R9, R10, R11 are considered volatile and must be saved into the stack
 				by the caller, if it relies on them (unless otherwise safety-provable by analysis such as whole program optimization).
 
 				Callee rules:
@@ -348,7 +386,7 @@ Structure of Registers
         Real Mode, which means all registers, memory addresses, values, etc. that we use should not exceed 16 bits. There is no paging,
         no segmentation available. This phase talks to the hardware directly. Examples of such environments are boot loaders, legacy
         BIOS, etc. When the OS (64-bit version) is booted and running, we are operating in long 64-bit mode  or protected mode which
-        gives us the privilege to access the entire address space (in fact, the address space used by x86_64 architecture is of 48 bit 
+        gives us the privilege to access the entire address space (in fact, the address space used by x86_64 architecture is of 48 bit
 				instead of 64) and use 64-bit registers.
 
         These subjects (protected mode, real mode, virtual address, segmentation, etc. are explained deeply in volume 2).
